@@ -1,6 +1,8 @@
 package ba.unsa.etf.rpr.Controller;
 
+import ba.unsa.etf.rpr.Model.Status;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -25,8 +27,14 @@ public class ProfileController {
     public Label labDriversLicense;
     public Label labInspectionArea;
     public Label labInspectorType;
+    private Status status;
 
-    public void exportBtn(ActionEvent actionEvent) {
+    @FXML
+    public void initialize(){
+        status = Status.getInstance();
+    }
+
+    public void exportBtn(ActionEvent actionEvent) throws IOException {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text document", "*.txt"));
         File file = chooser.showSaveDialog(labFirstName.getScene().getWindow());
@@ -47,15 +55,16 @@ public class ProfileController {
                 exportData += "Login e-mail: " + labLoginEmail.getText() + "\n";
                 if(labDriversLicense.getText().equals("owns")) exportData+= "Has a valid driver's license\n";
                 else exportData += "Doesn't have a valid driver's license\n";
+
                 writer.println(exportData);
                 writer.close();
-            } catch (IOException ex) {
+              } catch (IOException ex) {
                 System.out.println("Error exporting file");
             }
         }
     }
 
-    public void closeBtn(ActionEvent actionEvent) {
+    public void closeBtn(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) labInspectorType.getScene().getWindow();
         stage.close();
     }

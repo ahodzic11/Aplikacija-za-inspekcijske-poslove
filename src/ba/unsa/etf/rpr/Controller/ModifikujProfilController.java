@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -156,7 +155,7 @@ public class ModifikujProfilController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
         Parent root = loader.load();
         GlavniProzorAdminController glavni = loader.getController();
-        glavni.refresujListu();
+        glavni.refreshInspectorsList();
         Stage stage = (Stage) fldIme.getScene().getWindow();
         stage.close();
     }

@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.Controller;
 import ba.unsa.etf.rpr.DAL.*;
 import ba.unsa.etf.rpr.Model.Inspektor;
 import ba.unsa.etf.rpr.Model.LogAkcije;
+import ba.unsa.etf.rpr.Model.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,11 +36,13 @@ public class GlavniProzorAdminController {
     public Button obrisiBtn;
     public Button dodijeliZadatakBtn;
     public Button pregledajZadatkeBtn;
+    public Label labStatusBar;
     private InspektorDAO inspektorDao;
     private AdministratorDAO administratorDAO;
     private PrijavljeniUserDAO prijavljeniUserDAO;
     private LogDAO logDAO;
     private LogAkcijaDAO logAkcijaDAO;
+    private Status status;
 
     @FXML
     public void initialize() throws SQLException {
@@ -48,8 +51,9 @@ public class GlavniProzorAdminController {
         prijavljeniUserDAO = PrijavljeniUserDAO.getInstance();
         logAkcijaDAO = LogAkcijaDAO.getInstance();
         logDAO = LogDAO.getInstance();
+        status = Status.getInstance();
 
-        disableujDugmad();
+        disableButtons();
 
         listaInspektora.setItems(inspektorDao.sviInspektori());
         listaInspektora.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
@@ -59,14 +63,14 @@ public class GlavniProzorAdminController {
                 labelJedinstvenaSifra.setText("UNIQUE ID: " + novi.getJedinstvenaSifra());
                 idTrenutnoPrikazanog = novi.getId();
                 trenutnoPrikazani = novi;
-                enableujDugmad();
+                enableButtons();
             }else{
-                disableujDugmad();
+                disableButtons();
             }
         });
     }
 
-    private void disableujDugmad() {
+    private void disableButtons() {
         profilBtn.setDisable(true);
         modifikujBtn.setDisable(true);
         izvjestajiBtn.setDisable(true);
@@ -75,7 +79,7 @@ public class GlavniProzorAdminController {
         pregledajZadatkeBtn.setDisable(true);
     }
 
-    private void enableujDugmad(){
+    private void enableButtons(){
         profilBtn.setDisable(false);
         modifikujBtn.setDisable(false);
         izvjestajiBtn.setDisable(false);
@@ -91,11 +95,13 @@ public class GlavniProzorAdminController {
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.showAndWait();
-        refresujListu();
+        refreshInspectorsList();
         listaInspektora.getSelectionModel().select(listaInspektora.getItems().size()-1);
     }
 
     public void profilBtn(ActionEvent actionEvent) throws IOException, SQLException {
+        status.setStatus("Inspector profile - " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog) + "] opened.");
+        updateStatus();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/inspectorProfile.fxml"));
@@ -120,16 +126,18 @@ public class GlavniProzorAdminController {
         else profilController.labDriversLicense.setText("Ne posjeduje");
         String akcija = "Administrator[" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+"] opened account - " + inspektorDao.dajTipInspektoraZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog)+"]";
         logAkcijaDAO.dodaj(new LogAkcije(1, LocalDateTime.now().format(formatter), akcija, prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()));
-        myStage.setTitle("Inspector profile");
+         myStage.setTitle("Inspector profile");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
-        myStage.show();
+        myStage.showAndWait();
+        labStatusBar.setText(status.getStatus());
     }
 
     public void obrisiBtn(ActionEvent actionEvent) throws SQLException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String akcija = "Administrator[" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+"] deleted account - " + inspektorDao.dajTipInspektoraZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog)+"]";
         logAkcijaDAO.dodaj(new LogAkcije(1, LocalDateTime.now().format(formatter), akcija, prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()));
+        labStatusBar.setText("Inspector profile deleted");
         inspektorDao.obrisi(trenutnoPrikazani);
         listaInspektora.setItems(inspektorDao.sviInspektori());
         labelInfo.setText("");
@@ -159,13 +167,13 @@ public class GlavniProzorAdminController {
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.showAndWait();
-        refresujListu();
+        refreshInspectorsList();
         listaInspektora.getSelectionModel().select(idTrenutnoPrikazanog);
         labelInfo.setText(inspektorDao.dajImeZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajPrezimeZaID(idTrenutnoPrikazanog));
         labelJedinstvenaSifra.setText("UNIQUE ID: " + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog));
     }
 
-    public void refresujListu(){
+    public void refreshInspectorsList(){
         listaInspektora.setItems(inspektorDao.sviInspektori());
     }
 
@@ -181,7 +189,6 @@ public class GlavniProzorAdminController {
         stage.close();
     }
 
-
     public void izvjestajiBtn(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/izvjestaji.fxml"));
@@ -192,6 +199,7 @@ public class GlavniProzorAdminController {
         myStage.setTitle("Reports");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.showAndWait();
+        labStatusBar.setText("Reports opened");
     }
 
     public void exitBtn(ActionEvent actionEvent) {
@@ -218,6 +226,7 @@ public class GlavniProzorAdminController {
 
     public void logoviBtn(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
+        labStatusBar.setText("Logs opened");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/logovi.fxml"));
         Parent root = loader.load();
         LogoviController cont = loader.getController();
@@ -235,5 +244,13 @@ public class GlavniProzorAdminController {
         myStage.setTitle("Assign a task");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.showAndWait();
+    }
+
+    public void exported() {
+        labStatusBar.setText("Inspector profile - " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) +  "[" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog) + "] exported.");
+    }
+
+    private void updateStatus(){
+        labStatusBar.setText(status.getStatus());
     }
 }
