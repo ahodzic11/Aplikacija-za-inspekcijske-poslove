@@ -1,5 +1,8 @@
 package ba.unsa.etf.rpr.Controller;
 
+import ba.unsa.etf.rpr.DAL.LogAkcijaDAO;
+import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
+import ba.unsa.etf.rpr.Model.LogAkcije;
 import ba.unsa.etf.rpr.Model.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +13,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ProfileController {
     public Label labFirstName;
@@ -28,13 +34,18 @@ public class ProfileController {
     public Label labInspectionArea;
     public Label labInspectorType;
     private Status status;
+    private LogAkcijaDAO logAkcijaDAO;
+    private PrijavljeniUserDAO prijavljeniUserDAO;
 
     @FXML
-    public void initialize(){
+    public void initialize() throws SQLException {
         status = Status.getInstance();
+        logAkcijaDAO = LogAkcijaDAO.getInstance();
+        prijavljeniUserDAO = PrijavljeniUserDAO.getInstance();
     }
 
     public void exportBtn(ActionEvent actionEvent) throws IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text document", "*.txt"));
         File file = chooser.showSaveDialog(labFirstName.getScene().getWindow());
@@ -55,10 +66,11 @@ public class ProfileController {
                 exportData += "Login e-mail: " + labLoginEmail.getText() + "\n";
                 if(labDriversLicense.getText().equals("owns")) exportData+= "Has a valid driver's license\n";
                 else exportData += "Doesn't have a valid driver's license\n";
-
+                status.setStatus("Inspector profile - " + labFirstName.getText() + " " + labLastName.getText() +  " [" + labUniqueID.getText() + "] exported.");
+                logAkcijaDAO.dodaj(new LogAkcije(1, LocalDateTime.now().format(formatter), "Administrator [" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+ "] exported profile - " + labFirstName.getText() + " " + labLastName.getText() +  " [" + labUniqueID.getText() + "] ", prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()));
                 writer.println(exportData);
                 writer.close();
-              } catch (IOException ex) {
+              } catch (IOException | SQLException ex) {
                 System.out.println("Error exporting file");
             }
         }

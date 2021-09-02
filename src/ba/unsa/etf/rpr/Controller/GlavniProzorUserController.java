@@ -78,7 +78,7 @@ public class GlavniProzorUserController {
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException {
-        logDAO.logujOdjavu(inspektorDao.dajJedinstvenuSifruZaID(prijavljeniDao.dajIdUlogovanogInspektora()));
+        logDAO.logout(inspektorDao.dajJedinstvenuSifruZaID(prijavljeniDao.dajIdUlogovanogInspektora()));
         prijavljeniDao.obrisiPrijavljenog();
         Stage stage = (Stage) listaIzvjestaja.getScene().getWindow();
         stage.close();

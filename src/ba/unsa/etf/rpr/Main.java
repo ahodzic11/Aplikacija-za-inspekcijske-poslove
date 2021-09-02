@@ -28,7 +28,7 @@ public class Main extends Application {
             for(Administrator a : administratori)
                 if(a.getJedinstvenaSifra().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
-                    primaryStage.setTitle("Dobrodošao admine!");
+                    primaryStage.setTitle("Administrator");
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                     primaryStage.show();
                 }
@@ -36,7 +36,7 @@ public class Main extends Application {
             for(Inspektor i : inspektori)
                 if(i.getJedinstvenaSifra().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
-                    primaryStage.setTitle("Dobrodošao korisniče!");
+                    primaryStage.setTitle("Inspector");
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                     primaryStage.show();
                 }

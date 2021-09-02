@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.InspektorDAO;
+import ba.unsa.etf.rpr.Model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +19,7 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ModifikujProfilController {
+public class ModifyProfileController {
     public int idOtvorenog;
     public RadioButton rbGlavniInspektor;
     public RadioButton rbFederalniInspektor;
@@ -33,10 +34,12 @@ public class ModifikujProfilController {
     public TextField fldPristupniMail;
     public TextField fldPristupnaSifra;
     public CheckBox cbVozacka;
+    private Status status;
 
     @FXML
     public void initialize(){
         inspektorDao = InspektorDAO.getInstance();
+        status = Status.getInstance();
 
         fldIme.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
             if (fldIme.getText().isBlank() || sadrziBroj(fldIme.getText())) {
@@ -156,6 +159,8 @@ public class ModifikujProfilController {
         Parent root = loader.load();
         GlavniProzorAdminController glavni = loader.getController();
         glavni.refreshInspectorsList();
+        status.setStatus("Inspector profile - " + inspektorDao.dajImePrezimeInspektora(idOtvorenog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idOtvorenog) + "] modified.");
+
         Stage stage = (Stage) fldIme.getScene().getWindow();
         stage.close();
     }

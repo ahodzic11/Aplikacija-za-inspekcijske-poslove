@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.DodijeliZadatakController">
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.AssignTaskController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -27,14 +27,14 @@
    <children>
       <HBox spacing="70.0" GridPane.rowIndex="2">
          <children>
-            <RadioButton fx:id="rbSviTermini" mnemonicParsing="false" text="Svi">
+            <RadioButton fx:id="rbAllTasks" mnemonicParsing="false" text="All tasks">
                <toggleGroup>
                   <ToggleGroup fx:id="terminiGroup" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="rbSlobodniTermini" mnemonicParsing="false" text="Slobodni" toggleGroup="$terminiGroup" />
+            <RadioButton fx:id="rbUntakenTasks" mnemonicParsing="false" text="Untaken ones" toggleGroup="$terminiGroup" />
          </children>
       </HBox>
-      <ListView fx:id="listaTermina" prefHeight="120.0" prefWidth="50.0" GridPane.rowIndex="3" />
+      <ListView fx:id="tasksList" prefHeight="120.0" prefWidth="50.0" GridPane.rowIndex="3" />
       <ButtonBar GridPane.rowIndex="4">
         <buttons>
           <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="OK" />
@@ -43,7 +43,7 @@
       </ButtonBar>
       <VBox alignment="CENTER">
          <children>
-            <Label text="Termini" textAlignment="CENTER" />
+            <Label text="Tasks" textAlignment="CENTER" />
          </children>
       </VBox>
    </children>

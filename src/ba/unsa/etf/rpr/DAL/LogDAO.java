@@ -88,7 +88,7 @@ public class LogDAO {
         return instance;
     }
 
-    public void logujOdjavu(String jedinstvenaSifra) {
+    public void logout(String jedinstvenaSifra) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         try{
             odjaviUpit.setString(1, LocalDateTime.now().format(formatter));

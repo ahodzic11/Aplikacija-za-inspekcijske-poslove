@@ -35,8 +35,8 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Account">
               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#promijeniPodatkeAdminaBtn" text="Change my login info" />
-                  <MenuItem mnemonicParsing="false" onAction="#dodajAdminaBtn" text="Create admin account" />
+                  <MenuItem mnemonicParsing="false" onAction="#changeAdminLoginData" text="Change my login info" />
+                  <MenuItem mnemonicParsing="false" onAction="#createAdminAccountBtn" text="Create admin account" />
                   <MenuItem mnemonicParsing="false" onAction="#openCreateAccount" text="Create inspector account" />
               </items>
             </Menu>
@@ -100,13 +100,13 @@
                           </rowConstraints>
                            <children>
                               <Button fx:id="profilBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#profilBtn" prefHeight="103.0" prefWidth="235.0" text="Show profile" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                              <Button fx:id="izvjestajiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#izvjestajiBtn" prefHeight="91.0" prefWidth="235.0" text="Inspector reports" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                              <Button fx:id="modifikujBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifikujBtn" prefHeight="150.0" prefWidth="245.0" text="Modify" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                              <Button fx:id="obrisiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#obrisiBtn" prefHeight="150.0" prefWidth="245.0" text="Delete " GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                              <Button fx:id="izvjestajiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#reportsBtn" prefHeight="91.0" prefWidth="235.0" text="Inspector reports" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                              <Button fx:id="modifikujBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyBtn" prefHeight="150.0" prefWidth="245.0" text="Modify" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                              <Button fx:id="obrisiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteBtn" prefHeight="150.0" prefWidth="245.0" text="Delete " GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
                               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openCreateAccount" prefHeight="136.0" prefWidth="647.0" text="Create a new inspector" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
                               <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                              <Button fx:id="dodijeliZadatakBtn" mnemonicParsing="false" onAction="#dodijeliZadatakBtn" prefHeight="155.0" prefWidth="365.0" text="Assign a task" GridPane.rowIndex="2" />
-                              <Button fx:id="pregledajZadatkeBtn" mnemonicParsing="false" prefHeight="222.0" prefWidth="413.0" text="Show duties" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="dodijeliZadatakBtn" mnemonicParsing="false" onAction="#assignTaskBtn" prefHeight="155.0" prefWidth="365.0" text="Assign a task" GridPane.rowIndex="2" />
+                              <Button fx:id="pregledajZadatkeBtn" mnemonicParsing="false" onAction="#showDutiesBtn" prefHeight="222.0" prefWidth="413.0" text="Show duties" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                            <VBox.margin>
                               <Insets />

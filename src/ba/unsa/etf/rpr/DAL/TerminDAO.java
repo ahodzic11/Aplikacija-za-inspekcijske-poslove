@@ -281,7 +281,7 @@ public class TerminDAO {
         return rezultat;
     }
 
-    public void dodijeliZadatakInspektoru(int idInspektora, int idTermina) {
+    public void assignTaskToInspectorID(int idInspektora, int idTermina) {
         try{
             dodijeliUpit.setInt(1, idInspektora);
             dodijeliUpit.setInt(2, idTermina);
