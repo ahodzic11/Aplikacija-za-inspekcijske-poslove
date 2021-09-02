@@ -215,7 +215,6 @@ public class GlavniProzorAdminController {
     }
 
     public void dodajAdminaBtn(ActionEvent actionEvent) {
-
     }
 
     public void logoviBtn(ActionEvent actionEvent) throws IOException {
