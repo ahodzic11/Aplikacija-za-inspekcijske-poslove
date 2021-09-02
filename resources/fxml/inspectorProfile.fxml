@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.ProfileController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints maxHeight="17.0" minHeight="17.0" prefHeight="17.0" />
+      <RowConstraints maxHeight="17.0" minHeight="17.0" prefHeight="17.0" />
+      <RowConstraints maxHeight="17.0" minHeight="17.0" prefHeight="17.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+   </rowConstraints>
+   <children>
+      <Label text="First name:" GridPane.rowIndex="2" />
+      <Label text="Last name:" GridPane.rowIndex="3" />
+      <Label fx:id="labFirstName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label fx:id="labLastName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label text="Birthdate:" GridPane.rowIndex="4" />
+      <Label fx:id="labBirthdate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label text="JBMG:" GridPane.rowIndex="5" />
+      <Label fx:id="labJMBG" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Label text="Gender:" GridPane.rowIndex="7" />
+      <Label fx:id="labGender" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Label text="ID number:" GridPane.rowIndex="8" />
+      <Label fx:id="labIDNumber" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <Label text="Residence:" GridPane.rowIndex="9" />
+      <Label text="Phone number:" GridPane.rowIndex="10" />
+      <Label text="E-mail:" GridPane.rowIndex="11" />
+      <Label fx:id="labEmail" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <Label fx:id="labPhoneNumber" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <Label fx:id="labResidence" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <Label text="Unique ID:" GridPane.rowIndex="1" />
+      <Label fx:id="labUniqueID" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="Password:" GridPane.rowIndex="14" />
+      <Label text="Driver's license:" GridPane.rowIndex="15" />
+      <Label fx:id="labDriversLicense" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+      <Label text="Login e-mail:" GridPane.rowIndex="13" />
+      <Label fx:id="labLoginEmail" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <Label fx:id="labPassword" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+      <Label text="Inspection area:" GridPane.rowIndex="16" />
+      <Label text="Inspector type:" GridPane.rowIndex="17" />
+      <Label fx:id="labInspectionArea" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+      <Label fx:id="labInspectorType" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+      <Separator GridPane.columnSpan="2" GridPane.rowIndex="6" />
+      <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="12" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="18">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#exportBtn" text="Export" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#closeBtn" text="Close" />
+        </buttons>
+      </ButtonBar>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

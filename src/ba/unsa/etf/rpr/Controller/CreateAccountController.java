@@ -41,7 +41,7 @@ public class CreateAccountController {
         inspektorDAO = InspektorDAO.getInstance();
         rbFederalniInspektor.setSelected(true);
         postaviComboFederalniInspektor();
-        // validacija
+        // validation
         fldIme.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
             if (fldIme.getText().isBlank() || sadrziBroj(fldIme.getText())) {
                 fldIme.getStyleClass().removeAll("poljeIspravno");
@@ -193,7 +193,7 @@ public class CreateAccountController {
     }
 
     public void dodajBtn(ActionEvent actionEvent) throws SQLException {
-        //if(fldIme.getText().isBlank() || fldPrezime.getText().isBlank()) return;
+        if(!isValid()) return;
         int spol=0, vozacka=0;
         if(vozackaCB.isSelected()) vozacka=1;
         if(maleRB.isSelected()) spol=1;
@@ -219,5 +219,17 @@ public class CreateAccountController {
         java.util.Collections.sort(listaInspektora);
         comboVrstaInspektora.setItems(listaInspektora);
         comboVrstaInspektora.getItems().addAll();
+    }
+
+    private boolean isValid(){
+        if(fldIme.getText().isBlank() || sadrziBroj(fldIme.getText())) return false;
+        if(fldPrezime.getText().isBlank() || sadrziBroj(fldPrezime.getText())) return false;
+        if(birthdate.getValue().isAfter(LocalDate.now())) return false;
+        if(fldJMBG.getLength()!=13 || sadrziSlovo(fldJMBG.getText())) return false;
+        if(fldBrojLicne.getText().isBlank() || fldMjestoPrebivalista.getText().isBlank()) return false;
+        if(fldBrojTelefona.getText().isBlank() || sadrziSlovo(fldBrojTelefona.getText())) return false;
+        if(!valEmail(fldPersonalniMail.getText()) || !valEmail(fldKorisnickiMail.getText())) return false;
+        if(fldSifra.getText().length()<6 || fldUniqueID.getText().length()!=6) return false;
+        return true;
     }
 }
