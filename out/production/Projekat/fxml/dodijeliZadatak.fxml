@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.DodijeliZadatakController">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <HBox spacing="70.0" GridPane.rowIndex="2">
+         <children>
+            <RadioButton fx:id="rbSviTermini" mnemonicParsing="false" text="Svi">
+               <toggleGroup>
+                  <ToggleGroup fx:id="terminiGroup" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="rbSlobodniTermini" mnemonicParsing="false" text="Slobodni" toggleGroup="$terminiGroup" />
+         </children>
+      </HBox>
+      <ListView fx:id="listaTermina" prefHeight="120.0" prefWidth="50.0" GridPane.rowIndex="3" />
+      <ButtonBar GridPane.rowIndex="4">
+        <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="OK" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+      <VBox alignment="CENTER">
+         <children>
+            <Label text="Termini" textAlignment="CENTER" />
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

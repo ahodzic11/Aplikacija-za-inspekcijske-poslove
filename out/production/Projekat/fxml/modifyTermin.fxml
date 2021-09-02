@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.ModifyTerminController">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <Label text="Naziv objekta" />
+        <TextField fx:id="fldNazivObjekta" GridPane.rowIndex="1" />
+        <TextField fx:id="fldAdresaObjekta" GridPane.rowIndex="3" />
+        <Label text="Adresa objekta" GridPane.rowIndex="2" />
+        <Label text="Datum termina" GridPane.rowIndex="4" />
+        <Label text="Vrijeme termina" GridPane.rowIndex="7" />
+        <HBox spacing="10.0" GridPane.rowIndex="8">
+            <children>
+                <TextField fx:id="fldSati" prefWidth="60.0" promptText="sati">
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </TextField>
+                <TextField fx:id="fldMinuta" prefHeight="25.0" prefWidth="60.0" promptText="minuta" />
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </HBox>
+        <TextArea fx:id="areaNapomene" prefHeight="81.0" prefWidth="204.0" GridPane.rowIndex="10" />
+        <Label text="Napomene" GridPane.rowIndex="9" />
+        <DatePicker fx:id="datePickTermin" GridPane.rowIndex="6" />
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="11">
+            <buttons>
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#modifikujBtn" text="Modifikuj" />
+                <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
+            </buttons>
+        </ButtonBar>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</GridPane>

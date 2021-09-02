@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.PregledTerminaController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Label text="Termin zakazao:" />
+      <Label fx:id="labTerminZakazao" text="Label" GridPane.columnIndex="1" />
+      <Label text="Naziv objekta:" GridPane.rowIndex="1" />
+      <Label fx:id="labNazivObjekta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="Adresa objekta:" GridPane.rowIndex="2" />
+      <Label text="Datum i vrijeme termina:" GridPane.rowIndex="3" />
+      <Label text="Napomene za termin:" GridPane.rowIndex="4" />
+      <Label text="Za termin zadužen:" GridPane.rowIndex="5" />
+      <Label text="Termin obavljen:" GridPane.rowIndex="6" />
+      <Label fx:id="labAdresaObjekta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label fx:id="labDatumVrijemeTermina" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label fx:id="labZaduzeniInspektor" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Label fx:id="labTerminObavljen" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextArea fx:id="areaNapomeneTermina" editable="false" prefHeight="0.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <buttons>
+          <Button cancelButton="true" mnemonicParsing="false" onAction="#closeBtn" text="Close" />
+        </buttons>
+      </ButtonBar>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

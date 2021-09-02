@@ -1,0 +1,15 @@
+.poljeIspravno {
+    -fx-control-inner-background: greenyellow;
+}
+.poljeNeispravno {
+    -fx-control-inner-background: lightpink;
+}
+
+.radio-button:default .radio .dot {
+    -fx-background-color: red;
+    -fx-background-insets: 0;
+}
+
+.pozadinaNeispravnog{
+    -fx-background-color: lightpink;
+}

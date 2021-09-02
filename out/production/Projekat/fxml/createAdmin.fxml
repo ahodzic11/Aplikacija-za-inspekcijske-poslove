@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.CreateAdminController">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Label fx:id="fldEmail" text="Email" />
+      <Label fx:id="fldSifra" text="Šifra" GridPane.rowIndex="2" />
+      <Label fx:id="fldJedinstvenaSifra" text="Jedinstvena šifra" GridPane.rowIndex="4" />
+      <TextField GridPane.rowIndex="1" />
+      <TextField GridPane.rowIndex="3" />
+      <TextField GridPane.rowIndex="5" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="6">
+        <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#kreirajAdminaBtn" text="Kreiraj" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

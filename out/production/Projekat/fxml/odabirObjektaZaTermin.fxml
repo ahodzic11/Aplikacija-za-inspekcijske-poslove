@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.OdabirObjektaController">
+    <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <ListView fx:id="vlasnici" prefHeight="88.0" prefWidth="205.0" GridPane.rowIndex="1" />
+        <Label text="Vlasnici" />
+        <Label text="Objekti vlasnika" GridPane.rowIndex="4" />
+        <ListView fx:id="objektiVlasnika" prefHeight="113.0" prefWidth="205.0" GridPane.rowIndex="5" />
+        <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <children>
+                <Label text="Naziv objekta" />
+                <TextField fx:id="fldNaziv" />
+                <Label text="Adresa objekta" />
+                <TextField fx:id="fldAdresa" />
+                <Label text="Vrsta objekta" />
+                <ComboBox fx:id="comboVrstaObjekta" editable="true" prefWidth="150.0" />
+                <HBox prefHeight="0.0" prefWidth="199.0" spacing="10.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#createObjekatBtn" prefHeight="25.0" prefWidth="93.0" text="Dodaj objekat" />
+                        <Button mnemonicParsing="false" onAction="#deleteObjekat" text="Obriši objekat" />
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </VBox>
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <buttons>
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#otvoriObjekatBtn" text="OK" />
+                <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
+            </buttons>
+        </ButtonBar>
+        <VBox spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <children>
+                <HBox prefHeight="27.0" prefWidth="212.0" spacing="20.0">
+                    <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                            <children>
+                                <Label text="Ime" />
+                                <TextField fx:id="fldIme" />
+                            </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                            <children>
+                                <Label text="Prezime" />
+                                <TextField fx:id="fldPrezime" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <Label text="JMBG" />
+                <TextField fx:id="fldJMBG" />
+                <Label text="Telefon" />
+                <TextField fx:id="fldTelefon" />
+                <Label text="E-mail" />
+                <TextField fx:id="fldEmail" />
+                <HBox spacing="20.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#dodajVlasnika" text="Dodaj vlasnika" />
+                        <Button mnemonicParsing="false" onAction="#deleteVlasnikBtn" text="Obriši vlasnika" />
+                    </children>
+                    <padding>
+                        <Insets top="8.0" />
+                    </padding>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </VBox>
+        <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+        <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</GridPane>

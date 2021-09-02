@@ -1,0 +1,37 @@
+#anchorBackground{
+    -fx-background-image: url('/img/forestwallpaper.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.text-field {
+    -fx-text-fill: lightgray;
+    -fx-border-color: lightgray;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+}
+
+#closeButton{
+    -fx-background-color: transparent;
+}
+
+#forgotButton{
+    -fx-background-color: transparent;
+    -fx-text-fill: lightgray;
+}
+
+.labela{
+    -fx-background-color: transparent;
+    -fx-text-fill: lightgray;
+}
+
+.loginButton{
+    -fx-background-color: royalblue;
+    -fx-border-radius: 0;
+    -fx-text-fill: white;
+}
+
+.checkBox{
+    -fx-background-color: transparent;
+    -fx-text-fill: lightgray;
+}
