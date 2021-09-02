@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.Controller;
 import ba.unsa.etf.rpr.DAL.InspektorDAO;
 import ba.unsa.etf.rpr.DAL.ObjekatDAO;
 import ba.unsa.etf.rpr.DAL.TerminDAO;
+import ba.unsa.etf.rpr.Model.Status;
 import ba.unsa.etf.rpr.Model.Termin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ public class ShowDutiesController {
     private InspektorDAO inspectorDAO;
     private ObjekatDAO objectDAO;
     private TerminDAO taskDAO;
+    private Status status;
     public ListView tasksList;
     public int inspectorId = 0;
     private int currentTaskID;
@@ -30,6 +32,8 @@ public class ShowDutiesController {
         taskDAO = TerminDAO.getInstance();
         inspectorDAO = InspektorDAO.getInstance();
         objectDAO = ObjekatDAO.getInstance();
+        status = Status.getInstance();
+
         tasksList.setItems(taskDAO.dajSveTermineInspektora(inspectorId));
         tasksList.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
             Termin newTask = (Termin) newItem;
@@ -39,6 +43,9 @@ public class ShowDutiesController {
     }
 
     public void taskDetailsBtn(ActionEvent actionEvent) throws IOException {
+        int objectId = taskDAO.dajIDObjektaZaIDTermina(currentTaskID);
+        status.setStatus("Task details for task [" + objectDAO.dajNazivObjektaZaID(objectId) + ", " + objectDAO.dajAdresuObjektaZaID(objectId) + " - "
+                + taskDAO.dajVrijemeZaID(currentTaskID) + "] have been shown.");
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledTermina.fxml"));
         Parent root = loader.load();
@@ -51,16 +58,16 @@ public class ShowDutiesController {
         cont.labDatumVrijemeTermina.setText(taskDAO.dajVrijemeZaID(currentTaskID));
         cont.areaNapomeneTermina.setText(taskDAO.dajNapomeneTerminaZaID(currentTaskID));
         int idZaduzenogInspektora = taskDAO.dajIDZaduzenogInspektora(currentTaskID);
-        System.out.println(idZaduzenogInspektora);
         if(idZaduzenogInspektora != -1) cont.labZaduzeniInspektor.setText(inspectorDAO.dajImePrezimeInspektora(idZaduzenogInspektora));
-        else cont.labZaduzeniInspektor.setText("Nema zaduženog inspektora");
+        else cont.labZaduzeniInspektor.setText("No assigned inspector");
         boolean terminObavljen = taskDAO.isObavljen(currentTaskID);
-        if(terminObavljen) cont.labTerminObavljen.setText("Obavljen");
-        else cont.labTerminObavljen.setText("Nije obavljen");
-        myStage.setTitle("Pregledaj termin");
+        if(terminObavljen) cont.labTerminObavljen.setText("Done");
+        else cont.labTerminObavljen.setText("Not done");
+        myStage.setTitle("Task details");
         myStage.setResizable(false);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        myStage.show();
+        myStage.showAndWait();
+        updateStatus();
     }
 
     public void closeBtn(ActionEvent actionEvent) {
@@ -74,5 +81,12 @@ public class ShowDutiesController {
 
     public void setInspectorId(int inspectorId) {
         this.inspectorId = inspectorId;
+    }
+
+    private void updateStatus() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
+        Parent root = loader.load();
+        GlavniProzorAdminController cont = loader.getController();
+        cont.updateStatus();
     }
 }

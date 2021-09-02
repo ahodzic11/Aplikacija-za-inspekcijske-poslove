@@ -151,8 +151,8 @@ public class ModifyProfileController {
         int vozacka = 0;
         if(cbVozacka.isSelected()) vozacka = 1;
         String tipInspektora = "";
-        if(rbGlavniInspektor.isSelected()) tipInspektora = "Glavni federalni inspektor";
-        else tipInspektora = "Federalni inspektor";
+        if(rbGlavniInspektor.isSelected()) tipInspektora = "Major federal inspector";
+        else tipInspektora = "Federal inspector";
         inspektorDao.modifikuj(idOtvorenog, fldIme.getText(), fldPrezime.getText(), fldBrojLicne.getText(), fldMjestoPrebivalista.getText(),
                 fldKontaktTelefon.getText(), fldPersonalniMail.getText(), fldPristupniMail.getText(), fldPristupnaSifra.getText(), vozacka, tipInspektora, comboOblastInspekcije.getEditor().getText());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));

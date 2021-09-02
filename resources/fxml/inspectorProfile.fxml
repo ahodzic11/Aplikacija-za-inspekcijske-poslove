@@ -51,7 +51,7 @@
       <Label fx:id="labIDNumber" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       <Label text="Residence:" GridPane.rowIndex="9" />
       <Label text="Phone number:" GridPane.rowIndex="10" />
-      <Label text="E-mail:" GridPane.rowIndex="11" />
+      <Label text="Personal e-mail:" GridPane.rowIndex="11" />
       <Label fx:id="labEmail" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="11" />
       <Label fx:id="labPhoneNumber" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="10" />
       <Label fx:id="labResidence" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />

@@ -29,6 +29,8 @@ public class Main extends Application {
                 if(a.getJedinstvenaSifra().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
                     primaryStage.setTitle("Administrator");
+                    primaryStage.setMinWidth(603);
+                    primaryStage.setMinHeight(505);
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                     primaryStage.show();
                 }

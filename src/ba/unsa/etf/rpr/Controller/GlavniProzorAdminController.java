@@ -71,24 +71,6 @@ public class GlavniProzorAdminController {
         });
     }
 
-    private void disableButtons() {
-        profilBtn.setDisable(true);
-        modifikujBtn.setDisable(true);
-        izvjestajiBtn.setDisable(true);
-        obrisiBtn.setDisable(true);
-        dodijeliZadatakBtn.setDisable(true);
-        pregledajZadatkeBtn.setDisable(true);
-    }
-
-    private void enableButtons(){
-        profilBtn.setDisable(false);
-        modifikujBtn.setDisable(false);
-        izvjestajiBtn.setDisable(false);
-        obrisiBtn.setDisable(false);
-        dodijeliZadatakBtn.setDisable(false);
-        pregledajZadatkeBtn.setDisable(false);
-    }
-
     public void openCreateAccount(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/createAccount.fxml"));
@@ -97,6 +79,7 @@ public class GlavniProzorAdminController {
         myStage.setResizable(false);
         myStage.showAndWait();
         refreshInspectorsList();
+        updateStatus();
         listaInspektora.getSelectionModel().select(listaInspektora.getItems().size()-1);
     }
 
@@ -124,10 +107,10 @@ public class GlavniProzorAdminController {
         profileController.labPassword.setText(inspektorDao.dajPristupnuSifruZaID(idTrenutnoPrikazanog));
         profileController.labInspectionArea.setText(inspektorDao.dajOblastInspekcijeZaID(idTrenutnoPrikazanog));
         profileController.labInspectorType.setText(inspektorDao.dajTipInspektoraZaID(idTrenutnoPrikazanog));
-        if(inspektorDao.dajVozackuZaID(idTrenutnoPrikazanog)==1) profileController.labDriversLicense.setText("Owns a license");
-        else profileController.labDriversLicense.setText("Doesn't own a license");
+        if(inspektorDao.dajVozackuZaID(idTrenutnoPrikazanog)==1) profileController.labDriversLicense.setText("owns a license");
+        else profileController.labDriversLicense.setText("doesn't own a license");
 
-        String action = "Administrator[" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+"] opened account - " + inspektorDao.dajTipInspektoraZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog)+"]";
+        String action = "Administrator[" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+"] opened account - " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog)+"]";
 
         logAkcijaDAO.dodaj(new LogAkcije(1, LocalDateTime.now().format(formatter), action, prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()));
 
@@ -140,7 +123,6 @@ public class GlavniProzorAdminController {
     }
 
     public void deleteBtn(ActionEvent actionEvent) throws SQLException {
-        System.out.println("otvoren delete");
         status.setStatus("Inspector profile - " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog) + "] deleted.");
 
         String action = "Administrator[" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+"] deleted account - " + inspektorDao.dajTipInspektoraZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog)+"]";
@@ -274,18 +256,40 @@ public class GlavniProzorAdminController {
         updateStatus();
     }
 
-    private void updateStatus(){
+    public void updateStatus(){
         labStatusBar.setText(status.getStatus());
     }
 
     public void showDutiesBtn(ActionEvent actionEvent) throws IOException {
+        status.setStatus("Duties assigned to inspector " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog) + "] have been shown.");
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/showDuties.fxml"));
         Parent root = loader.load();
         ShowDutiesController cont = loader.getController();
         cont.inspectorId = idTrenutnoPrikazanog;
-        myStage.setTitle("Inspekcijski poslovi - User");
+        myStage.setTitle("Duties assigned");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        updateStatus();
         myStage.showAndWait();
+        updateStatus();
+    }
+
+
+    private void disableButtons() {
+        profilBtn.setDisable(true);
+        modifikujBtn.setDisable(true);
+        izvjestajiBtn.setDisable(true);
+        obrisiBtn.setDisable(true);
+        dodijeliZadatakBtn.setDisable(true);
+        pregledajZadatkeBtn.setDisable(true);
+    }
+
+    private void enableButtons(){
+        profilBtn.setDisable(false);
+        modifikujBtn.setDisable(false);
+        izvjestajiBtn.setDisable(false);
+        obrisiBtn.setDisable(false);
+        dodijeliZadatakBtn.setDisable(false);
+        pregledajZadatkeBtn.setDisable(false);
     }
 }

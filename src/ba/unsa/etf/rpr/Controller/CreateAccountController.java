@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.InspektorDAO;
 import ba.unsa.etf.rpr.Model.Inspektor;
+import ba.unsa.etf.rpr.Model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,15 +36,17 @@ public class CreateAccountController {
     public TextField fldJMBG;
     public RadioButton maleRB;
     public RadioButton femaleRB;
+    private Status status;
 
     @FXML
     public void initialize() throws SQLException {
         inspektorDAO = InspektorDAO.getInstance();
         rbFederalniInspektor.setSelected(true);
-        postaviComboFederalniInspektor();
+        status = Status.getInstance();
+        federalInspectorComboSetup();
         // validation
         fldIme.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if (fldIme.getText().isBlank() || sadrziBroj(fldIme.getText())) {
+            if (fldIme.getText().isBlank() || containsNumber(fldIme.getText())) {
                 fldIme.getStyleClass().removeAll("poljeIspravno");
                 fldIme.getStyleClass().add("poljeNeispravno");
             } else {
@@ -52,7 +55,7 @@ public class CreateAccountController {
             }
         });
         fldPrezime.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if(fldPrezime.getText().isBlank() || sadrziBroj(fldPrezime.getText())){
+            if(fldPrezime.getText().isBlank() || containsNumber(fldPrezime.getText())){
                 fldPrezime.getStyleClass().removeAll("poljeIspravno");
                 fldPrezime.getStyleClass().add("poljeNeispravno");
             }else{
@@ -71,7 +74,7 @@ public class CreateAccountController {
             }
         });
         fldJMBG.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if(fldJMBG.getLength()!=13 || sadrziSlovo(fldJMBG.getText())){
+            if(fldJMBG.getLength()!=13 || containsLetter(fldJMBG.getText())){
                 fldJMBG.getStyleClass().removeAll("poljeIspravno");
                 fldJMBG.getStyleClass().add("poljeNeispravno");
             }else{
@@ -98,7 +101,7 @@ public class CreateAccountController {
             }
         });
         fldBrojTelefona.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if(fldBrojTelefona.getText().isBlank() || sadrziSlovo(fldBrojTelefona.getText())){
+            if(fldBrojTelefona.getText().isBlank() || containsLetter(fldBrojTelefona.getText())){
                 fldBrojTelefona.getStyleClass().removeAll("poljeIspravno");
                 fldBrojTelefona.getStyleClass().add("poljeNeispravno");
             }else{
@@ -107,7 +110,7 @@ public class CreateAccountController {
             }
         });
         fldPersonalniMail.textProperty().addListener((observableValue, o, n) -> {
-            if(!valEmail(fldPersonalniMail.getText())){
+            if(!validEmail(fldPersonalniMail.getText())){
                 fldPersonalniMail.getStyleClass().removeAll("poljeIspravno");
                 fldPersonalniMail.getStyleClass().add("poljeNeispravno");
             }else{
@@ -116,7 +119,7 @@ public class CreateAccountController {
             }
         });
         fldKorisnickiMail.textProperty().addListener((observableValue, o, n) -> {
-            if(!valEmail(fldKorisnickiMail.getText())){
+            if(!validEmail(fldKorisnickiMail.getText())){
                 fldKorisnickiMail.getStyleClass().removeAll("poljeIspravno");
                 fldKorisnickiMail.getStyleClass().add("poljeNeispravno");
             }else{
@@ -143,7 +146,7 @@ public class CreateAccountController {
             }
         });
         rbFederalniInspektor.selectedProperty().addListener((obs, oldItem, newItem)->{
-            postaviComboFederalniInspektor();
+            federalInspectorComboSetup();
         });
         rbGlavniInspektor.selectedProperty().addListener((obs, oldItem, newItem)->{
             comboVrstaInspektora.getItems().removeAll();
@@ -166,21 +169,21 @@ public class CreateAccountController {
         });
     }
 
-    private boolean sadrziSlovo(String text) {
+    private boolean containsLetter(String text) {
         char[] charovi = text.toCharArray();
         for(char c : charovi)
             if(Character.isLetter(c)) return true;
         return false;
     }
 
-    private boolean sadrziBroj(String text){
+    private boolean containsNumber(String text){
         char[] charovi = text.toCharArray();
         for(char c : charovi)
             if(Character.isDigit(c)) return true;
         return false;
     }
 
-    private boolean valEmail(String input){
+    private boolean validEmail(String input){
         String emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
         Pattern emailPat = Pattern.compile(emailRegex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = emailPat.matcher(input);
@@ -192,24 +195,25 @@ public class CreateAccountController {
         stage.close();
     }
 
-    public void dodajBtn(ActionEvent actionEvent) throws SQLException {
-        if(!isValid()) return;
+    public void createInspectorBtn(ActionEvent actionEvent) throws SQLException {
+        //if(!isValid()) return;
         int spol=0, vozacka=0;
         if(vozackaCB.isSelected()) vozacka=1;
         if(maleRB.isSelected()) spol=1;
         else if(femaleRB.isSelected()) spol = 2; // spol=1 - musko, spol=2 - zensko
         String tipInspektora = "";
-        if(rbGlavniInspektor.isSelected()) tipInspektora = "Glavni federalni inspektor";
-        else tipInspektora = "Federalni inspektor";
+        if(rbGlavniInspektor.isSelected()) tipInspektora = "Major federal inspector";
+        else tipInspektora = "Federal inspector";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         inspektorDAO.dodaj(new Inspektor(0, fldIme.getText(), fldPrezime.getText(), birthdate.getValue().format(formatter), fldJMBG.getText(),
                 spol, fldBrojLicne.getText(), fldMjestoPrebivalista.getText(), fldBrojTelefona.getText(), fldPersonalniMail.getText(),
                 fldKorisnickiMail.getText(), fldSifra.getText(), vozacka, fldUniqueID.getText(), tipInspektora, comboVrstaInspektora.getEditor().getText()));
+        status.setStatus("New inspector profile added - " + fldIme.getText() + " " + fldPrezime.getText() + " [" + fldJMBG.getText() + "].");
         Stage stage = (Stage) fldIme.getScene().getWindow();
         stage.close();
     }
 
-    private void postaviComboFederalniInspektor(){
+    private void federalInspectorComboSetup(){
         comboVrstaInspektora.getItems().removeAll();
         ObservableList<String> listaInspektora = FXCollections.observableArrayList();
         listaInspektora.addAll("Zdravstveni inspektor", "Farmaceutski inspektor", "Inspektor za hranu", "Urbanistički inspektor",
@@ -222,13 +226,13 @@ public class CreateAccountController {
     }
 
     private boolean isValid(){
-        if(fldIme.getText().isBlank() || sadrziBroj(fldIme.getText())) return false;
-        if(fldPrezime.getText().isBlank() || sadrziBroj(fldPrezime.getText())) return false;
+        if(fldIme.getText().isBlank() || containsNumber(fldIme.getText())) return false;
+        if(fldPrezime.getText().isBlank() || containsNumber(fldPrezime.getText())) return false;
         if(birthdate.getValue().isAfter(LocalDate.now())) return false;
-        if(fldJMBG.getLength()!=13 || sadrziSlovo(fldJMBG.getText())) return false;
+        if(fldJMBG.getLength()!=13 || containsLetter(fldJMBG.getText())) return false;
         if(fldBrojLicne.getText().isBlank() || fldMjestoPrebivalista.getText().isBlank()) return false;
-        if(fldBrojTelefona.getText().isBlank() || sadrziSlovo(fldBrojTelefona.getText())) return false;
-        if(!valEmail(fldPersonalniMail.getText()) || !valEmail(fldKorisnickiMail.getText())) return false;
+        if(fldBrojTelefona.getText().isBlank() || containsLetter(fldBrojTelefona.getText())) return false;
+        if(!validEmail(fldPersonalniMail.getText()) || !validEmail(fldKorisnickiMail.getText())) return false;
         if(fldSifra.getText().length()<6 || fldUniqueID.getText().length()!=6) return false;
         return true;
     }

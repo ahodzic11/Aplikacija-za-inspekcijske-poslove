@@ -62,8 +62,8 @@ public class PreviewController {
                 Stage myStage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
                 myStage.setTitle("Inspekcijski poslovi - Administrator");
-                myStage.setMinWidth(610);
-                myStage.setMinHeight(474);
+                myStage.setMinWidth(603);
+                myStage.setMinHeight(505);
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 myStage.show();
                 Stage stage = (Stage) emailFld.getScene().getWindow();

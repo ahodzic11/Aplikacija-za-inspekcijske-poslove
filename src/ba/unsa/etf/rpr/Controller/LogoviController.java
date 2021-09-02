@@ -82,7 +82,7 @@ public class LogoviController {
         ArrayList<LogAkcije> logoviAkcija = logAkcijaDAO.dajSveLogove();
         String akcije = "";
         for(LogAkcije l : logoviAkcija){
-            akcije += l.getAkcija() + " vrijeme: " + l.getDatumVrijeme() + "\n";
+            akcije += l.getAkcija() + " date/time: " + l.getDatumVrijeme() + "\n";
         }
         areaAkcije.setText(akcije);
     }
@@ -103,11 +103,11 @@ public class LogoviController {
             if(jedinstveneSifreInspektora.contains(l.getJedinstvenaSifra())){
                 int idInspektora = inspektorDAO.dajIdZaJedinstvenuSifru(l.getJedinstvenaSifra());
                 imePrijavljenog = inspektorDAO.dajTipInspektoraZaID(idInspektora);
-                historijaPrijavljivanja += imePrijavljenog + " | prijava: " + l.getPrijava() + " odjava: " + l.getOdjava() + "\n";
+                historijaPrijavljivanja += imePrijavljenog + " | login: " + l.getPrijava() + " logout: " + l.getOdjava() + "\n";
             }else if(jedinstveneSifreAdministratora.contains(l.getJedinstvenaSifra())){
-                historijaPrijavljivanja += "Administrator | prijava: " + l.getPrijava() + " odjava: " + l.getOdjava() + "\n";
+                historijaPrijavljivanja += "Administrator | login: " + l.getPrijava() + " logout: " + l.getOdjava() + "\n";
             }else{
-                historijaPrijavljivanja += "Obrisan račun | prijava: " + l.getPrijava() + " odjava: " + l.getOdjava() + "\n";
+                historijaPrijavljivanja += "Obrisan račun | login: " + l.getPrijava() + " logout: " + l.getOdjava() + "\n";
             }
         }
         areaPrijavljivanja.setText(historijaPrijavljivanja);

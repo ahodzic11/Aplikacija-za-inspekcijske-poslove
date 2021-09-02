@@ -54,55 +54,55 @@
             <RowConstraints />
          </rowConstraints>
          <children>
-            <Label text="Ime:" GridPane.rowIndex="3" />
-            <Label text="Prezime:" GridPane.rowIndex="4" />
+            <Label text="First name:" GridPane.rowIndex="3" />
+            <Label text="Last name:" GridPane.rowIndex="4" />
             <TextField fx:id="fldIme" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="fldPrezime" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <DatePicker fx:id="birthdate" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label text="Datum rođenja:" GridPane.rowIndex="5" />
-            <Label text="JMBG" GridPane.rowIndex="6" />
+            <Label text="Birthdate:" GridPane.rowIndex="5" />
+            <Label text="JMBG:" GridPane.rowIndex="6" />
             <TextField fx:id="fldJMBG" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Spol" GridPane.rowIndex="7" />
+            <Label text="Gender:" GridPane.rowIndex="7" />
             <HBox prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <children>
-                  <RadioButton fx:id="maleRB" mnemonicParsing="false" text="Muški">
+                  <RadioButton fx:id="maleRB" mnemonicParsing="false" text="Male">
                      <toggleGroup>
-                        <ToggleGroup fx:id="groupSpol" />
+                        <ToggleGroup fx:id="groupGender"/>
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="femaleRB" mnemonicParsing="false" text="Ženski" toggleGroup="$groupSpol" />
+                  <RadioButton fx:id="femaleRB" mnemonicParsing="false" text="Female" toggleGroup="$groupGender" />
                </children>
             </HBox>
-            <Label text="Kontakt telefon:" GridPane.rowIndex="12" />
-            <Label text="Personalni e-mail:" GridPane.rowIndex="13" />
-            <Label text="Pristupni e-mail:" GridPane.rowIndex="14" />
+            <Label text="Phone number:" GridPane.rowIndex="12" />
+            <Label text="Personal e-mail:" GridPane.rowIndex="13" />
+            <Label text="Login e-mail:" GridPane.rowIndex="14" />
             <TextField fx:id="fldBrojTelefona" GridPane.columnIndex="1" GridPane.rowIndex="12" />
             <TextField fx:id="fldPersonalniMail" GridPane.columnIndex="1" GridPane.rowIndex="13" />
             <TextField fx:id="fldKorisnickiMail" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-            <Label text="Pristupna šifra:" GridPane.rowIndex="15" />
-            <Label text="Broj lične:" GridPane.rowIndex="8" />
+            <Label text="Password:" GridPane.rowIndex="15" />
+            <Label text="ID number:" GridPane.rowIndex="8" />
             <TextField fx:id="fldBrojLicne" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Label text="Vozačka dozvola B kategorije" GridPane.rowIndex="18" />
+            <Label text="Driver's license" GridPane.rowIndex="18" />
             <CheckBox fx:id="vozackaCB" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="18" />
             <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="11" />
-            <Label text="Mjesto prebivališta:" GridPane.rowIndex="10" />
+            <Label text="Residency:" GridPane.rowIndex="10" />
             <TextField fx:id="fldMjestoPrebivalista" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <TextField fx:id="fldSifra" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-            <Label text="Jedinstvena šifra uposlenika:" GridPane.rowIndex="16" />
+            <Label text="Unique ID:" GridPane.rowIndex="16" />
             <TextField fx:id="fldUniqueID" GridPane.columnIndex="1" GridPane.rowIndex="16" />
             <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="17" />
-            <Label text="Vrsta inspektora:" GridPane.rowIndex="1" />
+            <Label text="Inspector type:" GridPane.rowIndex="1" />
             <ComboBox fx:id="comboVrstaInspektora" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="19" />
             <Separator GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <HBox spacing="25.0" GridPane.columnSpan="2">
                <children>
-                  <RadioButton fx:id="rbGlavniInspektor" mnemonicParsing="false" text="Glavni federalni inspektor">
+                  <RadioButton fx:id="rbGlavniInspektor" mnemonicParsing="false" text="Major federal inspector" toggleGroup="$inspectorTypeGroup">
                      <toggleGroup>
-                        <ToggleGroup fx:id="vrstaInspektoraGroup" />
+                        <ToggleGroup fx:id="inspectorTypeGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbFederalniInspektor" mnemonicParsing="false" text="Federalni inspektor" toggleGroup="$vrstaInspektoraGroup" />
+                  <RadioButton fx:id="rbFederalniInspektor" mnemonicParsing="false" text="Federal inspector" toggleGroup="$inspectorTypeGroup" />
                </children>
             </HBox>
          </children>

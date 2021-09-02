@@ -25,8 +25,8 @@
    </rowConstraints>
    <children>
       <Label fx:id="fldEmail" text="Email" />
-      <Label fx:id="fldSifra" text="Šifra" GridPane.rowIndex="2" />
-      <Label fx:id="fldJedinstvenaSifra" text="Jedinstvena šifra" GridPane.rowIndex="4" />
+      <Label fx:id="fldSifra" text="Password" GridPane.rowIndex="2" />
+      <Label fx:id="fldJedinstvenaSifra" text="Unique ID" GridPane.rowIndex="4" />
       <TextField GridPane.rowIndex="1" />
       <TextField GridPane.rowIndex="3" />
       <TextField GridPane.rowIndex="5" />
