@@ -84,7 +84,7 @@ public class GlavniProzorUserController {
         stage.close();
         Stage myStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/preview.fxml"));
-        myStage.initStyle(StageStyle.UNDECORATED);
+        //myStage.initStyle(StageStyle.UNDECORATED);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();
     }

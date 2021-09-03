@@ -138,7 +138,7 @@ public class ObjectPickingForTaskController {
         if(idTrenutnogObjekta!=-1){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             Stage myStage = new Stage();
-            myStage.setTitle("Kreiraj termin!");
+            myStage.setTitle("Create a task!");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createTermin.fxml"));
             Parent root = loader.load();
             CreateTerminController cont = loader.getController();

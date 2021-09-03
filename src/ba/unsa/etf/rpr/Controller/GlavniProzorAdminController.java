@@ -13,10 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,7 +32,6 @@ public class GlavniProzorAdminController {
     public Label labelJedinstvenaSifra;
     public Inspektor trenutnoPrikazani;
     public int idTrenutnoPrikazanog;
-    public ImageView imgAvatar;
     public Button profilBtn;
     public Button izvjestajiBtn;
     public Button modifikujBtn;
@@ -37,6 +39,10 @@ public class GlavniProzorAdminController {
     public Button dodijeliZadatakBtn;
     public Button pregledajZadatkeBtn;
     public Label labStatusBar;
+    public Label labInspectorType;
+    public Label labEmail;
+    public Label labPhoneNumber;
+    public Button exportBtn;
     private InspektorDAO inspektorDao;
     private AdministratorDAO administratorDAO;
     private PrijavljeniUserDAO prijavljeniUserDAO;
@@ -63,6 +69,10 @@ public class GlavniProzorAdminController {
                 labelInfo.setText(novi.getIme() + " " + novi.getPrezime());
                 labelJedinstvenaSifra.setText("UNIQUE ID: " + novi.getJedinstvenaSifra());
                 idTrenutnoPrikazanog = novi.getId();
+                labInspectorType.setText(novi.getTipInspektora());
+                labEmail.setText(novi.getPristupniEmail());
+                labPhoneNumber.setText(novi.getKontaktTelefon());
+
                 trenutnoPrikazani = novi;
                 enableButtons();
             }else{
@@ -176,10 +186,9 @@ public class GlavniProzorAdminController {
 
     public void logoutBtn(ActionEvent actionEvent) throws IOException {
         logDAO.logout(prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog());
-
+        prijavljeniUserDAO.obrisiPrijavljenog();
         Stage myStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/preview.fxml"));
-        myStage.initStyle(StageStyle.UNDECORATED);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.show();
@@ -282,6 +291,7 @@ public class GlavniProzorAdminController {
         obrisiBtn.setDisable(true);
         dodijeliZadatakBtn.setDisable(true);
         pregledajZadatkeBtn.setDisable(true);
+        exportBtn.setDisable(true);
     }
 
     private void enableButtons(){
@@ -291,5 +301,38 @@ public class GlavniProzorAdminController {
         obrisiBtn.setDisable(false);
         dodijeliZadatakBtn.setDisable(false);
         pregledajZadatkeBtn.setDisable(false);
+        exportBtn.setDisable(false);
+    }
+
+    public void exportBtn(ActionEvent actionEvent) throws IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text document", "*.txt"));
+        File file = chooser.showSaveDialog(labPhoneNumber.getScene().getWindow());
+        if(file!=null){
+            try {
+                PrintWriter writer;
+                writer = new PrintWriter(file);
+                String exportData = labInspectorType.getText() + " " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + labelJedinstvenaSifra.getText() + "]\n\n";
+                exportData += "Inspection area: " + inspektorDao.dajOblastInspekcijeZaID(idTrenutnoPrikazanog) + "\n";
+                exportData += "Birthdate: " + inspektorDao.dajDatumRodjenjaZaID(idTrenutnoPrikazanog) + "\n";
+                exportData += "JMBG: " + inspektorDao.dajJMBGZaID(idTrenutnoPrikazanog) + "\n";
+                if(inspektorDao.dajSpolZaID(idTrenutnoPrikazanog)==1) exportData+= "Gender: Male\n";
+                else exportData += "Gender: Female\n";
+                exportData += "ID number: " + inspektorDao.dajBrojLicneZaID(idTrenutnoPrikazanog) + "\n";
+                exportData += "E-mail: " + labEmail.getText() + "\n";
+                exportData += "Phone number: " + labPhoneNumber.getText() + "\n";
+                exportData += "Residency: " + inspektorDao.dajMjestoPrebivalistaZaID(idTrenutnoPrikazanog) + "\n";
+                exportData += "Login e-mail: " + labEmail.getText() + "\n";
+                if(inspektorDao.dajVozackuZaID(idTrenutnoPrikazanog)==1) exportData+= "Has a valid driver's license\n";
+                else exportData += "Doesn't have a valid driver's license\n";
+                status.setStatus("Inspector profile - " + inspektorDao.dajImeZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajPrezimeZaID(idTrenutnoPrikazanog) +  " [" + labelJedinstvenaSifra.getText() + "] exported.");
+                logAkcijaDAO.dodaj(new LogAkcije(1, LocalDateTime.now().format(formatter), "Administrator [" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+ "] exported profile - " + inspektorDao.dajImeZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajPrezimeZaID(idTrenutnoPrikazanog) +  " [" + labelJedinstvenaSifra.getText() + "] ", prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()));
+                writer.println(exportData);
+                writer.close();
+            } catch (IOException | SQLException ex) {
+                System.out.println("Error exporting file!");
+            }
+        }
     }
 }
