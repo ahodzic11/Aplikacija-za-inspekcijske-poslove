@@ -114,7 +114,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#dodajBtn" text="OK" />
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#createInspectorBtn" text="OK" />
             <Button cancelButton="true" mnemonicParsing="false" onAction="#actionCancel" text="Cancel" />
         </buttons>
       </ButtonBar>

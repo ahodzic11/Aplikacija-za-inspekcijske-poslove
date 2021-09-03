@@ -101,7 +101,7 @@ public class ObjekatDAO {
         }
     }
 
-    public void dodaj(Objekat o) throws SQLException {
+    public void addObject(Objekat o) throws SQLException {
         try{
             ResultSet rs = noviIdUpit.executeQuery();
             if(rs.next())

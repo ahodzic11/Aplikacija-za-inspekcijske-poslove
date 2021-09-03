@@ -33,27 +33,27 @@
    </rowConstraints>
    <children>
       <Label text="Naziv objekta" />
-      <TextField fx:id="fldNazivObjekta" GridPane.rowIndex="1" />
-      <TextField fx:id="fldAdresaObjekta" GridPane.rowIndex="3" />
+      <TextField fx:id="fldObjectName" GridPane.rowIndex="1" />
+      <TextField fx:id="fldObjectAddress" GridPane.rowIndex="3" />
       <Label text="Adresa objekta" GridPane.rowIndex="2" />
       <Label text="Datum termina" GridPane.rowIndex="4" />
       <Label text="Vrijeme termina" GridPane.rowIndex="7" />
       <HBox spacing="10.0" GridPane.rowIndex="8">
          <children>
-            <TextField fx:id="fldSati" prefWidth="60.0" promptText="sati">
+            <TextField fx:id="fldHours" prefWidth="60.0" promptText="sati">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </TextField>
-            <TextField fx:id="fldMinuta" prefHeight="25.0" prefWidth="60.0" promptText="minuta" />
+            <TextField fx:id="fldMinutes" prefHeight="25.0" prefWidth="60.0" promptText="minuta" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <TextArea fx:id="areaNapomene" prefHeight="81.0" prefWidth="204.0" GridPane.rowIndex="10" />
+      <TextArea fx:id="areaNotes" prefHeight="81.0" prefWidth="204.0" GridPane.rowIndex="10" />
       <Label text="Napomene" GridPane.rowIndex="9" />
-      <DatePicker fx:id="datePickTermin" GridPane.rowIndex="6" />
+      <DatePicker fx:id="datePickTask" GridPane.rowIndex="6" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="11">
         <buttons>
           <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="OK" />

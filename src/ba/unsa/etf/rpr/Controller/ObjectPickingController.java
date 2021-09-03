@@ -23,21 +23,21 @@ import java.time.format.DateTimeFormatter;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
-public class OdabirObjektaController {
-    public ListView vlasnici;
+public class ObjectPickingController {
+    public ComboBox comboVrstaObjekta;
+    private IzvjestajDAO izvjestajDao;
     public ListView objektiVlasnika;
     public TextField fldNaziv;
     public TextField fldAdresa;
-    public ComboBox comboVrstaObjekta;
+    public TextField fldIme;
+    public TextField fldPrezime;
     public TextField fldJMBG;
     public TextField fldTelefon;
     public TextField fldEmail;
-    public TextField fldPrezime;
-    public TextField fldIme;
-    private IzvjestajDAO izvjestajDao;
     private VlasnikDAO vlasnikdao;
     private ObjekatDAO objekatDao;
     private SvjedokDAO svjedokDao;
+    public ListView vlasnici;
     private int idTrenutnogVlasnika;
     private int idTrenutnogObjekta = -1;
 
@@ -59,7 +59,7 @@ public class OdabirObjektaController {
                 fldTelefon.setText(String.valueOf(novi.getTelefon()));
                 fldEmail.setText(novi.getEmail());
                 if(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika) != null)
-                    objektiVlasnika.setItems(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika));
+                objektiVlasnika.setItems(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika));
                 objektiVlasnika.getSelectionModel().selectedItemProperty().addListener((obs1, oldObjekat, newObjekat)->{
                     Objekat noviObjekat = (Objekat) newObjekat;
                     if(noviObjekat != null){
@@ -87,25 +87,25 @@ public class OdabirObjektaController {
 
     public void dodajVlasnika(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/createVlasnik.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/createOwner.fxml"));
         myStage.setTitle("Create an owner!");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.showAndWait();
-        refresujVlasnike();
+        refreshOwnersList();
     }
 
     public void createObjekatBtn(ActionEvent actionEvent) throws SQLException, IOException {
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createObjekat.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createObject.fxml"));
         Parent root = loader.load();
         CreateObjekatController cont = loader.getController();
-        cont.setIdVlasnika(idTrenutnogVlasnika);
+        cont.setOwnerId(idTrenutnogVlasnika);
         myStage.setTitle("Create an object!");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.showAndWait();
-        refresujVlasnike();
+        refreshOwnersList();
         refresujObjekte();
     }
 
@@ -123,34 +123,43 @@ public class OdabirObjektaController {
         objektiVlasnika.setItems(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika));
     }
 
-    public void refresujVlasnike() {
+    public void refreshOwnersList() {
         vlasnici.setItems(vlasnikdao.sviVlasnici());
     }
 
     public void deleteVlasnikBtn(ActionEvent actionEvent) {
         objekatDao.obrisiObjekteVlasnika(idTrenutnogVlasnika);
         vlasnikdao.obrisiVlasnika(idTrenutnogVlasnika);
-        refresujVlasnike();
+        refreshOwnersList();
         refresujObjekte();
     }
 
     public void otvoriObjekatBtn(ActionEvent actionEvent) throws IOException {
         if(idTrenutnogObjekta!=-1){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             Stage myStage = new Stage();
-            myStage.setTitle("Kreiraj termin!");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createTermin.fxml"));
+            myStage.setTitle("Kreiraj izvještaj!");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/kreirajIzvjestaj.fxml"));
             Parent root = loader.load();
-            CreateTerminController cont = loader.getController();
+            KreirajIzvjestajController cont = loader.getController();
             cont.fldNazivObjekta.setText(objekatDao.dajNazivObjektaZaID(idTrenutnogObjekta));
             cont.fldAdresaObjekta.setText(objekatDao.dajAdresuObjektaZaID(idTrenutnogObjekta));
-            cont.datePickTermin.getEditor().setText(LocalDate.now().format(formatter));
+            cont.fldVlasnik.setText(vlasnikdao.dajPodatkeVlasnikaZaId(idTrenutnogVlasnika));
+            cont.datumInspekcije.setValue(LocalDate.now());
             cont.idObjekta = idTrenutnogObjekta;
-            myStage.setResizable(false);
-            myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-            myStage.showAndWait();
             Stage stage = (Stage) fldIme.getScene().getWindow();
             stage.close();
+            myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            myStage.show();
+
         }
+    }
+
+    public void obrisiIzvjestajeBtn(ActionEvent actionEvent) {
+        izvjestajDao.obrisiSveIzvjestaje();
+    }
+
+    public void obrisiSvjedokeBtn(ActionEvent actionEvent) {
+        svjedokDao.obrisiSveSvjedoke();
     }
 }

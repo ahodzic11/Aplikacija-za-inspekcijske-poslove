@@ -14,31 +14,31 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
 public class CreateTerminController {
-    public TextField fldNazivObjekta;
-    public TextField fldAdresaObjekta;
-    public TextField fldSati;
-    public TextField fldMinuta;
-    public TextArea areaNapomene;
-    public DatePicker datePickTermin;
-    private TerminDAO terminDAO;
-    private PrijavljeniUserDAO prijavljeniUserDAO;
+    public TextField fldObjectName;
+    public TextField fldObjectAddress;
+    public TextField fldHours;
+    public TextField fldMinutes;
+    public TextArea areaNotes;
+    public DatePicker datePickTask;
+    private TerminDAO taskDAO;
+    private PrijavljeniUserDAO userDAO;
     public int idObjekta;
 
     @FXML
     public void initialize() throws SQLException {
-        terminDAO = TerminDAO.getInstance();
-        prijavljeniUserDAO = PrijavljeniUserDAO.getInstance();
+        taskDAO = TerminDAO.getInstance();
+        userDAO = PrijavljeniUserDAO.getInstance();
     }
 
     public void okBtn(ActionEvent actionEvent) throws SQLException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        terminDAO.dodajTermin(new Termin(1, idObjekta, prijavljeniUserDAO.dajIdUlogovanogInspektora(), datePickTermin.getValue().format(formatter), areaNapomene.getText(), 0, -1));
-        Stage stage = (Stage) fldNazivObjekta.getScene().getWindow();
+        taskDAO.addTask(new Termin(1, idObjekta, userDAO.dajIdUlogovanogInspektora(), datePickTask.getValue().format(formatter), areaNotes.getText(), 0, -1));
+        Stage stage = (Stage) fldObjectName.getScene().getWindow();
         stage.close();
     }
 
     public void cancelBtn(ActionEvent actionEvent) {
-        Stage stage = (Stage) fldNazivObjekta.getScene().getWindow();
+        Stage stage = (Stage) fldObjectName.getScene().getWindow();
         stage.close();
     }
 }

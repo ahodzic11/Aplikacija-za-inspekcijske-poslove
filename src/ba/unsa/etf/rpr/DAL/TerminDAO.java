@@ -92,7 +92,7 @@ public class TerminDAO {
         return instance;
     }
 
-    public void dodajTermin(Termin t) throws SQLException {
+    public void addTask(Termin t) throws SQLException {
         try{
             ResultSet rs = noviIdUpit.executeQuery();
             if(rs.next())

@@ -11,8 +11,6 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -46,7 +44,7 @@
    <center>
       <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-            <Tab text="Termin">
+            <Tab text="Task">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <padding>
@@ -55,15 +53,14 @@
                      <left>
                         <VBox spacing="10.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label text="Termini" />
                               <HBox spacing="20.0">
                                  <children>
-                                    <RadioButton fx:id="rbSviTermini" mnemonicParsing="false" text="Svi">
+                                    <RadioButton fx:id="rbSviTermini" mnemonicParsing="false" text="All tasks">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="terminiGroup" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="rbMojiTermini" mnemonicParsing="false" text="Moji" toggleGroup="$terminiGroup" />
+                                    <RadioButton fx:id="rbMojiTermini" mnemonicParsing="false" text="My tasks" toggleGroup="$terminiGroup" />
                                  </children>
                               </HBox>
                               <ListView fx:id="listaTermina" prefWidth="90.0" />
@@ -87,12 +84,11 @@
                                   <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#napraviTerminBtn" prefHeight="391.0" prefWidth="961.0" text="Napravi termin" />
-                                    <Button mnemonicParsing="false" onAction="#pregledajTerminBtn" prefHeight="201.0" prefWidth="565.0" text="Pregled termina" GridPane.columnIndex="1" />
-                                    <Button mnemonicParsing="false" onAction="#detaljiObjektaTerminaBtn" prefHeight="272.0" prefWidth="573.0" text="Detalji objekta" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" onAction="#modifikacijaTerminaBtn" prefHeight="221.0" prefWidth="406.0" text="Modifikacija termina" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" onAction="#uzmiTerminBtn" prefHeight="274.0" prefWidth="509.0" text="Uzmi termin" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#obrisiTerminBtn" prefHeight="245.0" prefWidth="498.0" text="Obriši termin" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#createTaskBtn" prefHeight="391.0" prefWidth="961.0" text="Create a task" />
+                                    <Button mnemonicParsing="false" onAction="#pregledajTerminBtn" prefHeight="201.0" prefWidth="565.0" text="Task details" GridPane.columnIndex="1" />
+                                    <Button mnemonicParsing="false" onAction="#modifikacijaTerminaBtn" prefHeight="221.0" prefWidth="406.0" text="Modify task" GridPane.rowIndex="1" />
+                                    <Button mnemonicParsing="false" onAction="#uzmiTerminBtn" prefHeight="274.0" prefWidth="509.0" text="Take task" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button mnemonicParsing="false" onAction="#obrisiTerminBtn" prefHeight="245.0" prefWidth="498.0" text="Delete task" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -104,7 +100,7 @@
                   </BorderPane>
                </content>
             </Tab>
-          <Tab text="Izvještaj">
+          <Tab text="Report">
                <content>
                   <BorderPane>
                      <padding>
@@ -116,7 +112,7 @@
                      <left>
                         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label text="Moji izvještaji" />
+                              <Label text="My reports" />
                               <ListView fx:id="listaIzvjestaja" />
                            </children>
                            <padding>
@@ -127,7 +123,7 @@
                      <center>
                         <VBox BorderPane.alignment="CENTER">
                            <children>
-                              <Label text="Filteri" />
+                              <Label text="Filters" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -137,20 +133,20 @@
                      <right>
                         <GridPane hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#kreirajIzvjestaj" prefHeight="342.0" prefWidth="432.0" text="Kreiraj izvještaj" />
-                              <Button mnemonicParsing="false" onAction="#obrisiIzvjestajBtn" prefHeight="230.0" prefWidth="432.0" text="Obriši izvještaj" GridPane.rowIndex="2" />
-                              <Button mnemonicParsing="false" onAction="#modifikujIzvjestajBtn" prefHeight="432.0" prefWidth="432.0" text="Modifikuj izvještaj" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#pogledajIzvjestajBtn" prefHeight="235.0" prefWidth="353.0" text="Pogledaj izvještaj" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#exportujIzvjestajBtn" prefHeight="432.0" prefWidth="432.0" text="Exportuj izvještaj" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#kreirajIzvjestaj" prefHeight="342.0" prefWidth="432.0" text="Create a report" />
+                              <Button mnemonicParsing="false" onAction="#obrisiIzvjestajBtn" prefHeight="64.0" prefWidth="246.0" text="Delete report" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#modifikujIzvjestajBtn" prefHeight="432.0" prefWidth="432.0" text="Modify report" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#pogledajIzvjestajBtn" prefHeight="235.0" prefWidth="353.0" text="Report details" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#exportujIzvjestajBtn" prefHeight="432.0" prefWidth="432.0" text="Export report" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -163,24 +159,6 @@
                   </BorderPane>
                </content>
           </Tab>
-          <Tab text="Zadati poslovi">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-            <Tab closable="false" text="Postavke">
-               <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <left>
-                        <VBox BorderPane.alignment="CENTER">
-                           <children>
-                              <ImageView fitHeight="59.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </VBox>
-                     </left>
-                  </BorderPane>
-               </content>
-            </Tab>
         </tabs>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -191,6 +169,10 @@
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#refresujIzvjestajeBtn" text="Refresh" BorderPane.alignment="CENTER" />
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="labStatusBar" />
+         </children>
+      </HBox>
    </bottom>
 </BorderPane>

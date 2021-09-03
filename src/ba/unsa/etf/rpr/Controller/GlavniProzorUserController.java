@@ -70,7 +70,7 @@ public class GlavniProzorUserController {
 
     public void kreirajIzvjestaj(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/objektiVlasnici.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/objectPicking.fxml"));
         myStage.setTitle("Odaberi objekat");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
@@ -96,7 +96,7 @@ public class GlavniProzorUserController {
 
     public void refresujIzvjestajeBtn(ActionEvent actionEvent) {
         refresujIzvjestaj();
-        refresujTermine();
+        refreshTasks();
     }
 
     public void obrisiIzvjestajBtn(ActionEvent actionEvent) {
@@ -265,14 +265,14 @@ public class GlavniProzorUserController {
     public void exportujIzvjestajBtn(ActionEvent actionEvent) {
     }
 
-    public void napraviTerminBtn(ActionEvent actionEvent) throws IOException {
+    public void createTaskBtn(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/odabirObjektaZaTermin.fxml"));
-        myStage.setTitle("Izaberite objekat");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/objectPickingForTask.fxml"));
+        myStage.setTitle("Choose an object");
         myStage.setResizable(false);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.showAndWait();
-        refresujTermine();
+        refreshTasks();
     }
 
     public void pregledajTerminBtn(ActionEvent actionEvent) throws IOException {
@@ -320,15 +320,15 @@ public class GlavniProzorUserController {
         myStage.setTitle("Modifikuj termin");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.showAndWait();
-        refresujTermine();
+        refreshTasks();
     }
 
     public void obrisiTerminBtn(ActionEvent actionEvent) {
         terminDao.obrisiTermin(idTrenutnogTermina);
-        refresujTermine();
+        refreshTasks();
     }
 
-    private void refresujTermine() {
+    private void refreshTasks() {
         listaTermina.setItems(terminDao.dajSveTermineInspektora(prijavljeniDao.dajIdUlogovanogInspektora()));
     }
 

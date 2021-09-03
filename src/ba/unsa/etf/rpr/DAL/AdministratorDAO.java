@@ -72,7 +72,7 @@ public class AdministratorDAO {
         return instance;
     }
 
-    public void dodaj(Administrator a) throws SQLException {
+    public void addAdministrator(Administrator a) throws SQLException {
         try{
             ResultSet rs = noviIdUpit.executeQuery();
             if(rs.next())

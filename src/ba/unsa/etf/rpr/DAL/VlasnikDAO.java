@@ -54,7 +54,7 @@ public class VlasnikDAO {
         return rezultat;
     }
 
-    public void dodaj(Vlasnik v) throws SQLException {
+    public void addOwner(Vlasnik v) throws SQLException {
         try{
             ResultSet rs = noviIdUpit.executeQuery();
             if(rs.next())

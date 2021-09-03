@@ -13,3 +13,10 @@
 .pozadinaNeispravnog{
     -fx-background-color: lightpink;
 }
+
+#changeLoginInfo > .label{
+    -fx-graphic: url("/img/advanced.png");
+}
+#changeLoginInfo .accelerator-text{
+    -fx-graphic: none;
+}

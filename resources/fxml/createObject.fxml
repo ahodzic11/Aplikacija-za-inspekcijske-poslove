@@ -24,12 +24,12 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Label text="Naziv objekta" />
-      <Label text="Adresa objekta" GridPane.rowIndex="2" />
-      <Label text="Vrsta objekta" GridPane.rowIndex="4" />
-      <TextField fx:id="fldNaziv" GridPane.rowIndex="1" />
-      <TextField fx:id="fldAdresa" GridPane.rowIndex="3" />
-      <ComboBox fx:id="comboVrstaObjekta" editable="true" GridPane.rowIndex="5" />
+      <Label text="Object name" />
+      <Label text="Object address" GridPane.rowIndex="2" />
+      <Label text="Object type" GridPane.rowIndex="4" />
+      <TextField fx:id="fldName" GridPane.rowIndex="1" />
+      <TextField fx:id="fldAddress" GridPane.rowIndex="3" />
+      <ComboBox fx:id="comboObjectType" editable="true" GridPane.rowIndex="5" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="6">
         <buttons>
           <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="OK" />

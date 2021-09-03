@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,6 +9,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -18,31 +20,35 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.GlavniProzorAdminController">
+    <stylesheets>
+        <URL value="@/css/formulars.css" />
+    </stylesheets>
     <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu text="_File">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#logoutBtn" text="Log Out" />
-                  <MenuItem mnemonicParsing="false" onAction="#logoviBtn" text="Open Logs" />
-              <MenuItem mnemonicParsing="false" onAction="#exitBtn" text="Exit" />
+                  <MenuItem onAction="#logoutBtn" text="_Log Out" />
+                  <MenuItem onAction="#logoviBtn" text="_Open Logs" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem onAction="#exitBtn" text="E_xit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu text="_Edit">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#deleteBtn" text="Delete Inspector" />
+              <MenuItem onAction="#deleteBtn" text="_Delete Inspector" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Account">
+            <Menu text="_Account">
               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#changeAdminLoginData" text="Change Login Info" />
-                  <MenuItem mnemonicParsing="false" onAction="#createAdminAccountBtn" text="Create Admin Account" />
-                  <MenuItem mnemonicParsing="false" onAction="#openCreateAccount" text="Create Inspector Account" />
+                  <MenuItem fx:id="changeLoginInfo" onAction="#changeAdminLoginData" text="Change _Login Info" />
+                  <MenuItem onAction="#createAdminAccountBtn" text="Create _Admin Account" />
+                  <MenuItem onAction="#openCreateAccount" text="Create _Inspector Account" />
               </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu text="_Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="_About" />
             </items>
           </Menu>
         </menus>

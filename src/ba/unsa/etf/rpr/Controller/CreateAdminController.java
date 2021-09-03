@@ -12,16 +12,16 @@ import java.sql.SQLException;
 public class CreateAdminController {
     private AdministratorDAO administratorDAO;
     public Label fldEmail;
-    public Label fldSifra;
-    public Label fldJedinstvenaSifra;
+    public Label fldPassword;
+    public Label fldUniqueID;
 
     @FXML
     public void initialize() throws SQLException {
         administratorDAO = AdministratorDAO.getInstance();
     }
 
-    public void kreirajAdminaBtn(ActionEvent actionEvent) throws SQLException {
-        administratorDAO.dodaj(new Administrator(1, fldEmail.getText(), fldSifra.getText(), fldJedinstvenaSifra.getText()));
+    public void createAdminBtn(ActionEvent actionEvent) throws SQLException {
+        administratorDAO.addAdministrator(new Administrator(1, fldEmail.getText(), fldPassword.getText(), fldUniqueID.getText()));
         Stage stage = (Stage) fldEmail.getScene().getWindow();
         stage.close();
     }

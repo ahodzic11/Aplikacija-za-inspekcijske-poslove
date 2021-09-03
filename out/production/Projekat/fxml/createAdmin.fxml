@@ -25,14 +25,14 @@
    </rowConstraints>
    <children>
       <Label fx:id="fldEmail" text="Email" />
-      <Label fx:id="fldSifra" text="Password" GridPane.rowIndex="2" />
-      <Label fx:id="fldJedinstvenaSifra" text="Unique ID" GridPane.rowIndex="4" />
+      <Label fx:id="fldPassword" text="Password" GridPane.rowIndex="2" />
+      <Label fx:id="fldUniqueID" text="Unique ID" GridPane.rowIndex="4" />
       <TextField GridPane.rowIndex="1" />
       <TextField GridPane.rowIndex="3" />
       <TextField GridPane.rowIndex="5" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="6">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#kreirajAdminaBtn" text="Kreiraj" />
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#createAdminBtn" text="Kreiraj" />
             <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
         </buttons>
       </ButtonBar>
