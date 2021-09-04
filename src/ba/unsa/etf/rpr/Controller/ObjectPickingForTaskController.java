@@ -1,6 +1,11 @@
 package ba.unsa.etf.rpr.Controller;
 
+import ba.unsa.etf.rpr.DAL.ObjectDAO;
+import ba.unsa.etf.rpr.DAL.OwnerDAO;
 import ba.unsa.etf.rpr.DAL.ReportDAO;
+import ba.unsa.etf.rpr.DAL.WitnessDAO;
+import ba.unsa.etf.rpr.Model.Object;
+import ba.unsa.etf.rpr.Model.Owner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,63 +24,63 @@ import java.time.format.DateTimeFormatter;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class ObjectPickingForTaskController {
-    public ListView vlasnici;
-    public ListView objektiVlasnika;
-    public TextField fldNaziv;
-    public TextField fldAdresa;
-    public ComboBox comboVrstaObjekta;
+    public ListView ownersList;
+    public ListView objectsList;
+    public TextField fldName;
+    public TextField fldSurename;
+    public TextField fldAddress;
+    public ComboBox comboObjectType;
     public TextField fldJMBG;
-    public TextField fldTelefon;
+    public TextField fldPhoneNumber;
     public TextField fldEmail;
-    public TextField fldPrezime;
-    public TextField fldIme;
-    private ReportDAO izvjestajDao;
-    private VlasnikDAO vlasnikdao;
-    private ObjekatDAO objekatDao;
-    private SvjedokDAO svjedokDao;
-    private int idTrenutnogVlasnika;
-    private int idTrenutnogObjekta = -1;
+    public TextField fldOwnerName;
+    private ReportDAO reportDAO;
+    private OwnerDAO ownerDAO;
+    private ObjectDAO objectDAO;
+    private WitnessDAO witnessDAO;
+    private int selectedOwnerID;
+    private int selectedObjectID = -1;
 
     @FXML
     public void initialize() throws SQLException {
-        vlasnikdao = VlasnikDAO.getInstance();
-        objekatDao = ObjekatDAO.getInstance();
-        izvjestajDao = IzvjestajDAO.getInstance();
-        svjedokDao = SvjedokDAO.getInstance();
-        comboVrstaObjekta.getItems().addAll("Obrazovna institucija", "Zdravstvena institucija", "Ugostiteljski objekat");
-        vlasnici.setItems(vlasnikdao.sviVlasnici());
-        vlasnici.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
-            Vlasnik novi = (Vlasnik) newItem;
-            if(novi != null){
-                idTrenutnogVlasnika = novi.getId();
-                fldIme.setText(novi.getIme());
-                fldPrezime.setText(novi.getPrezime());
-                fldJMBG.setText(novi.getJmbg());
-                fldTelefon.setText(String.valueOf(novi.getTelefon()));
-                fldEmail.setText(novi.getEmail());
-                if(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika) != null)
-                    objektiVlasnika.setItems(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika));
-                objektiVlasnika.getSelectionModel().selectedItemProperty().addListener((obs1, oldObjekat, newObjekat)->{
-                    Objekat noviObjekat = (Objekat) newObjekat;
-                    if(noviObjekat != null){
-                        idTrenutnogObjekta = noviObjekat.getId();
-                        fldNaziv.setText(noviObjekat.getNazivObjekta());
-                        fldAdresa.setText(noviObjekat.getAdresa());
-                        comboVrstaObjekta.getSelectionModel().select(objekatDao.dajVrstuObjektaZaID(idTrenutnogObjekta));
+        ownerDAO = OwnerDAO.getInstance();
+        objectDAO = ObjectDAO.getInstance();
+        reportDAO = ReportDAO.getInstance();
+        witnessDAO = WitnessDAO.getInstance();
+        comboObjectType.getItems().addAll("Obrazovna institucija", "Zdravstvena institucija", "Ugostiteljski objekat");
+        ownersList.setItems(ownerDAO.allOwners());
+        ownersList.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
+            Owner newOwner = (Owner) newItem;
+            if(newOwner != null){
+                selectedOwnerID = newOwner.getId();
+                fldOwnerName.setText(newOwner.getName());
+                fldSurename.setText(newOwner.getSurename());
+                fldJMBG.setText(newOwner.getJmbg());
+                fldPhoneNumber.setText(String.valueOf(newOwner.getPhoneNumber()));
+                fldEmail.setText(newOwner.getEmail());
+                if(objectDAO.getObjectsFromOwner(selectedOwnerID) != null)
+                    objectsList.setItems(objectDAO.getObjectsFromOwner(selectedOwnerID));
+                objectsList.getSelectionModel().selectedItemProperty().addListener((obs1, oldObjekat, newObjekat)->{
+                    Object newObject = (Object) newObjekat;
+                    if(newObject != null){
+                        selectedObjectID = newObject.getId();
+                        fldName.setText(newObject.getName());
+                        fldAddress.setText(newObject.getAddress());
+                        comboObjectType.getSelectionModel().select(objectDAO.getObjectTypeForID(selectedObjectID));
                     }else{
-                        fldNaziv.setText("");
-                        fldAdresa.setText("");
-                        comboVrstaObjekta.getSelectionModel().select("");
-                        idTrenutnogObjekta = -1;
+                        fldName.setText("");
+                        fldAddress.setText("");
+                        comboObjectType.getSelectionModel().select("");
+                        selectedObjectID = -1;
                     }
                 });
             }else{
-                fldIme.setText("");
-                fldPrezime.setText("");
+                fldOwnerName.setText("");
+                fldSurename.setText("");
                 fldJMBG.setText("");
-                fldTelefon.setText("");
+                fldPhoneNumber.setText("");
                 fldEmail.setText("");
-                idTrenutnogVlasnika = -1;
+                selectedOwnerID = -1;
             }
         });
     }
@@ -95,7 +100,7 @@ public class ObjectPickingForTaskController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createObject.fxml"));
         Parent root = loader.load();
         CreateObjekatController cont = loader.getController();
-        cont.setOwnerId(idTrenutnogVlasnika);
+        cont.setOwnerId(selectedOwnerID);
         myStage.setTitle("Create an object!");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
@@ -105,46 +110,46 @@ public class ObjectPickingForTaskController {
     }
 
     public void cancelBtn(ActionEvent actionEvent) {
-        Stage stage = (Stage) vlasnici.getScene().getWindow();
+        Stage stage = (Stage) ownersList.getScene().getWindow();
         stage.close();
     }
 
     public void deleteObject(ActionEvent actionEvent) {
-        objekatDao.obrisiSaIDem(idTrenutnogObjekta);
+        objectDAO.deleteObjectWithID(selectedObjectID);
         refreshObjects();
     }
 
     private void refreshObjects() {
-        objektiVlasnika.setItems(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika));
+        objectsList.setItems(objectDAO.getObjectsFromOwner(selectedOwnerID));
     }
 
     public void refreshOwners() {
-        vlasnici.setItems(vlasnikdao.sviVlasnici());
+        ownersList.setItems(ownerDAO.allOwners());
     }
 
     public void deleteVlasnikBtn(ActionEvent actionEvent) {
-        objekatDao.obrisiObjekteVlasnika(idTrenutnogVlasnika);
-        vlasnikdao.obrisiVlasnika(idTrenutnogVlasnika);
+        objectDAO.deleteOwnersObjects(selectedOwnerID);
+        ownerDAO.deleteOwner(selectedOwnerID);
         refreshOwners();
         refreshObjects();
     }
 
-    public void otvoriObjekatBtn(ActionEvent actionEvent) throws IOException {
-        if(idTrenutnogObjekta!=-1){
+    public void pickObjectBtn(ActionEvent actionEvent) throws IOException {
+        if(selectedObjectID !=-1){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             Stage myStage = new Stage();
             myStage.setTitle("Create a task!");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createTermin.fxml"));
             Parent root = loader.load();
             CreateTerminController cont = loader.getController();
-            cont.fldObjectName.setText(objekatDao.dajNazivObjektaZaID(idTrenutnogObjekta));
-            cont.fldObjectAddress.setText(objekatDao.dajAdresuObjektaZaID(idTrenutnogObjekta));
+            cont.fldObjectName.setText(objectDAO.getNameForID(selectedObjectID));
+            cont.fldObjectAddress.setText(objectDAO.getAddressForObjectID(selectedObjectID));
             cont.datePickTask.getEditor().setText(LocalDate.now().format(formatter));
-            cont.objectId = idTrenutnogObjekta;
+            cont.objectId = selectedObjectID;
             myStage.setResizable(false);
             myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             myStage.showAndWait();
-            Stage stage = (Stage) fldIme.getScene().getWindow();
+            Stage stage = (Stage) fldOwnerName.getScene().getWindow();
             stage.close();
         }
     }

@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.LogAkcijaDAO;
-import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
-import ba.unsa.etf.rpr.Model.LogAkcije;
+import ba.unsa.etf.rpr.DAL.ActionLogDAO;
+import ba.unsa.etf.rpr.DAL.UserDAO;
 import ba.unsa.etf.rpr.Model.Status;
+import ba.unsa.etf.rpr.Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -34,14 +34,14 @@ public class ProfileController {
     public Label labInspectionArea;
     public Label labInspectorType;
     private Status status;
-    private LogAkcijaDAO logAkcijaDAO;
-    private PrijavljeniUserDAO prijavljeniUserDAO;
+    private ActionLogDAO actionLogDAO;
+    private UserDAO userDAO;
 
     @FXML
     public void initialize() throws SQLException {
         status = Status.getInstance();
-        logAkcijaDAO = LogAkcijaDAO.getInstance();
-        prijavljeniUserDAO = PrijavljeniUserDAO.getInstance();
+        actionLogDAO = ActionLogDAO.getInstance();
+        userDAO = UserDAO.getInstance();
     }
 
 

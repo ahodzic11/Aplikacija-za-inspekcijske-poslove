@@ -50,7 +50,7 @@ public class ShowDutiesController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledTermina.fxml"));
         Parent root = loader.load();
         PregledTerminaController cont = loader.getController();
-        int idInspektora = taskDAO.dajInspektoraZaIDTermina(currentTaskID);
+        int idInspektora = taskDAO.getInspectorForID(currentTaskID);
         int idObjekta = taskDAO.getObjectID(currentTaskID);
         cont.labTerminZakazao.setText(inspectorDAO.getNameSurenameForID(idInspektora));
         cont.labNazivObjekta.setText(objectDAO.getNameForID(idObjekta));
