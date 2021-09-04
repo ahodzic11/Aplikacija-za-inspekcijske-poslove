@@ -80,7 +80,7 @@
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="409.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label text="Inspectors:" />
-                        <ListView fx:id="listaInspektora" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="inspectorList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -91,8 +91,8 @@
                   <VBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label fx:id="labInspectorType" />
-                        <Label fx:id="labelInfo" />
-                        <Label fx:id="labelJedinstvenaSifra" />
+                        <Label fx:id="labInfo" />
+                        <Label fx:id="labUniqueID" />
                         <Label fx:id="labEmail" />
                         <Label fx:id="labPhoneNumber" />
                         <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
@@ -113,14 +113,14 @@
                                     <RowConstraints fillHeight="false" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="profilBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#profilBtn" prefHeight="103.0" prefWidth="235.0" text="Show profile" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                                    <Button fx:id="izvjestajiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#reportsBtn" prefHeight="91.0" prefWidth="235.0" text="Inspector reports" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-                                    <Button fx:id="modifikujBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyBtn" prefHeight="150.0" prefWidth="245.0" text="Modify" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                                    <Button fx:id="obrisiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteBtn" prefHeight="150.0" prefWidth="245.0" text="Delete " GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="profileBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#profilBtn" prefHeight="103.0" prefWidth="235.0" text="Show profile" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="reportsBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#reportsBtn" prefHeight="91.0" prefWidth="235.0" text="Inspector reports" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="modifyBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyBtn" prefHeight="150.0" prefWidth="245.0" text="Modify" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="deleteBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteBtn" prefHeight="150.0" prefWidth="245.0" text="Delete " GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
                                     <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openCreateAccount" prefHeight="136.0" prefWidth="647.0" text="Create a new inspector" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS" />
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                                    <Button fx:id="dodijeliZadatakBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#assignTaskBtn" prefHeight="155.0" prefWidth="365.0" text="Assign a task" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
-                                    <Button fx:id="pregledajZadatkeBtn" mnemonicParsing="false" onAction="#showDutiesBtn" prefHeight="222.0" prefWidth="413.0" text="Show duties" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Button fx:id="assignTaskBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#assignTaskBtn" prefHeight="155.0" prefWidth="365.0" text="Assign a task" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="showDutiesBtn" mnemonicParsing="false" onAction="#showDutiesBtn" prefHeight="222.0" prefWidth="413.0" text="Show duties" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                                     <Button fx:id="exportBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportBtn" prefHeight="96.0" prefWidth="547.0" text="Export inspector profile" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />

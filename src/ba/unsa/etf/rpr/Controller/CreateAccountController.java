@@ -200,7 +200,7 @@ public class CreateAccountController {
         int spol=0, vozacka=0;
         if(vozackaCB.isSelected()) vozacka=1;
         if(maleRB.isSelected()) spol=1;
-        else if(femaleRB.isSelected()) spol = 2; // spol=1 - musko, spol=2 - zensko
+        else if(femaleRB.isSelected()) spol = 2; // gender = 1 - male / 2 - female
         String tipInspektora = "";
         if(rbGlavniInspektor.isSelected()) tipInspektora = "Major federal inspector";
         else tipInspektora = "Federal inspector";

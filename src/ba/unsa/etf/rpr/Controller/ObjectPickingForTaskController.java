@@ -1,11 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.IzvjestajDAO;
-import ba.unsa.etf.rpr.DAL.ObjekatDAO;
-import ba.unsa.etf.rpr.DAL.SvjedokDAO;
-import ba.unsa.etf.rpr.DAL.VlasnikDAO;
-import ba.unsa.etf.rpr.Model.Objekat;
-import ba.unsa.etf.rpr.Model.Vlasnik;
+import ba.unsa.etf.rpr.DAL.ReportDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +29,7 @@ public class ObjectPickingForTaskController {
     public TextField fldEmail;
     public TextField fldPrezime;
     public TextField fldIme;
-    private IzvjestajDAO izvjestajDao;
+    private ReportDAO izvjestajDao;
     private VlasnikDAO vlasnikdao;
     private ObjekatDAO objekatDao;
     private SvjedokDAO svjedokDao;

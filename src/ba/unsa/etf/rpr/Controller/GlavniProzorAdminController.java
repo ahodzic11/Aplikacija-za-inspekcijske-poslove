@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
-import ba.unsa.etf.rpr.Model.Inspektor;
-import ba.unsa.etf.rpr.Model.LogAkcije;
+import ba.unsa.etf.rpr.Model.ActionLog;
+import ba.unsa.etf.rpr.Model.Inspector;
 import ba.unsa.etf.rpr.Model.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,10 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,53 +25,53 @@ import java.time.format.DateTimeFormatter;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class GlavniProzorAdminController {
-    public ListView listaInspektora;
-    public Label labelInfo;
-    public Label labelJedinstvenaSifra;
-    public Inspektor trenutnoPrikazani;
-    public int idTrenutnoPrikazanog;
-    public Button profilBtn;
-    public Button izvjestajiBtn;
-    public Button modifikujBtn;
-    public Button obrisiBtn;
-    public Button dodijeliZadatakBtn;
-    public Button pregledajZadatkeBtn;
+    public ListView inspectorList;
+    public Label labInfo;
+    public Label labUniqueID;
+    public Inspector currentInspector;
+    public int currentInspectorID;
+    public Button profileBtn;
+    public Button reportsBtn;
+    public Button modifyBtn;
+    public Button deleteBtn;
+    public Button assignTaskBtn;
+    public Button showDutiesBtn;
     public Label labStatusBar;
     public Label labInspectorType;
     public Label labEmail;
     public Label labPhoneNumber;
     public Button exportBtn;
-    private InspektorDAO inspektorDao;
+    private InspectorDAO inspectorDAO;
     private AdministratorDAO administratorDAO;
-    private PrijavljeniUserDAO prijavljeniUserDAO;
-    private LogDAO logDAO;
-    private LogAkcijaDAO logAkcijaDAO;
+    private UserDAO userDAO;
+    private LoginLogDAO loginLogDAO;
+    private ActionLogDAO actionLogDAO;
     private Status status;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     @FXML
     public void initialize() throws SQLException {
-        inspektorDao = InspektorDAO.getInstance();
+        inspectorDAO = InspectorDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
-        prijavljeniUserDAO = PrijavljeniUserDAO.getInstance();
-        logAkcijaDAO = LogAkcijaDAO.getInstance();
-        logDAO = LogDAO.getInstance();
+        userDAO = UserDAO.getInstance();
+        actionLogDAO = ActionLogDAO.getInstance();
+        loginLogDAO = LoginLogDAO.getInstance();
         status = Status.getInstance();
 
         disableButtons();
 
-        listaInspektora.setItems(inspektorDao.sviInspektori());
-        listaInspektora.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
-            Inspektor novi = (Inspektor) newItem;
-            if(novi!=null){
-                labelInfo.setText(novi.getIme() + " " + novi.getPrezime());
-                labelJedinstvenaSifra.setText("UNIQUE ID: " + novi.getJedinstvenaSifra());
-                idTrenutnoPrikazanog = novi.getId();
-                labInspectorType.setText(novi.getTipInspektora());
-                labEmail.setText(novi.getPristupniEmail());
-                labPhoneNumber.setText(novi.getKontaktTelefon());
+        inspectorList.setItems(inspectorDAO.allInspectors());
+        inspectorList.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
+            Inspector newInspector = (Inspector) newItem;
+            if(newInspector!=null){
+                labInfo.setText(newInspector.getFirstName() + " " + newInspector.getLastName());
+                labUniqueID.setText("UNIQUE ID: " + newInspector.getUniqueId());
+                currentInspectorID = newInspector.getId();
+                labInspectorType.setText(newInspector.getInspectorType());
+                labEmail.setText(newInspector.getLoginEmail());
+                labPhoneNumber.setText(newInspector.getPhoneNumber());
 
-                trenutnoPrikazani = novi;
+                currentInspector = newInspector;
                 enableButtons();
             }else{
                 disableButtons();
@@ -90,11 +88,11 @@ public class GlavniProzorAdminController {
         myStage.showAndWait();
         refreshInspectorsList();
         updateStatus();
-        listaInspektora.getSelectionModel().select(listaInspektora.getItems().size()-1);
+        inspectorList.getSelectionModel().select(inspectorList.getItems().size()-1);
     }
 
     public void profilBtn(ActionEvent actionEvent) throws IOException, SQLException {
-        status.setStatus("Inspector profile - " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog) + "] opened.");
+        status.setStatus("Inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened.");
         updateStatus();
 
         Stage myStage = new Stage();
@@ -102,27 +100,27 @@ public class GlavniProzorAdminController {
         Parent root = loader.load();
 
         ProfileController profileController = loader.getController();
-        profileController.labUniqueID.setText(trenutnoPrikazani.getJedinstvenaSifra());
-        profileController.labFirstName.setText(inspektorDao.dajImeZaID(idTrenutnoPrikazanog));
-        profileController.labLastName.setText(inspektorDao.dajPrezimeZaID(idTrenutnoPrikazanog));
-        profileController.labBirthdate.setText(inspektorDao.dajDatumRodjenjaZaID(idTrenutnoPrikazanog));
-        profileController.labJMBG.setText(inspektorDao.dajJMBGZaID(idTrenutnoPrikazanog));
-        if(inspektorDao.dajSpolZaID(idTrenutnoPrikazanog)==1) profileController.labGender.setText("M");
+        profileController.labUniqueID.setText(currentInspector.getUniqueId());
+        profileController.labFirstName.setText(inspectorDAO.getFirstNameForID(currentInspectorID));
+        profileController.labLastName.setText(inspectorDAO.getSurenameForID(currentInspectorID));
+        profileController.labBirthdate.setText(inspectorDAO.getBirthdateForID(currentInspectorID));
+        profileController.labJMBG.setText(inspectorDAO.getJMBGForID(currentInspectorID));
+        if(inspectorDAO.getGenderForID(currentInspectorID)==1) profileController.labGender.setText("M");
         else profileController.labGender.setText("F");
-        profileController.labIDNumber.setText(inspektorDao.dajBrojLicneZaID(idTrenutnoPrikazanog));
-        profileController.labResidence.setText(inspektorDao.dajMjestoPrebivalistaZaID(idTrenutnoPrikazanog));
-        profileController.labPhoneNumber.setText(inspektorDao.dajTelefonZaID(idTrenutnoPrikazanog));
-        profileController.labEmail.setText(inspektorDao.dajPersonalniEmailZaID(idTrenutnoPrikazanog));
-        profileController.labLoginEmail.setText(inspektorDao.dajPristupniEmailZaID(idTrenutnoPrikazanog));
-        profileController.labPassword.setText(inspektorDao.dajPristupnuSifruZaID(idTrenutnoPrikazanog));
-        profileController.labInspectionArea.setText(inspektorDao.dajOblastInspekcijeZaID(idTrenutnoPrikazanog));
-        profileController.labInspectorType.setText(inspektorDao.dajTipInspektoraZaID(idTrenutnoPrikazanog));
-        if(inspektorDao.dajVozackuZaID(idTrenutnoPrikazanog)==1) profileController.labDriversLicense.setText("owns a license");
+        profileController.labIDNumber.setText(inspectorDAO.getIDNumberForID(currentInspectorID));
+        profileController.labResidence.setText(inspectorDAO.getResidenceForID(currentInspectorID));
+        profileController.labPhoneNumber.setText(inspectorDAO.getPhoneNumberForID(currentInspectorID));
+        profileController.labEmail.setText(inspectorDAO.getEmailForID(currentInspectorID));
+        profileController.labLoginEmail.setText(inspectorDAO.getLoginEmailForID(currentInspectorID));
+        profileController.labPassword.setText(inspectorDAO.getPasswordForID(currentInspectorID));
+        profileController.labInspectionArea.setText(inspectorDAO.getInspectionAreaForID(currentInspectorID));
+        profileController.labInspectorType.setText(inspectorDAO.getInspectorTypeForID(currentInspectorID));
+        if(inspectorDAO.getDriversLicenseForID(currentInspectorID)==1) profileController.labDriversLicense.setText("owns a license");
         else profileController.labDriversLicense.setText("doesn't own a license");
 
-        String action = "Administrator[" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+"] opened account - " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog)+"]";
+        String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] opened account - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
 
-        logAkcijaDAO.dodaj(new LogAkcije(1, LocalDateTime.now().format(formatter), action, prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()));
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), action, userDAO.getLoggedUserUniqueID()));
 
         myStage.setTitle("Inspector profile");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -133,16 +131,16 @@ public class GlavniProzorAdminController {
     }
 
     public void deleteBtn(ActionEvent actionEvent) throws SQLException {
-        status.setStatus("Inspector profile - " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog) + "] deleted.");
+        status.setStatus("Inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] deleted.");
 
-        String action = "Administrator[" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+"] deleted account - " + inspektorDao.dajTipInspektoraZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog)+"]";
-        logAkcijaDAO.dodaj(new LogAkcije(1, LocalDateTime.now().format(formatter), action, prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()));
+        String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] deleted account - " + inspectorDAO.getInspectorTypeForID(currentInspectorID) + " " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), action, userDAO.getLoggedUserUniqueID()));
 
-        inspektorDao.obrisi(trenutnoPrikazani);
+        inspectorDAO.deleteInspector(currentInspector);
         refreshInspectorsList();
 
-        labelInfo.setText("");
-        labelJedinstvenaSifra.setText("");
+        labInfo.setText("");
+        labUniqueID.setText("");
 
         updateStatus();
     }
@@ -153,19 +151,19 @@ public class GlavniProzorAdminController {
         Parent root = loader.load();
 
         ModifyProfileController mod = loader.getController();
-        mod.idOtvorenog = idTrenutnoPrikazanog;
-        mod.fldIme.setText(inspektorDao.dajImeZaID(idTrenutnoPrikazanog));
-        mod.fldPrezime.setText(inspektorDao.dajPrezimeZaID(idTrenutnoPrikazanog));
-        mod.fldBrojLicne.setText(inspektorDao.dajBrojLicneZaID(idTrenutnoPrikazanog));
-        mod.fldMjestoPrebivalista.setText(inspektorDao.dajMjestoPrebivalistaZaID(idTrenutnoPrikazanog));
-        mod.fldKontaktTelefon.setText(inspektorDao.dajTelefonZaID(idTrenutnoPrikazanog));
-        mod.fldPersonalniMail.setText(inspektorDao.dajPersonalniEmailZaID(idTrenutnoPrikazanog));
-        mod.fldPristupniMail.setText(inspektorDao.dajPristupniEmailZaID(idTrenutnoPrikazanog));
-        mod.fldPristupnaSifra.setText(inspektorDao.dajPristupnuSifruZaID(idTrenutnoPrikazanog));
-        mod.comboOblastInspekcije.setValue(inspektorDao.dajOblastInspekcijeZaID(idTrenutnoPrikazanog));
-        if(inspektorDao.isGlavniInspektor(idTrenutnoPrikazanog)) mod.rbGlavniInspektor.setSelected(true);
+        mod.idOtvorenog = currentInspectorID;
+        mod.fldIme.setText(inspectorDAO.getFirstNameForID(currentInspectorID));
+        mod.fldPrezime.setText(inspectorDAO.getSurenameForID(currentInspectorID));
+        mod.fldBrojLicne.setText(inspectorDAO.getIDNumberForID(currentInspectorID));
+        mod.fldMjestoPrebivalista.setText(inspectorDAO.getResidenceForID(currentInspectorID));
+        mod.fldKontaktTelefon.setText(inspectorDAO.getPhoneNumberForID(currentInspectorID));
+        mod.fldPersonalniMail.setText(inspectorDAO.getEmailForID(currentInspectorID));
+        mod.fldPristupniMail.setText(inspectorDAO.getLoginEmailForID(currentInspectorID));
+        mod.fldPristupnaSifra.setText(inspectorDAO.getPasswordForID(currentInspectorID));
+        mod.comboOblastInspekcije.setValue(inspectorDAO.getInspectionAreaForID(currentInspectorID));
+        if(inspectorDAO.isMajorInspector(currentInspectorID)) mod.rbGlavniInspektor.setSelected(true);
         else mod.rbFederalniInspektor.setSelected(true);
-        if(inspektorDao.dajVozackuZaID(idTrenutnoPrikazanog)==1) mod.cbVozacka.setSelected(true);
+        if(inspectorDAO.getDriversLicenseForID(currentInspectorID)==1) mod.cbVozacka.setSelected(true);
         else mod.cbVozacka.setSelected(false);
 
         myStage.setTitle("Modify the inspector");
@@ -174,35 +172,35 @@ public class GlavniProzorAdminController {
         myStage.showAndWait();
         refreshInspectorsList();
 
-        listaInspektora.getSelectionModel().select(idTrenutnoPrikazanog);
-        labelInfo.setText(inspektorDao.dajImeZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajPrezimeZaID(idTrenutnoPrikazanog));
-        labelJedinstvenaSifra.setText("UNIQUE ID: " + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog));
+        inspectorList.getSelectionModel().select(currentInspectorID);
+        labInfo.setText(inspectorDAO.getFirstNameForID(currentInspectorID) + " " + inspectorDAO.getSurenameForID(currentInspectorID));
+        labUniqueID.setText("UNIQUE ID: " + inspectorDAO.getUniqueIDForID(currentInspectorID));
         updateStatus();
     }
 
     public void refreshInspectorsList(){
-        listaInspektora.setItems(inspektorDao.sviInspektori());
+        inspectorList.setItems(inspectorDAO.allInspectors());
     }
 
     public void logoutBtn(ActionEvent actionEvent) throws IOException {
-        logDAO.logout(prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog());
-        prijavljeniUserDAO.obrisiPrijavljenog();
+        loginLogDAO.logout(userDAO.getLoggedUserUniqueID());
+        userDAO.deleteLoggedUser();
         Stage myStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/preview.fxml"));
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.show();
-        Stage stage = (Stage) labelJedinstvenaSifra.getScene().getWindow();
+        Stage stage = (Stage) labUniqueID.getScene().getWindow();
         stage.close();
     }
 
     public void reportsBtn(ActionEvent actionEvent) throws IOException {
-        status.setStatus("Reports for inspector profile - " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog) + "] opened.");
+        status.setStatus("Reports for inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened.");
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/izvjestaji.fxml"));
         Parent root = loader.load();
         IzvjestajiController cont = loader.getController();
-        cont.setIdInspektora(idTrenutnoPrikazanog);
+        cont.setIdInspektora(currentInspectorID);
         cont.refresujIzvjestaj();
 
         myStage.setTitle("Reports");
@@ -212,7 +210,7 @@ public class GlavniProzorAdminController {
     }
 
     public void exitBtn(ActionEvent actionEvent) {
-        Stage stage = (Stage) listaInspektora.getScene().getWindow();
+        Stage stage = (Stage) inspectorList.getScene().getWindow();
         stage.close();
     }
 
@@ -222,9 +220,9 @@ public class GlavniProzorAdminController {
         Parent root = loader.load();
 
         ModifyAdministratorController cont = loader.getController();
-        String adminUniqueID = prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog();
-        cont.fldEmail.setText(administratorDAO.dajEmailZaJedinstvenuSifru(adminUniqueID));
-        cont.fldSifra.setText(administratorDAO.dajSifruZaJedinstvenuSifru(adminUniqueID));
+        String adminUniqueID = userDAO.getLoggedUserUniqueID();
+        cont.fldEmail.setText(administratorDAO.getEmailForUniqueID(adminUniqueID));
+        cont.fldSifra.setText(administratorDAO.getPasswordForUniqueID(adminUniqueID));
         cont.fldJedinstvenaSifra.setText(adminUniqueID);
 
         myStage.setTitle("Modify the administrator");
@@ -258,7 +256,7 @@ public class GlavniProzorAdminController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/assignTask.fxml"));
         Parent root = loader.load();
         AssignTaskController cont = loader.getController();
-        cont.setInspectorID(idTrenutnoPrikazanog);
+        cont.setInspectorID(currentInspectorID);
         myStage.setTitle("Assign a task");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.showAndWait();
@@ -270,12 +268,12 @@ public class GlavniProzorAdminController {
     }
 
     public void showDutiesBtn(ActionEvent actionEvent) throws IOException {
-        status.setStatus("Duties assigned to inspector " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idTrenutnoPrikazanog) + "] have been shown.");
+        status.setStatus("Duties assigned to inspector " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] have been shown.");
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/showDuties.fxml"));
         Parent root = loader.load();
         ShowDutiesController cont = loader.getController();
-        cont.inspectorId = idTrenutnoPrikazanog;
+        cont.inspectorId = currentInspectorID;
         myStage.setTitle("Duties assigned");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         updateStatus();
@@ -285,22 +283,22 @@ public class GlavniProzorAdminController {
 
 
     private void disableButtons() {
-        profilBtn.setDisable(true);
-        modifikujBtn.setDisable(true);
-        izvjestajiBtn.setDisable(true);
-        obrisiBtn.setDisable(true);
-        dodijeliZadatakBtn.setDisable(true);
-        pregledajZadatkeBtn.setDisable(true);
+        profileBtn.setDisable(true);
+        modifyBtn.setDisable(true);
+        reportsBtn.setDisable(true);
+        deleteBtn.setDisable(true);
+        assignTaskBtn.setDisable(true);
+        showDutiesBtn.setDisable(true);
         exportBtn.setDisable(true);
     }
 
     private void enableButtons(){
-        profilBtn.setDisable(false);
-        modifikujBtn.setDisable(false);
-        izvjestajiBtn.setDisable(false);
-        obrisiBtn.setDisable(false);
-        dodijeliZadatakBtn.setDisable(false);
-        pregledajZadatkeBtn.setDisable(false);
+        profileBtn.setDisable(false);
+        modifyBtn.setDisable(false);
+        reportsBtn.setDisable(false);
+        deleteBtn.setDisable(false);
+        assignTaskBtn.setDisable(false);
+        showDutiesBtn.setDisable(false);
         exportBtn.setDisable(false);
     }
 
@@ -313,21 +311,21 @@ public class GlavniProzorAdminController {
             try {
                 PrintWriter writer;
                 writer = new PrintWriter(file);
-                String exportData = labInspectorType.getText() + " " + inspektorDao.dajImePrezimeInspektora(idTrenutnoPrikazanog) + "[" + labelJedinstvenaSifra.getText() + "]\n\n";
-                exportData += "Inspection area: " + inspektorDao.dajOblastInspekcijeZaID(idTrenutnoPrikazanog) + "\n";
-                exportData += "Birthdate: " + inspektorDao.dajDatumRodjenjaZaID(idTrenutnoPrikazanog) + "\n";
-                exportData += "JMBG: " + inspektorDao.dajJMBGZaID(idTrenutnoPrikazanog) + "\n";
-                if(inspektorDao.dajSpolZaID(idTrenutnoPrikazanog)==1) exportData+= "Gender: Male\n";
+                String exportData = labInspectorType.getText() + " " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + labUniqueID.getText() + "]\n\n";
+                exportData += "Inspection area: " + inspectorDAO.getInspectionAreaForID(currentInspectorID) + "\n";
+                exportData += "Birthdate: " + inspectorDAO.getBirthdateForID(currentInspectorID) + "\n";
+                exportData += "JMBG: " + inspectorDAO.getJMBGForID(currentInspectorID) + "\n";
+                if(inspectorDAO.getGenderForID(currentInspectorID)==1) exportData+= "Gender: Male\n";
                 else exportData += "Gender: Female\n";
-                exportData += "ID number: " + inspektorDao.dajBrojLicneZaID(idTrenutnoPrikazanog) + "\n";
+                exportData += "ID number: " + inspectorDAO.getIDNumberForID(currentInspectorID) + "\n";
                 exportData += "E-mail: " + labEmail.getText() + "\n";
                 exportData += "Phone number: " + labPhoneNumber.getText() + "\n";
-                exportData += "Residency: " + inspektorDao.dajMjestoPrebivalistaZaID(idTrenutnoPrikazanog) + "\n";
+                exportData += "Residency: " + inspectorDAO.getResidenceForID(currentInspectorID) + "\n";
                 exportData += "Login e-mail: " + labEmail.getText() + "\n";
-                if(inspektorDao.dajVozackuZaID(idTrenutnoPrikazanog)==1) exportData+= "Has a valid driver's license\n";
+                if(inspectorDAO.getDriversLicenseForID(currentInspectorID)==1) exportData+= "Has a valid driver's license\n";
                 else exportData += "Doesn't have a valid driver's license\n";
-                status.setStatus("Inspector profile - " + inspektorDao.dajImeZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajPrezimeZaID(idTrenutnoPrikazanog) +  " [" + labelJedinstvenaSifra.getText() + "] exported.");
-                logAkcijaDAO.dodaj(new LogAkcije(1, LocalDateTime.now().format(formatter), "Administrator [" + prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()+ "] exported profile - " + inspektorDao.dajImeZaID(idTrenutnoPrikazanog) + " " + inspektorDao.dajPrezimeZaID(idTrenutnoPrikazanog) +  " [" + labelJedinstvenaSifra.getText() + "] ", prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog()));
+                status.setStatus("Inspector profile - " + inspectorDAO.getFirstNameForID(currentInspectorID) + " " + inspectorDAO.getSurenameForID(currentInspectorID) +  " [" + labUniqueID.getText() + "] exported.");
+                actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] exported profile - " + inspectorDAO.getFirstNameForID(currentInspectorID) + " " + inspectorDAO.getSurenameForID(currentInspectorID) +  " [" + labUniqueID.getText() + "] ", userDAO.getLoggedUserUniqueID()));
                 writer.println(exportData);
                 writer.close();
             } catch (IOException | SQLException ex) {
