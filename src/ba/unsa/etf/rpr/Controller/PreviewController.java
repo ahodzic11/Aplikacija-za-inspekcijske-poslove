@@ -3,11 +3,11 @@ package ba.unsa.etf.rpr.Controller;
 import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.DAL.LogDAO;
-import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
+import ba.unsa.etf.rpr.DAL.done.UserDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 import ba.unsa.etf.rpr.Model.Inspector;
 import ba.unsa.etf.rpr.Model.Log;
-import ba.unsa.etf.rpr.Model.PrijavljeniUser;
+import ba.unsa.etf.rpr.Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +28,7 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class PreviewController {
     private InspectorDAO inspektorDao;
-    private PrijavljeniUserDAO prijavljeniUserDao;
+    private UserDAO prijavljeniUserDao;
     private AdministratorDAO administratorDAO;
     private LogDAO logDAO;
     public Button loginBtn;
@@ -39,7 +39,7 @@ public class PreviewController {
     @FXML
     public void initialize() throws SQLException {
         inspektorDao = InspectorDAO.getInstance();
-        prijavljeniUserDao = PrijavljeniUserDAO.getInstance();
+        prijavljeniUserDao = UserDAO.getInstance();
         logDAO = LogDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
     }
@@ -57,7 +57,7 @@ public class PreviewController {
         for(Administrator a : listaAdministratora)
             if(emailFld.getText().equals(a.getEmail()) && pswFld.getText().equals(a.getPassword())){
                 String jedinstvenaSifraAdmina = administratorDAO.getUniqueIDForEmail(emailFld.getText());
-                prijavljeniUserDao.dodaj(new PrijavljeniUser(-1, LocalDateTime.now().format(formatter), ostaniUlogovan, jedinstvenaSifraAdmina));
+                prijavljeniUserDao.addUser(new User(-1, LocalDateTime.now().format(formatter), ostaniUlogovan, jedinstvenaSifraAdmina));
                 logDAO.dodaj(new Log(1, LocalDateTime.now().format(formatter), "", jedinstvenaSifraAdmina));
                 Stage myStage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
@@ -73,7 +73,7 @@ public class PreviewController {
         for(Inspector i : upisaniInspektori)
             if(emailFld.getText().equals(i.getLoginEmail()) && pswFld.getText().equals(i.getPassword())){
                 int idInspektora = inspektorDao.getInspectorIDForEmail(emailFld.getText());
-                prijavljeniUserDao.dodaj(new PrijavljeniUser(idInspektora, LocalDateTime.now().format(formatter), ostaniUlogovan, inspektorDao.getUniqueIDForID(idInspektora)));
+                prijavljeniUserDao.addUser(new User(idInspektora, LocalDateTime.now().format(formatter), ostaniUlogovan, inspektorDao.getUniqueIDForID(idInspektora)));
                 logDAO.dodaj(new Log(1, LocalDateTime.now().format(formatter), "", inspektorDao.getUniqueIDForID(idInspektora)));
                 Stage myStage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));

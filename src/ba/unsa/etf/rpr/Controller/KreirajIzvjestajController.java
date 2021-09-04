@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
+import ba.unsa.etf.rpr.DAL.done.UserDAO;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
 import ba.unsa.etf.rpr.Model.Svjedok;
 import javafx.event.ActionEvent;
@@ -27,7 +28,7 @@ public class KreirajIzvjestajController {
     private VlasnikDAO vlasnikDao;
     private SvjedokDAO svjedokDao;
     private IzvjestajDAO izvjestajDao;
-    private PrijavljeniUserDAO prijavljeniUserDao;
+    private UserDAO prijavljeniUserDao;
     public int idObjekta;
 
     @FXML
@@ -37,7 +38,7 @@ public class KreirajIzvjestajController {
         vlasnikDao = VlasnikDAO.getInstance();
         izvjestajDao = IzvjestajDAO.getInstance();
         svjedokDao = SvjedokDAO.getInstance();
-        prijavljeniUserDao = PrijavljeniUserDAO.getInstance();
+        prijavljeniUserDao = UserDAO.getInstance();
         fldPrekrsaj.setDisable(true); fldKazna.setDisable(true); fldZahtjevi.setDisable(true);
         cbPrekrsaj.selectedProperty().addListener((obs, oldItem, newItem)->{
             if(newItem){
@@ -114,7 +115,7 @@ public class KreirajIzvjestajController {
         svjedokDao.dodaj(new Svjedok(idPrvogSvjedoka, idNovogIzvjestaja, s1Ime.getText(), s1prezime.getText(), s1JMBG.getText(), s1Izjava.getText()));
         int idDrugogSvjedoka = svjedokDao.dajIdNovogSvjedoka();
         svjedokDao.dodaj(new Svjedok(idDrugogSvjedoka, idNovogIzvjestaja, s2ime.getText(), s2prezime.getText(), s2JMBG.getText(), s2Izjava.getText()));
-        Izvjestaj noviIzvjestaj = new Izvjestaj(1, prijavljeniUserDao.dajIdUlogovanogInspektora(), datumInspekcije.getValue().format(formatter),
+        Izvjestaj noviIzvjestaj = new Izvjestaj(1, prijavljeniUserDao.getLoggedUserID(), datumInspekcije.getValue().format(formatter),
                 opisTerena.getText(), fldPrekrsaj.getText(), Integer.parseInt(fldKazna.getText()), fldZahtjevi.getText(), evidencijaRadnika, krivicnoDjelo, fitocertifikat, uzorak,
                 Integer.parseInt(fldBrojDanaZabrane.getText()), fldUslovZabrane.getText(), prijavljenoRadiliste,
                 Integer.parseInt(fldBrojZaposlenih.getText()), Integer.parseInt(fldPotvrdaORadu.getText()), fldNedostatak.getText(), idPrvogSvjedoka, idDrugogSvjedoka, idObjekta,

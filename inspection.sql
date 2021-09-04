@@ -68,13 +68,6 @@ CREATE TABLE IF NOT EXISTS "logovi" (
 	"jedinstvenaSifra"	TEXT,
 	PRIMARY KEY("id")
 );
-CREATE TABLE IF NOT EXISTS "loginPodaci" (
-	"idUsera"	INTEGER,
-	"datumLogovanja"	TEXT,
-	"ostaniUlogovan"	INTEGER,
-	"jedinstvenaSifra"	TEXT,
-	PRIMARY KEY("idUsera")
-);
 CREATE TABLE IF NOT EXISTS "logoviAkcija" (
 	"id"	INTEGER,
 	"datumVrijeme"	TEXT,
@@ -91,22 +84,29 @@ CREATE TABLE IF NOT EXISTS "administrator" (
 );
 CREATE TABLE IF NOT EXISTS "inspector" (
 	"id"	INTEGER,
-	"ime"	TEXT,
-	"prezime"	TEXT,
-	"datumRodjenja"	TEXT,
+	"name"	TEXT,
+	"lastName"	TEXT,
+	"birthdate"	TEXT,
 	"jmbg"	TEXT,
-	"spol"	INTEGER,
-	"brojLicne"	TEXT,
-	"mjestoPrebivalista"	TEXT,
-	"kontaktTelefon"	TEXT,
-	"personalniEmail"	TEXT,
-	"pristupniEmail"	TEXT,
-	"pristupnaSifra"	TEXT,
-	"vozacka"	INTEGER,
-	"jedinstvenaSifra"	TEXT,
-	"tipInspektora"	TEXT,
-	"oblastInspektora"	TEXT,
+	"gender"	INTEGER,
+	"idNumber"	TEXT,
+	"residence"	TEXT,
+	"phoneNumber"	TEXT,
+	"email"	TEXT,
+	"loginEmail"	TEXT,
+	"password"	TEXT,
+	"license"	INTEGER,
+	"uniqueId"	TEXT,
+	"inspectorType"	TEXT,
+	"inspectionArea"	TEXT,
 	PRIMARY KEY("id")
+);
+CREATE TABLE IF NOT EXISTS "loginData" (
+	"userID"	INTEGER,
+	"loginDate"	TEXT,
+	"stayLogged"	INTEGER,
+	"uniqueId"	TEXT,
+	PRIMARY KEY("userID")
 );
 INSERT INTO "vlasnik" VALUES (0,'Dino','Kovačević','123123',23021,'dinok@gmail.com');
 INSERT INTO "izvjestaj" VALUES (0,-1,'30/08/2021','abBIOSAMTUADMIN',2,2,'2',1,1,0,0,2,'',1,2,2,'2',0,1,1,'Praonica','Povezice',NULL);
@@ -119,7 +119,6 @@ INSERT INTO "logovi" VALUES (2,'03/09/2021 16:18:00','03/09/2021 18:20:32','ASFO
 INSERT INTO "logovi" VALUES (3,'03/09/2021 16:26:29','03/09/2021 18:20:32','ASFOKD');
 INSERT INTO "logovi" VALUES (4,'03/09/2021 18:20:38','03/09/2021 18:25:22','admin');
 INSERT INTO "logovi" VALUES (5,'03/09/2021 18:34:58','','admin');
-INSERT INTO "loginPodaci" VALUES (-1,'03/09/2021 18:34:58',1,'admin');
 INSERT INTO "logoviAkcija" VALUES (0,'02-09-2021 17:54:19','Administrator[admin] opened account - Adnan Hodžić[ASFOKD]','admin');
 INSERT INTO "logoviAkcija" VALUES (1,'02-09-2021 17:55:19','Administrator[admin] opened account - Adnan Hodžić[ASFOKD]','admin');
 INSERT INTO "logoviAkcija" VALUES (2,'02/09/2021 17:55:33','Administrator [admin] exported profile - Adnan Hodžić [ASFOKD] ','admin');
@@ -135,4 +134,5 @@ INSERT INTO "logoviAkcija" VALUES (11,'03-09-2021 19:25:56','Administrator[admin
 INSERT INTO "logoviAkcija" VALUES (12,'03/09/2021 19:33:54','Administrator [admin] exported profile - Adnan Hodžić [UNIQUE ID: ASFOKD] ','admin');
 INSERT INTO "administrator" VALUES (1,'admin','admin','admin');
 INSERT INTO "inspector" VALUES (0,'Adnan','Hodžić','01.09.2021','1231251232423',1,'FASOJDFOS','Kakanj','062734086','hodzicadnan00@gmail.com','adnan','adnan',1,'ASFOKD','Major federal inspector','Inspektor rada');
+INSERT INTO "loginData" VALUES (-1,'03/09/2021 18:34:58',1,'admin');
 COMMIT;

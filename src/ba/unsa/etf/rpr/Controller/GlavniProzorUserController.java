@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
+import ba.unsa.etf.rpr.DAL.done.UserDAO;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
 import ba.unsa.etf.rpr.Model.Termin;
 import javafx.event.ActionEvent;
@@ -25,7 +26,7 @@ public class GlavniProzorUserController {
     public RadioButton rbMojiTermini;
     private SvjedokDAO svjedokDAO;
     private IzvjestajDAO izvjestajDAO;
-    private PrijavljeniUserDAO prijavljeniDao;
+    private UserDAO prijavljeniDao;
     private int idTrenutnogIzvjestaja = -1;
     private ObjekatDAO objekatDao;
     private VlasnikDAO vlasnikDao;
@@ -37,14 +38,14 @@ public class GlavniProzorUserController {
     @FXML
     public void initialize() throws SQLException {
         svjedokDAO = SvjedokDAO.getInstance();
-        prijavljeniDao = PrijavljeniUserDAO.getInstance();
+        prijavljeniDao = UserDAO.getInstance();
         izvjestajDAO = IzvjestajDAO.getInstance();
         objekatDao = ObjekatDAO.getInstance();
         vlasnikDao = VlasnikDAO.getInstance();
         terminDao = TerminDAO.getInstance();
         inspektorDao = InspectorDAO.getInstance();
         logDAO = LogDAO.getInstance();
-        listaIzvjestaja.setItems(izvjestajDAO.dajIzvjestajeInspektoraSaIDem(prijavljeniDao.dajIdUlogovanogInspektora()));
+        listaIzvjestaja.setItems(izvjestajDAO.dajIzvjestajeInspektoraSaIDem(prijavljeniDao.getLoggedUserID()));
         listaIzvjestaja.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
             Izvjestaj noviIzvjestaj = (Izvjestaj) newItem;
             if(noviIzvjestaj!=null)
@@ -64,7 +65,7 @@ public class GlavniProzorUserController {
         });
         rbMojiTermini.selectedProperty().addListener((obs, oldItem, newItem)->{
             if(newItem)
-                listaTermina.setItems(terminDao.dajSveTermineInspektora(prijavljeniDao.dajIdUlogovanogInspektora()));
+                listaTermina.setItems(terminDao.dajSveTermineInspektora(prijavljeniDao.getLoggedUserID()));
         });
     }
 
@@ -78,8 +79,8 @@ public class GlavniProzorUserController {
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException {
-        logDAO.logout(inspektorDao.getUniqueIDForID(prijavljeniDao.dajIdUlogovanogInspektora()));
-        prijavljeniDao.obrisiPrijavljenog();
+        logDAO.logout(inspektorDao.getUniqueIDForID(prijavljeniDao.getLoggedUserID()));
+        prijavljeniDao.deleteLoggedUser();
         Stage stage = (Stage) listaIzvjestaja.getScene().getWindow();
         stage.close();
         Stage myStage = new Stage();
@@ -106,7 +107,7 @@ public class GlavniProzorUserController {
 
     private void refresujIzvjestaj() {
         try {
-            listaIzvjestaja.setItems(izvjestajDAO.dajIzvjestajeInspektoraSaIDem(prijavljeniDao.dajIdUlogovanogInspektora()));
+            listaIzvjestaja.setItems(izvjestajDAO.dajIzvjestajeInspektoraSaIDem(prijavljeniDao.getLoggedUserID()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -329,10 +330,10 @@ public class GlavniProzorUserController {
     }
 
     private void refreshTasks() {
-        listaTermina.setItems(terminDao.dajSveTermineInspektora(prijavljeniDao.dajIdUlogovanogInspektora()));
+        listaTermina.setItems(terminDao.dajSveTermineInspektora(prijavljeniDao.getLoggedUserID()));
     }
 
     public void uzmiTerminBtn(ActionEvent actionEvent) {
-        if(!terminDao.isZauzetTermin(idTrenutnogTermina))terminDao.uzmiTermin(idTrenutnogTermina, prijavljeniDao.dajIdUlogovanogInspektora());
+        if(!terminDao.isZauzetTermin(idTrenutnogTermina))terminDao.uzmiTermin(idTrenutnogTermina, prijavljeniDao.getLoggedUserID());
     }
 }

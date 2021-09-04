@@ -2,7 +2,7 @@ package ba.unsa.etf.rpr;
 
 import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
+import ba.unsa.etf.rpr.DAL.done.UserDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 import ba.unsa.etf.rpr.Model.Inspector;
 import javafx.application.Application;
@@ -19,13 +19,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        PrijavljeniUserDAO prijavljeniUserDao = PrijavljeniUserDAO.getInstance();
+        UserDAO prijavljeniUserDao = UserDAO.getInstance();
         AdministratorDAO administratorDAO = AdministratorDAO.getInstance();
         InspectorDAO inspektorDAO = InspectorDAO.getInstance();
-        if(prijavljeniUserDao.dajUlogovanost()){
+        if(prijavljeniUserDao.isLoggedIn()){
             ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
             for(Administrator a : administratori)
-                if(a.getUniqueId().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
+                if(a.getUniqueId().equals(prijavljeniUserDao.getLoggedUserUniqueID())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
                     primaryStage.setTitle("Administrator");
                     primaryStage.setMinWidth(603);
@@ -35,7 +35,7 @@ public class Main extends Application {
                 }
             ArrayList<Inspector> inspektori = inspektorDAO.allValidInspectors();
             for(Inspector i : inspektori)
-                if(i.getUniqueId().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
+                if(i.getUniqueId().equals(prijavljeniUserDao.getLoggedUserUniqueID())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
                     primaryStage.setTitle("Inspector");
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));

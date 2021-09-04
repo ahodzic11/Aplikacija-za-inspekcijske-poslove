@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
-import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
+import ba.unsa.etf.rpr.DAL.done.UserDAO;
 import ba.unsa.etf.rpr.Model.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 public class ModifyAdministratorController {
-    private PrijavljeniUserDAO prijavljeniUserDAO;
+    private UserDAO prijavljeniUserDAO;
     private AdministratorDAO administratorDAO;
     public TextField fldEmail;
     public TextField fldSifra;
@@ -20,13 +20,13 @@ public class ModifyAdministratorController {
 
     @FXML
     public void initialize() throws SQLException {
-        prijavljeniUserDAO = PrijavljeniUserDAO.getInstance();
+        prijavljeniUserDAO = UserDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
         status = Status.getInstance();
     }
 
     public void okBtn(ActionEvent actionEvent) {
-        String jedinstvenaSifra = prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog();
+        String jedinstvenaSifra = prijavljeniUserDAO.getLoggedUserUniqueID();
         int idAdministratora = administratorDAO.getIdForUniqueID(jedinstvenaSifra);
         administratorDAO.modifyAdministrator(idAdministratora, fldEmail.getText(), fldSifra.getText(), fldJedinstvenaSifra.getText());
         Stage stage = (Stage) fldEmail.getScene().getWindow();

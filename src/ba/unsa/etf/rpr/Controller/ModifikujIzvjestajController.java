@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
+import ba.unsa.etf.rpr.DAL.done.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -45,7 +46,7 @@ public class ModifikujIzvjestajController {
     public TextArea s2Izjava;
     public TextField fldJedinstvenaSifra;
     private IzvjestajDAO izvjestajDao;
-    private PrijavljeniUserDAO prijavljeniUserDao;
+    private UserDAO prijavljeniUserDao;
     public int idOtvorenogIzvjestaja;
     private SvjedokDAO svjedokDao;
     private ObjekatDAO objekatDao;
@@ -53,7 +54,7 @@ public class ModifikujIzvjestajController {
     @FXML
     public void initialize() throws SQLException {
         izvjestajDao = IzvjestajDAO.getInstance();
-        prijavljeniUserDao = PrijavljeniUserDAO.getInstance();
+        prijavljeniUserDao = UserDAO.getInstance();
         objekatDao = ObjekatDAO.getInstance();
         svjedokDao = SvjedokDAO.getInstance();
         cbPrekrsaj.selectedProperty().addListener((obs, oldItem, newItem)->{
@@ -124,7 +125,7 @@ public class ModifikujIzvjestajController {
         svjedokDao.modifikuj(idPrvogSvjedoka, idOtvorenogIzvjestaja, s1Ime.getText(), s1prezime.getText(), s1JMBG.getText(), s1Izjava.getText());
         svjedokDao.modifikuj(idDrugogSvjedoka, idOtvorenogIzvjestaja, s2ime.getText(), s2prezime.getText(), s2JMBG.getText(), s2Izjava.getText());
         int idObjekta = izvjestajDao.dajIDObjektaZaIzvjestajID(idOtvorenogIzvjestaja);
-        izvjestajDao.modifikuj(idOtvorenogIzvjestaja, prijavljeniUserDao.dajIdUlogovanogInspektora(), stringDatumInspekcije,
+        izvjestajDao.modifikuj(idOtvorenogIzvjestaja, prijavljeniUserDao.getLoggedUserID(), stringDatumInspekcije,
                 opisTerena.getText(), fldPrekrsaj.getText(), Integer.parseInt(fldKazna.getText()), fldZahtjevi.getText(), evidencijaRadnika, krivicnoDjelo, fitocertifikat, uzorak,
                 Integer.parseInt(fldBrojDanaZabrane.getText()), fldUslovZabrane.getText(), prijavljenoRadiliste,
                 Integer.parseInt(fldBrojZaposlenih.getText()), Integer.parseInt(fldPotvrdaORadu.getText()), fldNedostatak.getText(), idPrvogSvjedoka, idDrugogSvjedoka, idObjekta,
