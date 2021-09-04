@@ -35,7 +35,7 @@
       <ListView fx:id="tasksList" prefHeight="120.0" prefWidth="50.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
       <ButtonBar GridPane.rowIndex="2">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="Assign" />
+          <Button fx:id="assignBtn" defaultButton="true" mnemonicParsing="false" onAction="#assignBtn" text="Assign" />
             <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
         </buttons>
       </ButtonBar>

@@ -27,12 +27,12 @@
       <Button fx:id="loginBtn" defaultButton="true" mnemonicParsing="false" onAction="#login" prefHeight="20.0" prefWidth="87.0" styleClass="loginButton" text="Log In" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@/img/praviavatar.png" />
+            <Image url="@/img/avatar.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
          <image>
-            <Image url="@/img/pravilock.png" />
+            <Image url="@/img/lock.png" />
          </image>
       </ImageView>
       <TextField fx:id="fldEmail" prefHeight="25.0" prefWidth="217.0" promptText="E-mail" styleClass="text-field" GridPane.columnIndex="1" GridPane.columnSpan="2" />

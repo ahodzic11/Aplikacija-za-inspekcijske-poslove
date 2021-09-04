@@ -199,6 +199,7 @@ public class GlavniProzorAdminController {
         status.setStatus("Reports for inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened. (" + LocalDateTime.now().format(logFormatter) + ")");
         String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] open reports for inspector - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
         actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), action, userDAO.getLoggedUserUniqueID()));
+        updateStatus();
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/reports.fxml"));
         Parent root = loader.load();
@@ -283,8 +284,9 @@ public class GlavniProzorAdminController {
         labStatusBar.setText(status.getStatus());
     }
 
-    public void showDutiesBtn(ActionEvent actionEvent) throws IOException {
-        status.setStatus("Duties assigned to inspector " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] have been shown.");
+    public void showDutiesBtn(ActionEvent actionEvent) throws IOException, SQLException {
+        status.setStatus("Duties assigned to inspector " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] have been shown. (" + LocalDateTime.now().format(logFormatter) + ")");
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] opened duties of inspector - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "]", userDAO.getLoggedUserUniqueID()));
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/showDuties.fxml"));
         Parent root = loader.load();
@@ -292,6 +294,9 @@ public class GlavniProzorAdminController {
         cont.inspectorId = currentInspectorID;
         myStage.setTitle("Duties assigned");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setMinWidth(210);
+        myStage.setMinHeight(187);
+        myStage.setMaxWidth(210);
         updateStatus();
         myStage.showAndWait();
         updateStatus();

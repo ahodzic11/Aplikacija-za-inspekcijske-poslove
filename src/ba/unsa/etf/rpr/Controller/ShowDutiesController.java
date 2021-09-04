@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class ShowDutiesController {
+    public Button detailsBtn;
     private InspectorDAO inspectorDAO;
     private ObjectDAO objectDAO;
     private TaskDAO taskDAO;
@@ -33,12 +35,16 @@ public class ShowDutiesController {
         inspectorDAO = InspectorDAO.getInstance();
         objectDAO = ObjectDAO.getInstance();
         status = Status.getInstance();
-
+        detailsBtn.setDisable(true);
         tasksList.setItems(taskDAO.getAllTasksForInspector(inspectorId));
         tasksList.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
             Task newTask = (Task) newItem;
-            if(newTask != null)
+            if(newTask != null){
                 currentTaskID = newTask.getId();
+                detailsBtn.setDisable(false);
+            }else{
+                detailsBtn.setDisable(true);
+            }
         });
     }
 
