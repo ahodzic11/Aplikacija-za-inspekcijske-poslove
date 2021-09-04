@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
-import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.done.ActionLogDAO;
-import ba.unsa.etf.rpr.DAL.done.LoginLogDAO;
+import ba.unsa.etf.rpr.DAL.AdministratorDAO;
+import ba.unsa.etf.rpr.DAL.InspectorDAO;
+import ba.unsa.etf.rpr.DAL.ActionLogDAO;
+import ba.unsa.etf.rpr.DAL.LoginLogDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 import ba.unsa.etf.rpr.Model.Inspector;
 import ba.unsa.etf.rpr.Model.LoginLog;

@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.IzvjestajDAO;
-import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
-import ba.unsa.etf.rpr.DAL.done.WitnessDAO;
-import ba.unsa.etf.rpr.DAL.done.OwnerDAO;
+import ba.unsa.etf.rpr.DAL.ReportDAO;
+import ba.unsa.etf.rpr.DAL.ObjectDAO;
+import ba.unsa.etf.rpr.DAL.WitnessDAO;
+import ba.unsa.etf.rpr.DAL.OwnerDAO;
 import ba.unsa.etf.rpr.Model.Object;
 import ba.unsa.etf.rpr.Model.Owner;
 import javafx.event.ActionEvent;
@@ -25,7 +25,7 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class ObjectPickingController {
     public ComboBox comboVrstaObjekta;
-    private IzvjestajDAO izvjestajDao;
+    private ReportDAO izvjestajDao;
     public ListView objektiVlasnika;
     public TextField fldNaziv;
     public TextField fldAdresa;
@@ -45,7 +45,7 @@ public class ObjectPickingController {
     public void initialize() throws SQLException {
         vlasnikdao = OwnerDAO.getInstance();
         objekatDao = ObjectDAO.getInstance();
-        izvjestajDao = IzvjestajDAO.getInstance();
+        izvjestajDao = ReportDAO.getInstance();
         svjedokDao = WitnessDAO.getInstance();
         comboVrstaObjekta.getItems().addAll("Obrazovna institucija", "Zdravstvena institucija", "Ugostiteljski objekat");
         vlasnici.setItems(vlasnikdao.allOwners());
@@ -156,7 +156,7 @@ public class ObjectPickingController {
     }
 
     public void obrisiIzvjestajeBtn(ActionEvent actionEvent) {
-        izvjestajDao.obrisiSveIzvjestaje();
+        izvjestajDao.deleteAllReports();
     }
 
     public void obrisiSvjedokeBtn(ActionEvent actionEvent) {

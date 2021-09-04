@@ -1,8 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
-import ba.unsa.etf.rpr.DAL.done.*;
-import ba.unsa.etf.rpr.Model.Izvjestaj;
+import ba.unsa.etf.rpr.Model.Report;
 import ba.unsa.etf.rpr.Model.Witness;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +25,7 @@ public class KreirajIzvjestajController {
     private ObjectDAO objekatDao;
     private OwnerDAO vlasnikDao;
     private WitnessDAO svjedokDao;
-    private IzvjestajDAO izvjestajDao;
+    private ReportDAO izvjestajDao;
     private UserDAO prijavljeniUserDao;
     public int idObjekta;
 
@@ -35,7 +34,7 @@ public class KreirajIzvjestajController {
         inspektorDao = InspectorDAO.getInstance();
         objekatDao = ObjectDAO.getInstance();
         vlasnikDao = OwnerDAO.getInstance();
-        izvjestajDao = IzvjestajDAO.getInstance();
+        izvjestajDao = ReportDAO.getInstance();
         svjedokDao = WitnessDAO.getInstance();
         prijavljeniUserDao = UserDAO.getInstance();
         fldPrekrsaj.setDisable(true); fldKazna.setDisable(true); fldZahtjevi.setDisable(true);
@@ -110,16 +109,16 @@ public class KreirajIzvjestajController {
         if(cbPrijaviRadiliste.isSelected()) prijavljenoRadiliste = 1;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         int idPrvogSvjedoka = svjedokDao.getNewWitnessID();
-        int idNovogIzvjestaja = izvjestajDao.dajIdNovogIzvjestaja();
+        int idNovogIzvjestaja = izvjestajDao.getNewReportID();
         svjedokDao.addWitness(new Witness(idPrvogSvjedoka, idNovogIzvjestaja, s1Ime.getText(), s1prezime.getText(), s1JMBG.getText(), s1Izjava.getText()));
         int idDrugogSvjedoka = svjedokDao.getNewWitnessID();
         svjedokDao.addWitness(new Witness(idDrugogSvjedoka, idNovogIzvjestaja, s2ime.getText(), s2prezime.getText(), s2JMBG.getText(), s2Izjava.getText()));
-        Izvjestaj noviIzvjestaj = new Izvjestaj(1, prijavljeniUserDao.getLoggedUserID(), datumInspekcije.getValue().format(formatter),
+        Report noviIzvjestaj = new Report(1, prijavljeniUserDao.getLoggedUserID(), datumInspekcije.getValue().format(formatter),
                 opisTerena.getText(), fldPrekrsaj.getText(), Integer.parseInt(fldKazna.getText()), fldZahtjevi.getText(), evidencijaRadnika, krivicnoDjelo, fitocertifikat, uzorak,
                 Integer.parseInt(fldBrojDanaZabrane.getText()), fldUslovZabrane.getText(), prijavljenoRadiliste,
                 Integer.parseInt(fldBrojZaposlenih.getText()), Integer.parseInt(fldPotvrdaORadu.getText()), fldNedostatak.getText(), idPrvogSvjedoka, idDrugogSvjedoka, idObjekta,
                 fldNazivObjekta.getText(), fldAdresaObjekta.getText(), fldJedinstvenaSifra.getText());
-        izvjestajDao.dodaj(noviIzvjestaj);
+        izvjestajDao.addReport(noviIzvjestaj);
         Stage stage = (Stage) fldAdresaObjekta.getScene().getWindow();
         stage.close();
     }

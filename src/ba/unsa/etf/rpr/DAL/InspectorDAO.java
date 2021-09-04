@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.DAL.done;
+package ba.unsa.etf.rpr.DAL;
 
 import ba.unsa.etf.rpr.Model.Inspector;
 import javafx.collections.FXCollections;

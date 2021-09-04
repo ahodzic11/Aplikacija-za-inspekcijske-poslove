@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.done.UserDAO;
-import ba.unsa.etf.rpr.DAL.done.TaskDAO;
+import ba.unsa.etf.rpr.DAL.UserDAO;
+import ba.unsa.etf.rpr.DAL.TaskDAO;
 import ba.unsa.etf.rpr.Model.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

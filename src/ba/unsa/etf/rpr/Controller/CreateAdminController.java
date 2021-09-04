@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
+import ba.unsa.etf.rpr.DAL.AdministratorDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

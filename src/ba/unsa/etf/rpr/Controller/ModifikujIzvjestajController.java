@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
-import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
-import ba.unsa.etf.rpr.DAL.done.UserDAO;
-import ba.unsa.etf.rpr.DAL.done.WitnessDAO;
+import ba.unsa.etf.rpr.DAL.ObjectDAO;
+import ba.unsa.etf.rpr.DAL.UserDAO;
+import ba.unsa.etf.rpr.DAL.WitnessDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -47,7 +47,7 @@ public class ModifikujIzvjestajController {
     public TextField s2JMBG;
     public TextArea s2Izjava;
     public TextField fldJedinstvenaSifra;
-    private IzvjestajDAO izvjestajDao;
+    private ReportDAO izvjestajDao;
     private UserDAO prijavljeniUserDao;
     public int idOtvorenogIzvjestaja;
     private WitnessDAO svjedokDao;
@@ -55,7 +55,7 @@ public class ModifikujIzvjestajController {
 
     @FXML
     public void initialize() throws SQLException {
-        izvjestajDao = IzvjestajDAO.getInstance();
+        izvjestajDao = ReportDAO.getInstance();
         prijavljeniUserDao = UserDAO.getInstance();
         objekatDao = ObjectDAO.getInstance();
         svjedokDao = WitnessDAO.getInstance();
@@ -126,8 +126,8 @@ public class ModifikujIzvjestajController {
         String stringDatumInspekcije = datumInspekcije.getEditor().getText();
         svjedokDao.modifyWitness(idPrvogSvjedoka, idOtvorenogIzvjestaja, s1Ime.getText(), s1prezime.getText(), s1JMBG.getText(), s1Izjava.getText());
         svjedokDao.modifyWitness(idDrugogSvjedoka, idOtvorenogIzvjestaja, s2ime.getText(), s2prezime.getText(), s2JMBG.getText(), s2Izjava.getText());
-        int idObjekta = izvjestajDao.dajIDObjektaZaIzvjestajID(idOtvorenogIzvjestaja);
-        izvjestajDao.modifikuj(idOtvorenogIzvjestaja, prijavljeniUserDao.getLoggedUserID(), stringDatumInspekcije,
+        int idObjekta = izvjestajDao.getObjectIDForReport(idOtvorenogIzvjestaja);
+        izvjestajDao.modifyReport(idOtvorenogIzvjestaja, prijavljeniUserDao.getLoggedUserID(), stringDatumInspekcije,
                 opisTerena.getText(), fldPrekrsaj.getText(), Integer.parseInt(fldKazna.getText()), fldZahtjevi.getText(), evidencijaRadnika, krivicnoDjelo, fitocertifikat, uzorak,
                 Integer.parseInt(fldBrojDanaZabrane.getText()), fldUslovZabrane.getText(), prijavljenoRadiliste,
                 Integer.parseInt(fldBrojZaposlenih.getText()), Integer.parseInt(fldPotvrdaORadu.getText()), fldNedostatak.getText(), idPrvogSvjedoka, idDrugogSvjedoka, idObjekta,

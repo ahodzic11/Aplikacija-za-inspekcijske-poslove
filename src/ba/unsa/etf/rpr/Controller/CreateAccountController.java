@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
+import ba.unsa.etf.rpr.DAL.InspectorDAO;
 import ba.unsa.etf.rpr.Model.Inspector;
 import ba.unsa.etf.rpr.Model.Status;
 import javafx.collections.FXCollections;

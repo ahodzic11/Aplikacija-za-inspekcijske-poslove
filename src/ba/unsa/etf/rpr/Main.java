@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr;
 
-import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
-import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.done.UserDAO;
+import ba.unsa.etf.rpr.DAL.AdministratorDAO;
+import ba.unsa.etf.rpr.DAL.InspectorDAO;
+import ba.unsa.etf.rpr.DAL.UserDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 import ba.unsa.etf.rpr.Model.Inspector;
 import javafx.application.Application;

@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
-import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.done.TaskDAO;
+import ba.unsa.etf.rpr.DAL.ObjectDAO;
+import ba.unsa.etf.rpr.DAL.InspectorDAO;
+import ba.unsa.etf.rpr.DAL.TaskDAO;
 import ba.unsa.etf.rpr.Model.Status;
 import ba.unsa.etf.rpr.Model.Task;
 import javafx.event.ActionEvent;
