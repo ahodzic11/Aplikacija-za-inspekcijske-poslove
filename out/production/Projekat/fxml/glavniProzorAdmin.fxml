@@ -10,8 +10,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -28,27 +26,35 @@
         <menus>
           <Menu text="_File">
             <items>
-                  <MenuItem onAction="#logoutBtn" text="_Log Out" />
+                  <Menu text="_New">
+                    <items>
+                        <MenuItem onAction="#createAdminAccountBtn" text="_Admin account" />
+                      <MenuItem onAction="#openCreateAccount" text="_Inspector Account" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem onAction="#logoviBtn" text="_Open Logs" />
+                  <MenuItem onAction="#exportBtn" text="_Export Inspector" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem onAction="#logoutBtn" text="_Log Out" />
                   <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem onAction="#exitBtn" text="E_xit" />
             </items>
           </Menu>
           <Menu text="_Edit">
             <items>
+                  <MenuItem onAction="#modifyBtn" text="_Modify Inspector" />
               <MenuItem onAction="#deleteBtn" text="_Delete Inspector" />
             </items>
           </Menu>
             <Menu text="_Account">
               <items>
-                  <MenuItem fx:id="changeLoginInfo" onAction="#changeAdminLoginData" text="Change _Login Info" />
-                  <MenuItem onAction="#createAdminAccountBtn" text="Create _Admin Account" />
-                  <MenuItem onAction="#openCreateAccount" text="Create _Inspector Account" />
+                  <MenuItem fx:id="changeLoginInfo" onAction="#changeAdminLoginData" text="Modify _Login Info" />
               </items>
             </Menu>
           <Menu text="_Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="_About" />
+              <MenuItem onAction="#aboutBtn" text="_About" />
             </items>
           </Menu>
         </menus>
@@ -82,48 +88,56 @@
                   </VBox>
                </left>
                <center>
-                  <VBox alignment="CENTER" prefHeight="522.0" prefWidth="520.0" BorderPane.alignment="CENTER">
+                  <VBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ImageView fx:id="imgAvatar" fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@/img/avatar.png" />
-                           </image>
-                        </ImageView>
+                        <Label fx:id="labInspectorType" />
                         <Label fx:id="labelInfo" />
                         <Label fx:id="labelJedinstvenaSifra" />
-                        <Separator prefWidth="200.0" />
-                        <GridPane hgap="10.0" vgap="10.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
-                            <RowConstraints fillHeight="false" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
-                              <RowConstraints fillHeight="false" />
-                              <RowConstraints fillHeight="false" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
-                              <RowConstraints fillHeight="false" />
-                              <RowConstraints fillHeight="false" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
-                          </rowConstraints>
+                        <Label fx:id="labEmail" />
+                        <Label fx:id="labPhoneNumber" />
+                        <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="profilBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#profilBtn" prefHeight="103.0" prefWidth="235.0" text="Show profile" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                              <Button fx:id="izvjestajiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#reportsBtn" prefHeight="91.0" prefWidth="235.0" text="Inspector reports" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                              <Button fx:id="modifikujBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyBtn" prefHeight="150.0" prefWidth="245.0" text="Modify" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                              <Button fx:id="obrisiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteBtn" prefHeight="150.0" prefWidth="245.0" text="Delete " GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openCreateAccount" prefHeight="136.0" prefWidth="647.0" text="Create a new inspector" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
-                              <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                              <Button fx:id="dodijeliZadatakBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#assignTaskBtn" prefHeight="155.0" prefWidth="365.0" text="Assign a task" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-                              <Button fx:id="pregledajZadatkeBtn" mnemonicParsing="false" onAction="#showDutiesBtn" prefHeight="222.0" prefWidth="413.0" text="Show duties" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <GridPane hgap="10.0" vgap="10.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+                                  <RowConstraints />
+                                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+                                    <RowConstraints fillHeight="false" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+                                    <RowConstraints fillHeight="false" />
+                                    <RowConstraints fillHeight="false" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+                                    <RowConstraints fillHeight="false" />
+                                    <RowConstraints fillHeight="false" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button fx:id="profilBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#profilBtn" prefHeight="103.0" prefWidth="235.0" text="Show profile" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="izvjestajiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#reportsBtn" prefHeight="91.0" prefWidth="235.0" text="Inspector reports" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="modifikujBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyBtn" prefHeight="150.0" prefWidth="245.0" text="Modify" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="obrisiBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteBtn" prefHeight="150.0" prefWidth="245.0" text="Delete " GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openCreateAccount" prefHeight="136.0" prefWidth="647.0" text="Create a new inspector" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS" />
+                                    <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                                    <Button fx:id="dodijeliZadatakBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#assignTaskBtn" prefHeight="155.0" prefWidth="365.0" text="Assign a task" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="pregledajZadatkeBtn" mnemonicParsing="false" onAction="#showDutiesBtn" prefHeight="222.0" prefWidth="413.0" text="Show duties" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                                    <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                                    <Button fx:id="exportBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportBtn" prefHeight="96.0" prefWidth="547.0" text="Export inspector profile" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </GridPane>
                            </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </GridPane>
+                        </VBox>
                      </children>
+                     <BorderPane.margin>
+                        <Insets top="23.0" />
+                     </BorderPane.margin>
                   </VBox>
                </center>
             </BorderPane>

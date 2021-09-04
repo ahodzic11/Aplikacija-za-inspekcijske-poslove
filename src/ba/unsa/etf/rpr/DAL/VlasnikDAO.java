@@ -77,7 +77,7 @@ public class VlasnikDAO {
     private void kreirajBazu() {
         Scanner ulaz = null;
         try {
-            ulaz = new Scanner(new FileInputStream("inspekcija.sql"));
+            ulaz = new Scanner(new FileInputStream("inspection.sql"));
             String sqlUpit = "";
             while (ulaz.hasNext()) {
                 sqlUpit += ulaz.nextLine();

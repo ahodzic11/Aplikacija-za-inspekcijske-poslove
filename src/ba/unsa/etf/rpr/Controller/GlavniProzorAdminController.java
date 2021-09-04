@@ -335,4 +335,13 @@ public class GlavniProzorAdminController {
             }
         }
     }
+
+    public void aboutBtn(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/about.fxml"));
+        myStage.setTitle("About");
+        myStage.setResizable(false);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.show();
+    }
 }

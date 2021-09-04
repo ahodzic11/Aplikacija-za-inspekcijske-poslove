@@ -26,27 +26,35 @@
         <menus>
           <Menu text="_File">
             <items>
-                  <MenuItem onAction="#logoutBtn" text="_Log Out" />
+                  <Menu text="_New">
+                    <items>
+                        <MenuItem onAction="#createAdminAccountBtn" text="_Admin account" />
+                      <MenuItem onAction="#openCreateAccount" text="_Inspector Account" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem onAction="#logoviBtn" text="_Open Logs" />
+                  <MenuItem onAction="#exportBtn" text="_Export Inspector" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem onAction="#logoutBtn" text="_Log Out" />
                   <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem onAction="#exitBtn" text="E_xit" />
             </items>
           </Menu>
           <Menu text="_Edit">
             <items>
+                  <MenuItem onAction="#modifyBtn" text="_Modify Inspector" />
               <MenuItem onAction="#deleteBtn" text="_Delete Inspector" />
             </items>
           </Menu>
             <Menu text="_Account">
               <items>
-                  <MenuItem fx:id="changeLoginInfo" onAction="#changeAdminLoginData" text="Change _Login Info" />
-                  <MenuItem onAction="#createAdminAccountBtn" text="Create _Admin Account" />
-                  <MenuItem onAction="#openCreateAccount" text="Create _Inspector Account" />
+                  <MenuItem fx:id="changeLoginInfo" onAction="#changeAdminLoginData" text="Modify _Login Info" />
               </items>
             </Menu>
           <Menu text="_Help">
             <items>
-              <MenuItem text="_About" />
+              <MenuItem onAction="#aboutBtn" text="_About" />
             </items>
           </Menu>
         </menus>
@@ -82,11 +90,11 @@
                <center>
                   <VBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label fx:id="labInspectorType" text="No inspector selected" />
-                        <Label fx:id="labelInfo" text="No inspector selected" />
-                        <Label fx:id="labelJedinstvenaSifra" text="No inspector selected" />
-                        <Label fx:id="labEmail" text="No inspector selected" />
-                        <Label fx:id="labPhoneNumber" text="No inspector selected" />
+                        <Label fx:id="labInspectorType" />
+                        <Label fx:id="labelInfo" />
+                        <Label fx:id="labelJedinstvenaSifra" />
+                        <Label fx:id="labEmail" />
+                        <Label fx:id="labPhoneNumber" />
                         <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                            <children>
                               <GridPane hgap="10.0" vgap="10.0">
