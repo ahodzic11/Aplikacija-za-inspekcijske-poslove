@@ -84,7 +84,7 @@ public class GlavniProzorAdminController {
     public void openCreateAccount(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/createAccount.fxml"));
-        myStage.setTitle("Create an account!");
+        myStage.setTitle("Create an account");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.showAndWait();
@@ -102,7 +102,7 @@ public class GlavniProzorAdminController {
         Parent root = loader.load();
 
         ProfileController profileController = loader.getController();
-        profileController.labUniqueID.setText(currentInspector.getUniqueId());
+        profileController.labUniqueID.setText(inspectorDAO.getUniqueIDForID(currentInspectorID));
         profileController.labFirstName.setText(inspectorDAO.getFirstNameForID(currentInspectorID));
         profileController.labLastName.setText(inspectorDAO.getSurenameForID(currentInspectorID));
         profileController.labBirthdate.setText(inspectorDAO.getBirthdateForID(currentInspectorID));
@@ -138,7 +138,7 @@ public class GlavniProzorAdminController {
         String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] deleted account - " + inspectorDAO.getInspectorTypeForID(currentInspectorID) + " " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
         actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), action, userDAO.getLoggedUserUniqueID()));
 
-        inspectorDAO.deleteInspector(currentInspector);
+        inspectorDAO.deleteInspector(currentInspectorID);
         refreshInspectorsList();
         currentInspectorID = -1;
         labInfo.setText("");
@@ -155,20 +155,20 @@ public class GlavniProzorAdminController {
         Parent root = loader.load();
 
         ModifyProfileController mod = loader.getController();
-        mod.idOtvorenog = currentInspectorID;
-        mod.fldIme.setText(inspectorDAO.getFirstNameForID(currentInspectorID));
-        mod.fldPrezime.setText(inspectorDAO.getSurenameForID(currentInspectorID));
-        mod.fldBrojLicne.setText(inspectorDAO.getIDNumberForID(currentInspectorID));
-        mod.fldMjestoPrebivalista.setText(inspectorDAO.getResidenceForID(currentInspectorID));
-        mod.fldKontaktTelefon.setText(inspectorDAO.getPhoneNumberForID(currentInspectorID));
-        mod.fldPersonalniMail.setText(inspectorDAO.getEmailForID(currentInspectorID));
-        mod.fldPristupniMail.setText(inspectorDAO.getLoginEmailForID(currentInspectorID));
-        mod.fldPristupnaSifra.setText(inspectorDAO.getPasswordForID(currentInspectorID));
-        mod.comboOblastInspekcije.setValue(inspectorDAO.getInspectionAreaForID(currentInspectorID));
-        if(inspectorDAO.isMajorInspector(currentInspectorID)) mod.rbGlavniInspektor.setSelected(true);
-        else mod.rbFederalniInspektor.setSelected(true);
-        if(inspectorDAO.getDriversLicenseForID(currentInspectorID)==1) mod.cbVozacka.setSelected(true);
-        else mod.cbVozacka.setSelected(false);
+        mod.inspectorId = currentInspectorID;
+        mod.fldName.setText(inspectorDAO.getFirstNameForID(currentInspectorID));
+        mod.fldSurename.setText(inspectorDAO.getSurenameForID(currentInspectorID));
+        mod.fldIDNumber.setText(inspectorDAO.getIDNumberForID(currentInspectorID));
+        mod.fldResidency.setText(inspectorDAO.getResidenceForID(currentInspectorID));
+        mod.fldPhoneNumber.setText(inspectorDAO.getPhoneNumberForID(currentInspectorID));
+        mod.fldEmail.setText(inspectorDAO.getEmailForID(currentInspectorID));
+        mod.fldLoginEmail.setText(inspectorDAO.getLoginEmailForID(currentInspectorID));
+        mod.fldPassword.setText(inspectorDAO.getPasswordForID(currentInspectorID));
+        mod.comboInspectionArea.setValue(inspectorDAO.getInspectionAreaForID(currentInspectorID));
+        if(inspectorDAO.isMajorInspector(currentInspectorID)) mod.rbMajorInspector.setSelected(true);
+        else mod.rbFederalInspector.setSelected(true);
+        if(inspectorDAO.getDriversLicenseForID(currentInspectorID)==1) mod.cbDriversLicense.setSelected(true);
+        else mod.cbDriversLicense.setSelected(false);
 
         myStage.setTitle("Modify the inspector");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -200,11 +200,11 @@ public class GlavniProzorAdminController {
     public void reportsBtn(ActionEvent actionEvent) throws IOException {
         status.setStatus("Reports for inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened.");
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/izvjestaji.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/reports"));
         Parent root = loader.load();
-        ReportsController cont = loader.getController();
-        cont.setInspectorId(currentInspectorID);
-        cont.refreshReports();
+        ReportsController reportsController = loader.getController();
+        reportsController.setInspectorId(currentInspectorID);
+        reportsController.refreshReports();
 
         myStage.setTitle("Reports");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -239,17 +239,27 @@ public class GlavniProzorAdminController {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/createAdmin.fxml"));
         myStage.setTitle("Create an admin account");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        myStage.show();
+        myStage.setMinWidth(210);
+        myStage.setMinHeight(260);
+        myStage.setMaxWidth(300);
+        myStage.setMaxHeight(260);
+        myStage.showAndWait();
+        updateStatus();
     }
 
-    public void logoviBtn(ActionEvent actionEvent) throws IOException {
-        status.setStatus("Logs opened.");
+    public void logsBtn(ActionEvent actionEvent) throws IOException, SQLException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        status.setStatus("Logs opened. (" + LocalDateTime.now().format(formatter) + ")");
+        updateStatus();
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] opened logs", userDAO.getLoggedUserUniqueID()));
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/logs.fxml"));
         Parent root = loader.load();
         LogsController cont = loader.getController();
         myStage.setTitle("Logs");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setMinWidth(498);
+        myStage.setMinHeight(608);
         myStage.showAndWait();
         updateStatus();
     }
@@ -307,6 +317,7 @@ public class GlavniProzorAdminController {
     public void exportBtn(ActionEvent actionEvent) throws IOException {
         if(currentInspectorID == -1) return;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter logFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text document", "*.txt"));
         File file = chooser.showSaveDialog(labPhoneNumber.getScene().getWindow());
@@ -327,7 +338,7 @@ public class GlavniProzorAdminController {
                 exportData += "Login e-mail: " + labEmail.getText() + "\n";
                 if(inspectorDAO.getDriversLicenseForID(currentInspectorID)==1) exportData+= "Has a valid driver's license\n";
                 else exportData += "Doesn't have a valid driver's license\n";
-                status.setStatus("Inspector profile - " + inspectorDAO.getFirstNameForID(currentInspectorID) + " " + inspectorDAO.getSurenameForID(currentInspectorID) +  " [" + labUniqueID.getText() + "] exported.");
+                status.setStatus("Inspector profile - " + inspectorDAO.getFirstNameForID(currentInspectorID) + " " + inspectorDAO.getSurenameForID(currentInspectorID) +  " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] exported. (" + LocalDateTime.now().format(logFormatter) + ")");
                 actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] exported profile - " + inspectorDAO.getFirstNameForID(currentInspectorID) + " " + inspectorDAO.getSurenameForID(currentInspectorID) +  " [" + labUniqueID.getText() + "] ", userDAO.getLoggedUserUniqueID()));
                 writer.println(exportData);
                 writer.close();

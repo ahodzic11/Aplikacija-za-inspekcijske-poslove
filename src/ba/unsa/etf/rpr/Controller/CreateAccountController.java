@@ -207,7 +207,7 @@ public class CreateAccountController {
         inspectorDAO.addInspector(new Inspector(0, fldName.getText(), fldSurename.getText(), birthdate.getValue().format(formatter), fldJMBG.getText(),
                 gender, fldIDNumber.getText(), fldResidence.getText(), fldPhoneNumber.getText(), fldEmail.getText(),
                 fldLoginEmail.getText(), fldPassword.getText(), driversLicense, fldUniqueID.getText(), tipInspektora, comboInspectorType.getEditor().getText()));
-        status.setStatus("New inspector profile added - " + fldName.getText() + " " + fldSurename.getText() + " [" + fldJMBG.getText() + "].");
+        status.setStatus("New inspector profile added - " + fldName.getText() + " " + fldSurename.getText() + " [" + fldUniqueID.getText() + "].");
         Stage stage = (Stage) fldName.getScene().getWindow();
         stage.close();
     }

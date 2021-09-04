@@ -30,9 +30,9 @@
       <Label text="Email" />
       <Label text="Password" GridPane.rowIndex="2" />
       <Label text="Unique ID" GridPane.rowIndex="4" />
-      <TextField fx:id="fldEmail" GridPane.rowIndex="1" />
-      <TextField fx:id="fldPassword" GridPane.rowIndex="3" />
-      <TextField fx:id="fldUniqueID" GridPane.rowIndex="5" />
+      <TextField fx:id="fldEmail" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+      <TextField fx:id="fldPassword" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+      <TextField fx:id="fldUniqueID" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="6">
         <buttons>
           <Button defaultButton="true" mnemonicParsing="false" onAction="#createAdminBtn" text="Kreiraj" />

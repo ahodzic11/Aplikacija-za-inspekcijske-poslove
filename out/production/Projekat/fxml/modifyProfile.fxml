@@ -55,22 +55,22 @@
    </rowConstraints>
    <children>
       <Label text="First name" GridPane.rowIndex="4" />
-      <TextField fx:id="fldIme" GridPane.rowIndex="5" />
+      <TextField fx:id="fldName" GridPane.rowIndex="5" />
       <Label text="Last name" GridPane.rowIndex="6" />
-      <TextField fx:id="fldPrezime" GridPane.rowIndex="7" />
+      <TextField fx:id="fldSurename" GridPane.rowIndex="7" />
       <Label text="ID number" GridPane.rowIndex="9" />
-      <TextField fx:id="fldBrojLicne" GridPane.rowIndex="10" />
+      <TextField fx:id="fldIDNumber" GridPane.rowIndex="10" />
       <Label text="Residence" GridPane.rowIndex="11" />
-      <TextField fx:id="fldMjestoPrebivalista" GridPane.rowIndex="12" />
+      <TextField fx:id="fldResidency" GridPane.rowIndex="12" />
       <Label text="Phone number" GridPane.rowIndex="13" />
-      <TextField fx:id="fldKontaktTelefon" GridPane.rowIndex="14" />
+      <TextField fx:id="fldPhoneNumber" GridPane.rowIndex="14" />
       <Label text="Personal e-mail" GridPane.rowIndex="15" />
-      <TextField fx:id="fldPersonalniMail" GridPane.rowIndex="16" />
+      <TextField fx:id="fldEmail" GridPane.rowIndex="16" />
       <Label text="Login e-mail" GridPane.rowIndex="17" />
-      <TextField fx:id="fldPristupniMail" GridPane.rowIndex="18" />
+      <TextField fx:id="fldLoginEmail" GridPane.rowIndex="18" />
       <Label text="Password" GridPane.rowIndex="19" />
-      <TextField fx:id="fldPristupnaSifra" GridPane.rowIndex="20" />
-      <CheckBox fx:id="cbVozacka" contentDisplay="RIGHT" mnemonicParsing="false" text="Driver's license" GridPane.rowIndex="23" />
+      <TextField fx:id="fldPassword" GridPane.rowIndex="20" />
+      <CheckBox fx:id="cbDriversLicense" contentDisplay="RIGHT" mnemonicParsing="false" text="Driver's license" GridPane.rowIndex="23" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="27">
         <buttons>
           <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="OK" />
@@ -79,14 +79,14 @@
       </ButtonBar>
       <HBox spacing="20.0" GridPane.rowIndex="24" />
       <Label text="Inspection area:" GridPane.rowIndex="1" />
-      <ComboBox fx:id="comboOblastInspekcije" editable="true" GridPane.rowIndex="2" />
+      <ComboBox fx:id="comboInspectionArea" editable="true" GridPane.rowIndex="2" />
       <HBox spacing="30.0">
          <children>
-            <RadioButton fx:id="rbGlavniInspektor" mnemonicParsing="false" text="Major federal inspector">
+            <RadioButton fx:id="rbMajorInspector" mnemonicParsing="false" text="Major federal inspector">
                <toggleGroup>
                   <ToggleGroup fx:id="tipInspektoraGroup" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="rbFederalniInspektor" mnemonicParsing="false" text="Federal inspector" toggleGroup="$tipInspektoraGroup" />
+            <RadioButton fx:id="rbFederalInspector" mnemonicParsing="false" text="Federal inspector" toggleGroup="$tipInspektoraGroup" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

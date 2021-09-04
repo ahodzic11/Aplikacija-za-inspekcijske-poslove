@@ -23,7 +23,6 @@ public class Main extends Application {
         AdministratorDAO administratorDAO = AdministratorDAO.getInstance();
         InspectorDAO inspectorDAO = InspectorDAO.getInstance();
         if(userDAO.isLoggedIn()){
-            System.out.println("ulogovan");
             ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
             for(Administrator a : administratori)
                 if(a.getUniqueId().equals(userDAO.getLoggedUserUniqueID())){

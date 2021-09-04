@@ -56,11 +56,13 @@ public class ModifyAdministratorController {
     }
 
     public void okBtn(ActionEvent actionEvent) {
+        if(!isValid()) return;
         String userUniqueID = userDAO.getLoggedUserUniqueID();
         int administratorID = administratorDAO.getIdForUniqueID(userUniqueID);
         administratorDAO.modifyAdministrator(administratorID, fldEmail.getText(), fldPassword.getText(), fldUniqueID.getText());
         Stage stage = (Stage) fldEmail.getScene().getWindow();
         stage.close();
+
         status.setStatus("Administrator profile [" + userUniqueID + "] login data changed.");
     }
 
@@ -74,5 +76,11 @@ public class ModifyAdministratorController {
         Pattern emailPat = Pattern.compile(emailRegex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = emailPat.matcher(input);
         return matcher.find();
+    }
+
+    private boolean isValid(){
+        if(!validEmail(fldEmail.getText())) return false;
+        if(fldPassword.getText().length()<6 || fldUniqueID.getText().length()!=6) return false;
+        return true;
     }
 }

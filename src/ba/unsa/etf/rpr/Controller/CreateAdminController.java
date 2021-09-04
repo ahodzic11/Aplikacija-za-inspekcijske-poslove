@@ -1,7 +1,11 @@
 package ba.unsa.etf.rpr.Controller;
 
+import ba.unsa.etf.rpr.DAL.ActionLogDAO;
 import ba.unsa.etf.rpr.DAL.AdministratorDAO;
+import ba.unsa.etf.rpr.DAL.UserDAO;
+import ba.unsa.etf.rpr.Model.ActionLog;
 import ba.unsa.etf.rpr.Model.Administrator;
+import ba.unsa.etf.rpr.Model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,18 +16,27 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CreateAdminController {
     private AdministratorDAO administratorDAO;
+    private ActionLogDAO actionLogDAO;
+    private UserDAO userDAO;
     public TextField fldEmail;
     public TextField fldPassword;
     public TextField fldUniqueID;
+    private Status status;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     @FXML
     public void initialize() throws SQLException {
         administratorDAO = AdministratorDAO.getInstance();
+        status = Status.getInstance();
+        actionLogDAO = ActionLogDAO.getInstance();
+        userDAO = UserDAO.getInstance();
 
         fldEmail.textProperty().addListener((observableValue, o, n) -> {
             if(!validEmail(fldEmail.getText())){
@@ -63,6 +76,8 @@ public class CreateAdminController {
     public void createAdminBtn(ActionEvent actionEvent) throws SQLException {
         if(!isValid()) return;
         administratorDAO.addAdministrator(new Administrator(1, fldEmail.getText(), fldPassword.getText(), fldUniqueID.getText()));
+        status.setStatus("New administrator account made - [" + fldUniqueID.getText() + "].");
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] made a new administrator account - " + fldEmail.getText() + " [" + fldUniqueID.getText()+ "]", userDAO.getLoggedUserUniqueID()));
         Stage stage = (Stage) fldEmail.getScene().getWindow();
         stage.close();
     }

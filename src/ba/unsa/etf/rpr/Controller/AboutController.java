@@ -1,6 +1,8 @@
 package ba.unsa.etf.rpr.Controller;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class AboutController {
+    public Label labHeadline;
 
     public void openProjectLink(ActionEvent actionEvent) {
         if(Desktop.isDesktopSupported()){
@@ -32,5 +35,10 @@ public class AboutController {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void okBtn(ActionEvent actionEvent) {
+        Stage stage = (Stage) labHeadline.getScene().getWindow();
+        stage.close();
     }
 }

@@ -33,7 +33,7 @@
                     </items>
                   </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem onAction="#logoviBtn" text="_Open Logs" />
+                  <MenuItem onAction="#logsBtn" text="_Open Logs" />
                   <MenuItem onAction="#exportBtn" text="_Export Inspector" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem onAction="#logoutBtn" text="_Log Out" />

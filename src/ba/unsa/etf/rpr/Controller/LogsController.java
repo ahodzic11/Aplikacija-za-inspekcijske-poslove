@@ -1,13 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.AdministratorDAO;
-import ba.unsa.etf.rpr.DAL.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.ActionLogDAO;
-import ba.unsa.etf.rpr.DAL.LoginLogDAO;
-import ba.unsa.etf.rpr.Model.Administrator;
-import ba.unsa.etf.rpr.Model.Inspector;
-import ba.unsa.etf.rpr.Model.LoginLog;
-import ba.unsa.etf.rpr.Model.ActionLog;
+import ba.unsa.etf.rpr.DAL.*;
+import ba.unsa.etf.rpr.Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -18,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class LogsController {
@@ -25,8 +21,11 @@ public class LogsController {
     private ActionLogDAO actionLogDAO;
     private InspectorDAO inspectorDAO;
     private AdministratorDAO administratorDAO;
+    private UserDAO userDAO;
+    private Status status;
     public TextArea areaLogins;
     public TextArea areaActions;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @FXML
     public void initialize() throws SQLException {
@@ -34,6 +33,9 @@ public class LogsController {
         inspectorDAO = InspectorDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
         actionLogDAO = ActionLogDAO.getInstance();
+        userDAO = UserDAO.getInstance();
+        status = Status.getInstance();
+
         refreshLoginLogs();
         refreshActionLogs();
     }
@@ -43,7 +45,7 @@ public class LogsController {
         stage.close();
     }
 
-    public void actionLogsExportBtn(ActionEvent actionEvent) throws IOException {
+    public void actionLogsExportBtn(ActionEvent actionEvent) {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text document", "*.txt"));
         File file = chooser.showSaveDialog(areaLogins.getScene().getWindow());
@@ -52,8 +54,10 @@ public class LogsController {
                 PrintWriter writer;
                 writer = new PrintWriter(file);
                 writer.println(areaActions.getText());
+                status.setStatus("Exported action logs. (" + LocalDateTime.now().format(formatter) + ")");
+                actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] exported action logs", userDAO.getLoggedUserUniqueID()));
                 writer.close();
-            } catch (IOException ex) {
+            } catch (IOException | SQLException ex) {
                 System.out.println("Error while exporting logs");
             }
         }
@@ -68,20 +72,26 @@ public class LogsController {
                 PrintWriter writer;
                 writer = new PrintWriter(file);
                 writer.println(areaLogins.getText());
+                status.setStatus("Exported login logs. (" + LocalDateTime.now().format(formatter) + ")");
+                actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] exported login logs", userDAO.getLoggedUserUniqueID()));
                 writer.close();
-            } catch (IOException ex) {
+            } catch (IOException | SQLException ex) {
                 System.out.println("Error while exporting logs");
             }
         }
     }
 
-    public void deleteLoginLogsBtn(ActionEvent actionEvent) {
+    public void deleteLoginLogsBtn(ActionEvent actionEvent) throws SQLException {
         loginLogDAO.deleteAllLogs();
+        status.setStatus("Deleted login logs. (" + LocalDateTime.now().format(formatter) + ")");
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] deleted login logs", userDAO.getLoggedUserUniqueID()));
         refreshLoginLogs();
     }
 
-    public void deleteActionLogsBtn(ActionEvent actionEvent) {
+    public void deleteActionLogsBtn(ActionEvent actionEvent) throws SQLException {
         actionLogDAO.deleteLogs();
+        status.setStatus("Deleted action logs. (" + LocalDateTime.now().format(formatter) + ")");
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), "Administrator [" + userDAO.getLoggedUserUniqueID()+ "] deleted action logs", userDAO.getLoggedUserUniqueID()));
         refreshActionLogs();
     }
 

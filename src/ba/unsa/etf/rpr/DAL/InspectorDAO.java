@@ -299,9 +299,9 @@ public class InspectorDAO {
         }
     }
 
-    public void deleteInspector(Inspector i){
+    public void deleteInspector(int inspectorId){
         try{
-            deletingQuery.setInt(1, i.getId());
+            deletingQuery.setInt(1, inspectorId);
             deletingQuery.execute();
         } catch (SQLException e) {
             e.printStackTrace();
