@@ -232,7 +232,6 @@ public class CreateAccountController {
         if(fldIDNumber.getText().isBlank() || fldResidence.getText().isBlank()) return false;
         if(fldPhoneNumber.getText().isBlank() || containsLetter(fldPhoneNumber.getText())) return false;
         if(!validEmail(fldEmail.getText()) || !validEmail(fldLoginEmail.getText())) return false;
-        if(fldPassword.getText().length()<6 || fldUniqueID.getText().length()!=6) return false;
-        return true;
+        return fldPassword.getText().length() >= 6 && fldUniqueID.getText().length() == 6;
     }
 }

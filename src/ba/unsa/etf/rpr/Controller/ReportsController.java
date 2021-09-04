@@ -79,64 +79,64 @@ public class ReportsController {
         PregledIzvjestajaController cont = loader.getController();
 
         int objectId = reportDAO.getObjectIDForReport(currentReportId);
-        cont.labObjekat.setText(objectDAO.getNameForID(objectId));
-        cont.labVrstaObjekta.setText("Kafana");
-        cont.labAdresaObjekta.setText(objectDAO.getAddressForObjectID(objectId));
-        cont.areaOpisTerena.setText(reportDAO.getDescriptionForReportID(currentReportId));
+        cont.labObject.setText(objectDAO.getNameForID(objectId));
+        cont.labObjectType.setText("Kafana");
+        cont.labObjectAddress.setText(objectDAO.getAddressForObjectID(objectId));
+        cont.areaInspectorStatement.setText(reportDAO.getDescriptionForReportID(currentReportId));
         int ownerId = objectDAO.getOwnerForID(objectId);
-        cont.labVlasnik.setText(ownerDAO.getNameLastNameForID(ownerId));
+        cont.labOwner.setText(ownerDAO.getNameLastNameForID(ownerId));
         int firstWitnessID = witnessDAO.getFirstWitnessID(currentReportId);
         int secondWitnessID = witnessDAO.getSecondWitnessID(currentReportId);
-        cont.labPodaciPrvogSvjedoka.setText(witnessDAO.getWitnessName(firstWitnessID) + " " + witnessDAO.getWitnessSurename(firstWitnessID) + ", (" + witnessDAO.getWitnessJMBG(firstWitnessID) + ")");
-        cont.areaIzjavaPrvogSvjedoka.setText(witnessDAO.getWitnessStatementForWitness(firstWitnessID));
-        cont.labPodaciDrugogSvjedoka.setText(witnessDAO.getWitnessName(secondWitnessID) + " " + witnessDAO.getWitnessSurename(secondWitnessID) + ", (" + witnessDAO.getWitnessJMBG(secondWitnessID) + ")");
-        cont.areaIzjavaDrugogSvjedoka.setText(witnessDAO.getWitnessStatementForWitness(secondWitnessID));
-        cont.labDatumInspekcije.setText(reportDAO.getInspectionDateForReportID(currentReportId));
+        cont.labFirstWitnessInfo.setText(witnessDAO.getWitnessName(firstWitnessID) + " " + witnessDAO.getWitnessSurename(firstWitnessID) + ", (" + witnessDAO.getWitnessJMBG(firstWitnessID) + ")");
+        cont.areaFirstWitnessStatement.setText(witnessDAO.getWitnessStatementForWitness(firstWitnessID));
+        cont.labSecondWitnessInfo.setText(witnessDAO.getWitnessName(secondWitnessID) + " " + witnessDAO.getWitnessSurename(secondWitnessID) + ", (" + witnessDAO.getWitnessJMBG(secondWitnessID) + ")");
+        cont.areaSecondWitnessStatement.setText(witnessDAO.getWitnessStatementForWitness(secondWitnessID));
+        cont.labInspectionDate.setText(reportDAO.getInspectionDateForReportID(currentReportId));
         boolean violationIssued = reportDAO.violationBooked(currentReportId);
         if(violationIssued) {
-            cont.labNalog.setText("Issued");
-            cont.labPrekršaj.setText(reportDAO.getViolationForReportID(currentReportId));
-            cont.labNovcanaKazna.setText(reportDAO.getFineForReportID(currentReportId) + " KM");
-            cont.labDodatniZahtjevi.setText(reportDAO.getAdditionalRequirementsForReportID(currentReportId));
+            cont.labMisdemeanor.setText("Issued");
+            cont.labViolation.setText(reportDAO.getViolationForReportID(currentReportId));
+            cont.labFine.setText(reportDAO.getFineForReportID(currentReportId) + " KM");
+            cont.labAdditionalRequirements.setText(reportDAO.getAdditionalRequirementsForReportID(currentReportId));
         } else {
-            cont.labNalog.setText("Not issued");
-            cont.labPrekršaj.setText("Violation hasn't been commited");
-            cont.labNovcanaKazna.setText("No fines have been issued");
-            cont.labDodatniZahtjevi.setText("No additional requirements");
+            cont.labMisdemeanor.setText("Not issued");
+            cont.labViolation.setText("Violation hasn't been commited");
+            cont.labFine.setText("No fines have been issued");
+            cont.labAdditionalRequirements.setText("No additional requirements");
         }
         int workersReported = reportDAO.getRecordedWorkersForReportID(currentReportId);
         if(workersReported!=0){
-            cont.labRadnici.setText("Reported " + workersReported + " worker/s");
+            cont.labWorkers.setText("Reported " + workersReported + " worker/s");
         }else{
-            cont.labRadnici.setText("No workers reported");
+            cont.labWorkers.setText("No workers reported");
         }
         if(reportDAO.getCriminalOffenseForReportID(currentReportId)==1){
-            cont.labKrivicnoDjelo.setText("Criminal report issued");
+            cont.labCriminalOffense.setText("Criminal report issued");
         }else{
-            cont.labKrivicnoDjelo.setText("Criminal report not issued");
+            cont.labCriminalOffense.setText("Criminal report not issued");
         }
-        if(reportDAO.getPhytocertificateForReportID(currentReportId)==1) cont.labFitocertifikat.setText("Phytocertificate issued");
-        else cont.labFitocertifikat.setText("Phytocertificate not issued");
-        if(reportDAO.isUzetUzorakZaID(currentReportId)) cont.labUzetUzorak.setText("GP/CI/MC sample taken");
-        else cont.labUzetUzorak.setText("GP/CI/MC sample not taken");
-        cont.labZabranaRada.setText(reportDAO.getWorkProhibitionForReportID(currentReportId));
+        if(reportDAO.getPhytocertificateForReportID(currentReportId)==1) cont.labPhytocertificate.setText("Phytocertificate issued");
+        else cont.labPhytocertificate.setText("Phytocertificate not issued");
+        if(reportDAO.isUzetUzorakZaID(currentReportId)) cont.labSampleTaken.setText("GP/CI/MC sample taken");
+        else cont.labSampleTaken.setText("GP/CI/MC sample not taken");
+        cont.labWorkBan.setText(reportDAO.getWorkProhibitionForReportID(currentReportId));
         boolean prijavljenoRadiliste = reportDAO.isReportedWorksite(currentReportId);
         if(prijavljenoRadiliste){
-            cont.labPrijavljenoRadiliste.setText("Yes");
-            cont.labBrojZaposlenih.setText(String.valueOf(reportDAO.getEmployeeNumberForReportID(currentReportId)));
-            cont.labPotvrdaORadu.setText(String.valueOf(reportDAO.getOpeningCertificateNumberForReportID(currentReportId)));
+            cont.labReportedWorksite.setText("Yes");
+            cont.labEmployeeNumber.setText(String.valueOf(reportDAO.getEmployeeNumberForReportID(currentReportId)));
+            cont.labWorkPermit.setText(String.valueOf(reportDAO.getOpeningCertificateNumberForReportID(currentReportId)));
         }else{
-            cont.labPrijavljenoRadiliste.setText("No");
-            cont.labBrojZaposlenih.setText("No employees");
-            cont.labPotvrdaORadu.setText("No certificate to work freely");
+            cont.labReportedWorksite.setText("No");
+            cont.labEmployeeNumber.setText("No employees");
+            cont.labWorkPermit.setText("No certificate to work freely");
         }
         if(reportDAO.getDefectForReportID(currentReportId).isBlank()) {
-            cont.labRjesenjeNedostatak.setText("Not issued");
-            cont.labNedostatak.setText("No defects found");
+            cont.labDefectIssued.setText("Not issued");
+            cont.labDefect.setText("No defects found");
         }
         else {
-            cont.labRjesenjeNedostatak.setText("Issued");
-            cont.labNedostatak.setText(reportDAO.getDefectForReportID(currentReportId));
+            cont.labDefectIssued.setText("Issued");
+            cont.labDefect.setText(reportDAO.getDefectForReportID(currentReportId));
         }
         myStage.setResizable(false);
         myStage.setTitle("Report details");

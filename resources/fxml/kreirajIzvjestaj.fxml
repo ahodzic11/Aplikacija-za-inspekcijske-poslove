@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
@@ -18,6 +19,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefWidth="1055.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.KreirajIzvjestajController">
+   <stylesheets>
+      <URL value="@/css/formulars.css" />
+   </stylesheets>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
@@ -59,29 +63,29 @@
             <RowConstraints />
          </rowConstraints>
          <children>
-            <Label text="Objekat inspekcije" GridPane.rowIndex="1" />
-            <TextField fx:id="fldNazivObjekta" GridPane.rowIndex="2" />
-            <TextField fx:id="fldAdresaObjekta" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Adresa objekta" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Opis sa terena" GridPane.rowIndex="4" />
-            <TextArea fx:id="opisTerena" prefHeight="156.0" prefWidth="492.0" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-            <CheckBox fx:id="cbPrekrsaj" mnemonicParsing="false" text="Izdaj prekršajni nalog" GridPane.columnIndex="4" GridPane.columnSpan="3" />
-            <Label text="Počinjeni prekršaj" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <TextField fx:id="fldPrekrsaj" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <TextField fx:id="fldKazna" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-            <Label text="Novčana kazna (u KM)" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-            <Label text="Dodatni zahtjevi" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-            <Label text="Datum inspekcije" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <DatePicker fx:id="datumInspekcije" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField fx:id="fldZahtjevi" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-            <CheckBox fx:id="cbPrijaviRadiliste" mnemonicParsing="false" text="Prijavi radilište" GridPane.columnIndex="4" GridPane.rowIndex="14" />
-            <Label text="Vlasnik " GridPane.columnIndex="4" GridPane.rowIndex="15" />
-            <Label text="Broj zaposlenih" GridPane.columnIndex="5" GridPane.rowIndex="15" />
-            <TextField fx:id="fldVlasnik" GridPane.columnIndex="4" GridPane.rowIndex="16" />
-            <TextField fx:id="fldBrojZaposlenih" GridPane.columnIndex="5" GridPane.rowIndex="16" />
-            <Label text="Broj potvrde o radu" GridPane.columnIndex="6" GridPane.rowIndex="15" />
-            <TextField fx:id="fldPotvrdaORadu" GridPane.columnIndex="6" GridPane.rowIndex="16" />
-            <CheckBox fx:id="cbNedostatak" mnemonicParsing="false" text="Izdaj rješenje o otklanjanju nedostatka" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="19" />
+            <Label text="Object name" GridPane.rowIndex="1" />
+            <TextField fx:id="fldObjectName" editable="false" GridPane.rowIndex="2" />
+            <TextField fx:id="fldObjectAddress" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Object address" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Inspector's statement" GridPane.rowIndex="4" />
+            <TextArea fx:id="reportDescriptionArea" prefHeight="156.0" prefWidth="492.0" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+            <CheckBox fx:id="cbViolation" mnemonicParsing="false" text="Issue a misdemeanor citation" GridPane.columnIndex="4" GridPane.columnSpan="3" />
+            <Label text="Offense commited" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <TextField fx:id="fldViolation" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <TextField fx:id="fldFine" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Label text="Fine (in KM)" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label text="Additional requirements" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Label text="Inspection date" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <DatePicker fx:id="inspectionDate" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="fldAdditionalRequirements" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <CheckBox fx:id="cbReportWorksite" mnemonicParsing="false" text="Report a worksite" GridPane.columnIndex="4" GridPane.rowIndex="14" />
+            <Label text="Owner" GridPane.columnIndex="4" GridPane.rowIndex="15" />
+            <Label text="Number of employees" GridPane.columnIndex="5" GridPane.rowIndex="15" />
+            <TextField fx:id="fldOwner" GridPane.columnIndex="4" GridPane.rowIndex="16" />
+            <TextField fx:id="fldEmployeeNumber" GridPane.columnIndex="5" GridPane.rowIndex="16" />
+            <Label text="Work permit certification" GridPane.columnIndex="6" GridPane.rowIndex="15" />
+            <TextField fx:id="fldOpeningCertificationNumber" GridPane.columnIndex="6" GridPane.rowIndex="16" />
+            <CheckBox fx:id="cbDefectDetected" mnemonicParsing="false" text="Issue a warning for a workplace hazard" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="19" />
             <GridPane vgap="5.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="5">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -98,54 +102,54 @@
                   <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Broj evidentiranih radnika" GridPane.columnSpan="3" />
-                  <TextField fx:id="fldBrojRadnika" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="cbKrivicnoDjelo" mnemonicParsing="false" text="Podnesena prijava o krivičnom djelu" wrapText="true" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="cbUzorak" mnemonicParsing="false" text="Uzet uzorak na GP/CI/MC" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="cbFitocertifikat" mnemonicParsing="false" text="Izdat fitocertifikat" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label text="Number of workers " GridPane.columnSpan="3" />
+                  <TextField fx:id="fldReportedWorkers" GridPane.rowIndex="1" />
+                  <CheckBox fx:id="cbCriminalOffense" mnemonicParsing="false" text="File a criminal offense" wrapText="true" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="cbSampleTaken" mnemonicParsing="false" text="GP/CI/MC sample taken" GridPane.rowIndex="5" />
+                  <CheckBox fx:id="cbPhytocertificate" mnemonicParsing="false" text="Issue a phytocertificate" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <Separator prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <CheckBox fx:id="cbZabranaRada" mnemonicParsing="false" text="Izdaj privremenu zabranu rada" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9" />
-            <RadioButton fx:id="rbBrojDana" mnemonicParsing="false" text="Na određeni broj dan" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="10">
+            <CheckBox fx:id="cbWorkban" mnemonicParsing="false" text="Issue a temporary work ban" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+            <RadioButton fx:id="rbDaysBan" mnemonicParsing="false" text="For a certain number of days" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="10">
                <toggleGroup>
                   <ToggleGroup fx:id="groupZabrana" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rbIspunjenjeUslova" mnemonicParsing="false" text="Do ispunjenja uslova" toggleGroup="$groupZabrana" GridPane.columnIndex="6" GridPane.rowIndex="10" />
-            <Label text="Broj dana" GridPane.columnIndex="4" GridPane.rowIndex="11" />
-            <TextField fx:id="fldBrojDanaZabrane" GridPane.columnIndex="4" GridPane.rowIndex="12" />
-            <Label text="Neophodni uslov za otvaranje" GridPane.columnIndex="5" GridPane.rowIndex="11" />
-            <TextField fx:id="fldUslovZabrane" GridPane.columnIndex="5" GridPane.rowIndex="12" />
+            <RadioButton fx:id="rbConditionsBan" mnemonicParsing="false" text="Until critieria is met" toggleGroup="$groupZabrana" GridPane.columnIndex="6" GridPane.rowIndex="10" />
+            <Label text="Number of days" GridPane.columnIndex="4" GridPane.rowIndex="11" />
+            <TextField fx:id="fldClosedDays" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+            <Label text="Required criteria" GridPane.columnIndex="5" GridPane.rowIndex="11" />
+            <TextField fx:id="fldOpeningCondition" GridPane.columnIndex="5" GridPane.rowIndex="12" />
             <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="3" GridPane.rowSpan="24" />
             <Separator prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-            <CheckBox fx:id="cbEvidencijaRadnika" mnemonicParsing="false" text="Evidentiraj radnike na crno" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+            <CheckBox fx:id="cbWorkersReported" mnemonicParsing="false" text="Report illegal workers" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="4" />
             <Separator prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="7" />
             <Separator prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="13" />
             <Separator prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="18" />
-            <Label text="Nedostatak" GridPane.columnIndex="4" GridPane.rowIndex="20" />
-            <TextField fx:id="fldNedostatak" GridPane.columnIndex="4" GridPane.rowIndex="21" />
-            <Label text="Svjedok 1" GridPane.rowIndex="9" />
-            <TextField fx:id="s1Ime" GridPane.rowIndex="11" />
-            <Label text="Ime" GridPane.rowIndex="10" />
-            <Label text="Prezime" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Label text="Defect" GridPane.columnIndex="4" GridPane.rowIndex="20" />
+            <TextField fx:id="fldDefect" GridPane.columnIndex="4" GridPane.rowIndex="21" />
+            <Label text="First witness" GridPane.rowIndex="9" />
+            <TextField fx:id="fldFirstWitnessName" GridPane.rowIndex="11" />
+            <Label text="Name" GridPane.rowIndex="10" />
+            <Label text="Surename" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <Label text="JMBG" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-            <TextField fx:id="s1prezime" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-            <TextField fx:id="s1JMBG" GridPane.columnIndex="2" GridPane.rowIndex="11" />
-            <TextArea fx:id="s1Izjava" prefHeight="16.0" prefWidth="198.0" GridPane.columnSpan="3" GridPane.rowIndex="13" GridPane.rowSpan="4" />
-            <Label text="Izjava" GridPane.rowIndex="12" />
-            <Label text="Svjedok 2" GridPane.rowIndex="19" />
-            <Label text="Ime" GridPane.rowIndex="20" />
-            <Label text="Prezime" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+            <TextField fx:id="fldFirstWitnessSurename" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <TextField fx:id="fldFirstWitnessJMBG" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+            <TextArea fx:id="firstWitnessStatementArea" prefHeight="16.0" prefWidth="198.0" GridPane.columnSpan="3" GridPane.rowIndex="13" GridPane.rowSpan="4" />
+            <Label text="Statement" GridPane.rowIndex="12" />
+            <Label text="Second witness" GridPane.rowIndex="19" />
+            <Label text="Name" GridPane.rowIndex="20" />
+            <Label text="Surename" GridPane.columnIndex="1" GridPane.rowIndex="20" />
             <Label text="JMBG" GridPane.columnIndex="2" GridPane.rowIndex="20" />
-            <TextField fx:id="s2ime" GridPane.rowIndex="21" />
-            <TextField fx:id="s2prezime" GridPane.columnIndex="1" GridPane.rowIndex="21" />
-            <TextField fx:id="s2JMBG" GridPane.columnIndex="2" GridPane.rowIndex="21" />
-            <Label text="Izjava" GridPane.rowIndex="22" />
-            <TextArea fx:id="s2Izjava" prefHeight="92.0" prefWidth="186.0" GridPane.columnSpan="3" GridPane.rowIndex="23" />
+            <TextField fx:id="fldSecondWitnessName" GridPane.rowIndex="21" />
+            <TextField fx:id="fldSecondWitnessSurename" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+            <TextField fx:id="fldSecondWitnessJMBG" GridPane.columnIndex="2" GridPane.rowIndex="21" />
+            <Label text="Statement" GridPane.rowIndex="22" />
+            <TextArea fx:id="secondWitnessStatementArea" prefHeight="92.0" prefWidth="186.0" GridPane.columnSpan="3" GridPane.rowIndex="23" />
             <ButtonBar buttonMinWidth="30.0" GridPane.columnIndex="6" GridPane.rowIndex="23">
               <buttons>
-                <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="Kreiraj" />
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="Create" />
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
               </buttons>
             </ButtonBar>
@@ -153,8 +157,8 @@
             <Separator prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="18" />
             <VBox spacing="10.0" GridPane.columnIndex="4" GridPane.rowIndex="23">
                <children>
-                  <Label text="Jedinstvena šifra izvještaja" />
-                  <TextField fx:id="fldJedinstvenaSifra" />
+                  <Label text="Report's unique ID" />
+                  <TextField fx:id="fldUniqueID" />
                </children>
             </VBox>
          </children>

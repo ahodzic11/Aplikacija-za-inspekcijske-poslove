@@ -11,7 +11,7 @@
 
 <TabPane side="LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.PregledIzvjestajaController">
    <tabs>
-      <Tab closable="false" text="Osnovni podaci">
+      <Tab closable="false" text="Basic report information">
          <content>
             <GridPane hgap="10.0" vgap="10.0">
                <columnConstraints>
@@ -31,26 +31,26 @@
                   <RowConstraints />
                </rowConstraints>
                <children>
-                  <Label text="Objekat inspekcije:" />
-                  <Label fx:id="labObjekat" text="Label" GridPane.columnIndex="1" />
-                  <Label text="Vrsta objekta:" GridPane.rowIndex="1" />
-                  <Label fx:id="labVrstaObjekta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Adresa objekta:" GridPane.rowIndex="2" />
-                  <Label fx:id="labAdresaObjekta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Opis sa terena:" GridPane.rowIndex="5" />
-                  <Label text="Podaci prvog svjedoka:" GridPane.rowIndex="6" />
-                  <TextArea fx:id="areaOpisTerena" editable="false" prefHeight="66.0" prefWidth="163.0" text="fasfasdas" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label fx:id="labPodaciPrvogSvjedoka" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="Podaci drugog svjedoka:" GridPane.rowIndex="8" />
-                  <Label text="Izjava svjedoka:" GridPane.rowIndex="9" />
-                  <TextArea fx:id="areaIzjavaPrvogSvjedoka" editable="false" prefHeight="73.0" prefWidth="147.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label text="Izjava svjedoka:" GridPane.rowIndex="7" />
-                  <TextArea fx:id="areaIzjavaDrugogSvjedoka" editable="false" prefHeight="73.0" prefWidth="147.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label fx:id="labPodaciDrugogSvjedoka" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label text="Datum inspekcije:" GridPane.rowIndex="4" />
-                  <Label fx:id="labDatumInspekcije" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Vlasnik:" GridPane.rowIndex="3" />
-                  <Label fx:id="labVlasnik" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Object name:" />
+                  <Label fx:id="labObject" text="Label" GridPane.columnIndex="1" />
+                  <Label text="Object type:" GridPane.rowIndex="1" />
+                  <Label fx:id="labObjectType" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Object address:" GridPane.rowIndex="2" />
+                  <Label fx:id="labObjectAddress" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Inspector statement:" GridPane.rowIndex="5" />
+                  <Label text="First witness:" GridPane.rowIndex="6" />
+                  <TextArea fx:id="areaInspectorStatement" editable="false" prefHeight="66.0" prefWidth="163.0" text="fasfasdas" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="labFirstWitnessInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label text="Second witness:" GridPane.rowIndex="8" />
+                  <Label text="Witness statement:" GridPane.rowIndex="9" />
+                  <TextArea fx:id="areaFirstWitnessStatement" editable="false" prefHeight="73.0" prefWidth="147.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label text="Witness statement:" GridPane.rowIndex="7" />
+                  <TextArea fx:id="areaSecondWitnessStatement" editable="false" prefHeight="73.0" prefWidth="147.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label fx:id="labSecondWitnessInfo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label text="Inspection date:" GridPane.rowIndex="4" />
+                  <Label fx:id="labInspectionDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="Owner:" GridPane.rowIndex="3" />
+                  <Label fx:id="labOwner" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -58,12 +58,12 @@
             </GridPane>
          </content>
       </Tab>
-      <Tab closable="false" text="Podaci o prekršajima">
+      <Tab closable="false" text="Detailed report">
          <content>
             <GridPane hgap="10.0" vgap="10.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="123.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="170.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="133.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="160.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="17.0" minHeight="17.0" prefHeight="30.0" />
@@ -83,31 +83,31 @@
                   <RowConstraints maxHeight="17.0" minHeight="17.0" prefHeight="17.0" />
               </rowConstraints>
                <children>
-                  <Label text="Prekršajni nalog:" />
-                  <Label fx:id="labPrekršaj" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Novčana kazna:" GridPane.rowIndex="2" />
-                  <Label fx:id="labNovcanaKazna" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Dodatni zahtjevi:" GridPane.rowIndex="3" />
-                  <Label text="Počinjeni prekršaj:" GridPane.rowIndex="1" />
-                  <Label fx:id="labRadnici" text="Radnici na crno" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
-                  <Label fx:id="labKrivicnoDjelo" text="Prijava krivično djelo" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
-                  <Label fx:id="labFitocertifikat" text="Izdat certifikat" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
-                  <Label fx:id="labUzetUzorak" text="Uzet uzorak" GridPane.columnSpan="2147483647" GridPane.rowIndex="7" />
-                  <Label fx:id="labZabranaRada" text="Zabrana rada" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
-                  <Label text="Prijavljeno radilište:" GridPane.columnSpan="2147483647" GridPane.rowIndex="9" />
-                  <Label text="Broj zaposlenih:" GridPane.rowIndex="10" />
-                  <Label text="Broj potvrde o radu:" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
-                  <Label text="Rješenje o nedostatku:" GridPane.columnSpan="2147483647" GridPane.rowIndex="12" />
-                  <Label text="Nedostatak: " GridPane.rowIndex="13" />
-                  <Label fx:id="labNedostatak" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                  <Label fx:id="labPotvrdaORadu" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                  <Label fx:id="labBrojZaposlenih" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Label fx:id="labPrijavljenoRadiliste" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label fx:id="labDodatniZahtjevi" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label fx:id="labRjesenjeNedostatak" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                  <Label fx:id="labNalog" text="Label" GridPane.columnIndex="1" />
-                  <Label text="Jedinstvena šifra:" GridPane.rowIndex="14" />
-                  <Label fx:id="labJedinstvenaSifra" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                  <Label text="Misdemeanor:" />
+                  <Label fx:id="labViolation" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Fine:" GridPane.rowIndex="2" />
+                  <Label fx:id="labFine" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Additional requirements:" GridPane.rowIndex="3" />
+                  <Label text="Offense commited:" GridPane.rowIndex="1" />
+                  <Label fx:id="labWorkers" text="Illegal workers:" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
+                  <Label fx:id="labCriminalOffense" text="Criminal offense:" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
+                  <Label fx:id="labPhytocertificate" text="Phytocertificate issued:" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
+                  <Label fx:id="labSampleTaken" text="Sample taken" GridPane.columnSpan="2147483647" GridPane.rowIndex="7" />
+                  <Label fx:id="labWorkBan" text="Work ban" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
+                  <Label text="Worksite reported:" GridPane.columnSpan="2147483647" GridPane.rowIndex="9" />
+                  <Label text="Number of employees:" GridPane.rowIndex="10" />
+                  <Label text="Work permit certification:" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
+                  <Label text="Workplace hazard:" GridPane.columnSpan="2147483647" GridPane.rowIndex="12" />
+                  <Label text="Defect:" GridPane.rowIndex="13" />
+                  <Label fx:id="labDefect" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <Label fx:id="labWorkPermit" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <Label fx:id="labEmployeeNumber" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <Label fx:id="labReportedWorksite" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label fx:id="labAdditionalRequirements" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="labDefectIssued" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <Label fx:id="labMisdemeanor" text="Label" GridPane.columnIndex="1" />
+                  <Label text="Report Unique ID:" GridPane.rowIndex="14" />
+                  <Label fx:id="labUniqueID" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

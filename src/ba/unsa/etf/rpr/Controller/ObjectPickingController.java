@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -24,7 +23,7 @@ import java.time.format.DateTimeFormatter;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class ObjectPickingController {
-    public ComboBox comboVrstaObjekta;
+    public TextField fldObjectType;
     private ReportDAO izvjestajDao;
     public ListView objektiVlasnika;
     public TextField fldNaziv;
@@ -47,7 +46,6 @@ public class ObjectPickingController {
         objekatDao = ObjectDAO.getInstance();
         izvjestajDao = ReportDAO.getInstance();
         svjedokDao = WitnessDAO.getInstance();
-        comboVrstaObjekta.getItems().addAll("Obrazovna institucija", "Zdravstvena institucija", "Ugostiteljski objekat");
         vlasnici.setItems(vlasnikdao.allOwners());
         vlasnici.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
             Owner novi = (Owner) newItem;
@@ -66,11 +64,11 @@ public class ObjectPickingController {
                         idTrenutnogObjekta = noviObjekat.getId();
                         fldNaziv.setText(noviObjekat.getName());
                         fldAdresa.setText(noviObjekat.getAddress());
-                        comboVrstaObjekta.getSelectionModel().select(objekatDao.getObjectTypeForID(idTrenutnogObjekta));
+                        fldObjectType.setText(objekatDao.getObjectTypeForID(idTrenutnogObjekta));
                     }else{
                         fldNaziv.setText("");
                         fldAdresa.setText("");
-                        comboVrstaObjekta.getSelectionModel().select("");
+                        fldObjectType.setText("");
                         idTrenutnogObjekta = -1;
                     }
                 });
@@ -105,8 +103,7 @@ public class ObjectPickingController {
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.showAndWait();
-        refreshOwnersList();
-        refresujObjekte();
+        refreshObjects();
     }
 
     public void cancelBtn(ActionEvent actionEvent) {
@@ -116,10 +113,10 @@ public class ObjectPickingController {
 
     public void deleteObjekat(ActionEvent actionEvent) {
         objekatDao.deleteObjectWithID(idTrenutnogObjekta);
-        refresujObjekte();
+        refreshObjects();
     }
 
-    private void refresujObjekte() {
+    private void refreshObjects() {
         objektiVlasnika.setItems(objekatDao.getObjectsFromOwner(idTrenutnogVlasnika));
     }
 
@@ -131,7 +128,7 @@ public class ObjectPickingController {
         objekatDao.deleteOwnersObjects(idTrenutnogVlasnika);
         vlasnikdao.deleteOwner(idTrenutnogVlasnika);
         refreshOwnersList();
-        refresujObjekte();
+        refreshObjects();
     }
 
     public void otvoriObjekatBtn(ActionEvent actionEvent) throws IOException {
@@ -142,24 +139,15 @@ public class ObjectPickingController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/kreirajIzvjestaj.fxml"));
             Parent root = loader.load();
             KreirajIzvjestajController cont = loader.getController();
-            cont.fldNazivObjekta.setText(objekatDao.getNameForID(idTrenutnogObjekta));
-            cont.fldAdresaObjekta.setText(objekatDao.getAddressForObjectID(idTrenutnogObjekta));
-            cont.fldVlasnik.setText(vlasnikdao.getNameLastNameForID(idTrenutnogVlasnika));
-            cont.datumInspekcije.setValue(LocalDate.now());
-            cont.idObjekta = idTrenutnogObjekta;
+            cont.fldObjectName.setText(objekatDao.getNameForID(idTrenutnogObjekta));
+            cont.fldObjectAddress.setText(objekatDao.getAddressForObjectID(idTrenutnogObjekta));
+            cont.fldOwner.setText(vlasnikdao.getNameLastNameForID(idTrenutnogVlasnika));
+            cont.inspectionDate.setValue(LocalDate.now());
+            cont.objectId = idTrenutnogObjekta;
             Stage stage = (Stage) fldIme.getScene().getWindow();
             stage.close();
             myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             myStage.show();
-
         }
-    }
-
-    public void obrisiIzvjestajeBtn(ActionEvent actionEvent) {
-        izvjestajDao.deleteAllReports();
-    }
-
-    public void obrisiSvjedokeBtn(ActionEvent actionEvent) {
-        svjedokDao.deleteAllWitnesses();
     }
 }

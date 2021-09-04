@@ -43,7 +43,7 @@
           </Menu>
           <Menu text="_Edit">
             <items>
-              <MenuItem onAction="#obrisiIzvjestajBtn" text="_Delete Report" />
+              <MenuItem onAction="#deleteReportBtn" text="_Delete Report" />
             </items>
           </Menu>
           <Menu text="_Help">
@@ -98,8 +98,8 @@
                                       </rowConstraints>
                                        <children>
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#kreirajIzvjestaj" prefHeight="342.0" prefWidth="432.0" text="Create a report" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#obrisiIzvjestajBtn" prefHeight="64.0" prefWidth="246.0" text="Delete report" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifikujIzvjestajBtn" prefHeight="432.0" prefWidth="432.0" text="Modify report" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteReportBtn" prefHeight="64.0" prefWidth="246.0" text="Delete report" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyReportBtn" prefHeight="432.0" prefWidth="432.0" text="Modify report" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pogledajIzvjestajBtn" prefHeight="235.0" prefWidth="353.0" text="Report details" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportujIzvjestajBtn" prefHeight="432.0" prefWidth="432.0" text="Export report" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
                                        </children>
