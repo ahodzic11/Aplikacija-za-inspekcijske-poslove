@@ -76,7 +76,7 @@ public class ReportsController {
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/reportDetails.fxml"));
         Parent root = loader.load();
-        PregledIzvjestajaController cont = loader.getController();
+        ReportDetailsController cont = loader.getController();
 
         int objectId = reportDAO.getObjectIDForReport(currentReportId);
         cont.labObject.setText(objectDAO.getNameForID(objectId));
@@ -117,7 +117,7 @@ public class ReportsController {
         }
         if(reportDAO.getPhytocertificateForReportID(currentReportId)==1) cont.labPhytocertificate.setText("Phytocertificate issued");
         else cont.labPhytocertificate.setText("Phytocertificate not issued");
-        if(reportDAO.isUzetUzorakZaID(currentReportId)) cont.labSampleTaken.setText("GP/CI/MC sample taken");
+        if(reportDAO.sampleTakenForID(currentReportId)) cont.labSampleTaken.setText("GP/CI/MC sample taken");
         else cont.labSampleTaken.setText("GP/CI/MC sample not taken");
         cont.labWorkBan.setText(reportDAO.getWorkProhibitionForReportID(currentReportId));
         boolean prijavljenoRadiliste = reportDAO.isReportedWorksite(currentReportId);
@@ -152,76 +152,76 @@ public class ReportsController {
     public void modifyReportBtn(ActionEvent actionEvent) throws IOException {
         if(currentReportId == -1) return;
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/modifikujIzvjestaj.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/modifyReport.fxml"));
         Parent root = loader.load();
-        ModifikujIzvjestajController cont = loader.getController();
+        ModifyReportController cont = loader.getController();
 
         int objectId = reportDAO.getObjectIDForReport(currentReportId);
-        cont.fldNazivObjekta.setText(objectDAO.getNameForID(objectId));
-        cont.fldAdresaObjekta.setText(objectDAO.getAddressForObjectID(objectId));
-        cont.datumInspekcije.getEditor().setText(reportDAO.getInspectionDateForReportID(currentReportId));
-        cont.opisTerena.setText(reportDAO.getDescriptionForReportID(currentReportId));
+        cont.fldObjectName.setText(objectDAO.getNameForID(objectId));
+        cont.fldObjectAddress.setText(objectDAO.getAddressForObjectID(objectId));
+        cont.inspectionDate.getEditor().setText(reportDAO.getInspectionDateForReportID(currentReportId));
+        cont.areaInspectorsStatement.setText(reportDAO.getDescriptionForReportID(currentReportId));
         int firstWitnessID = witnessDAO.getFirstWitnessID(currentReportId);
         int secondWitnessID = witnessDAO.getSecondWitnessID(currentReportId);
-        cont.s1Ime.setText(witnessDAO.getWitnessName(firstWitnessID));
-        cont.s1prezime.setText(witnessDAO.getWitnessSurename(firstWitnessID));
-        cont.s1JMBG.setText(witnessDAO.getWitnessJMBG(firstWitnessID));
-        cont.s1Izjava.setText(witnessDAO.getWitnessStatementForWitness(firstWitnessID));
-        cont.s2ime.setText(witnessDAO.getWitnessName(secondWitnessID));
-        cont.s2prezime.setText(witnessDAO.getWitnessSurename(secondWitnessID));
-        cont.s2JMBG.setText(witnessDAO.getWitnessJMBG(secondWitnessID));
-        cont.s2Izjava.setText(witnessDAO.getWitnessStatementForWitness(secondWitnessID));
+        cont.fldFirstWitnessName.setText(witnessDAO.getWitnessName(firstWitnessID));
+        cont.fldFirstWitnessSurename.setText(witnessDAO.getWitnessSurename(firstWitnessID));
+        cont.fldFirstWitnessJMBG.setText(witnessDAO.getWitnessJMBG(firstWitnessID));
+        cont.areaFirstWitnessStatement.setText(witnessDAO.getWitnessStatementForWitness(firstWitnessID));
+        cont.fldSecondWitnessName.setText(witnessDAO.getWitnessName(secondWitnessID));
+        cont.fldSecondWitnessSurename.setText(witnessDAO.getWitnessSurename(secondWitnessID));
+        cont.fldSecondWitnessJMBG.setText(witnessDAO.getWitnessJMBG(secondWitnessID));
+        cont.areaSecondWitnessStatement.setText(witnessDAO.getWitnessStatementForWitness(secondWitnessID));
         if(reportDAO.getViolationForReportID(currentReportId).isBlank()){
-            cont.cbPrekrsaj.setSelected(false);
+            cont.cbViolation.setSelected(false);
         }else{
-            cont.cbPrekrsaj.setSelected(true);
-            cont.fldPrekrsaj.setText(reportDAO.getViolationForReportID(currentReportId));
-            cont.fldKazna.setText(reportDAO.getFineForReportID(currentReportId));
-            cont.fldZahtjevi.setText(reportDAO.getAdditionalRequirementsForReportID(currentReportId));
+            cont.cbViolation.setSelected(true);
+            cont.fldMisdemeanor.setText(reportDAO.getViolationForReportID(currentReportId));
+            cont.fldFine.setText(reportDAO.getFineForReportID(currentReportId));
+            cont.fldAdditionalRequirements.setText(reportDAO.getAdditionalRequirementsForReportID(currentReportId));
         }
         if(reportDAO.getRecordedWorkersForReportID(currentReportId)!=0){
-            cont.cbEvidencijaRadnika.setSelected(true);
-            cont.fldBrojRadnika.setText(String.valueOf(reportDAO.getRecordedWorkersForReportID(currentReportId)));
+            cont.cbWorkersReported.setSelected(true);
+            cont.fldReportedWorkers.setText(String.valueOf(reportDAO.getRecordedWorkersForReportID(currentReportId)));
         }else{
-            cont.cbEvidencijaRadnika.setSelected(false);
+            cont.cbWorkersReported.setSelected(false);
         }
         if(reportDAO.getCriminalOffenseForReportID(currentReportId)==1){
-            cont.cbKrivicnoDjelo.setSelected(true);
+            cont.cbCriminalOffense.setSelected(true);
         }
-        if(reportDAO.getPhytocertificateForReportID(currentReportId)==1) cont.cbFitocertifikat.setSelected(true);
-        if(reportDAO.isUzetUzorakZaID(currentReportId)) cont.cbUzorak.setSelected(true);
-        else cont.cbUzorak.setSelected(false);
+        if(reportDAO.getPhytocertificateForReportID(currentReportId)==1) cont.cbPhytocertificate.setSelected(true);
+        if(reportDAO.sampleTakenForID(currentReportId)) cont.cbSampleTaken.setSelected(true);
+        else cont.cbSampleTaken.setSelected(false);
         if(reportDAO.getDaysClosedForReportID(currentReportId)!=0){
-            cont.cbZabranaRada.setSelected(true);
-            cont.rbBrojDana.setSelected(true);
-            cont.fldBrojDanaZabrane.setText(String.valueOf(reportDAO.getDaysClosedForReportID(currentReportId)));
-            cont.fldUslovZabrane.setDisable(true);
+            cont.cbWorkBan.setSelected(true);
+            cont.rbDaysClosed.setSelected(true);
+            cont.fldDaysClosed.setText(String.valueOf(reportDAO.getDaysClosedForReportID(currentReportId)));
+            cont.fldConditionClosed.setDisable(true);
         }else if(!reportDAO.getOpeningConditionsForReportID(currentReportId).isBlank()){
-            cont.cbZabranaRada.setSelected(true);
-            cont.rbIspunjenjeUslova.setSelected(true);
-            cont.fldBrojDanaZabrane.setDisable(true);
-            cont.fldUslovZabrane.setText(reportDAO.getOpeningConditionsForReportID(currentReportId));
+            cont.cbWorkBan.setSelected(true);
+            cont.rbConditionClosed.setSelected(true);
+            cont.fldDaysClosed.setDisable(true);
+            cont.fldConditionClosed.setText(reportDAO.getOpeningConditionsForReportID(currentReportId));
         }
         if(reportDAO.isReportedWorksite(currentReportId)){
             int ownerId = objectDAO.getOwnerForID(objectId);
-            cont.cbPrijaviRadiliste.setSelected(true);
-            cont.fldVlasnik.setText(ownerDAO.getNameLastNameForID(ownerId));
-            cont.fldBrojZaposlenih.setText(String.valueOf(reportDAO.getEmployeeNumberForReportID(currentReportId)));
-            cont.fldPotvrdaORadu.setText(String.valueOf(reportDAO.getOpeningCertificateNumberForReportID(currentReportId)));
+            cont.cbReportWorkplace.setSelected(true);
+            cont.fldOwner.setText(ownerDAO.getNameLastNameForID(ownerId));
+            cont.fldEmployeeNumber.setText(String.valueOf(reportDAO.getEmployeeNumberForReportID(currentReportId)));
+            cont.fldWorkPermit.setText(String.valueOf(reportDAO.getOpeningCertificateNumberForReportID(currentReportId)));
         }else{
-            cont.cbPrijaviRadiliste.setSelected(false);
-            cont.fldVlasnik.setDisable(true);
-            cont.fldBrojZaposlenih.setDisable(true);
-            cont.fldPotvrdaORadu.setDisable(true);
+            cont.cbReportWorkplace.setSelected(false);
+            cont.fldOwner.setDisable(true);
+            cont.fldEmployeeNumber.setDisable(true);
+            cont.fldWorkPermit.setDisable(true);
         }
         if(!reportDAO.getDefectForReportID(currentReportId).isBlank()){
-            cont.cbNedostatak.setSelected(true);
-            cont.fldNedostatak.setText(reportDAO.getDefectForReportID(currentReportId));
+            cont.cbDefect.setSelected(true);
+            cont.fldDefect.setText(reportDAO.getDefectForReportID(currentReportId));
         }else{
-            cont.cbNedostatak.setSelected(false);
-            cont.fldNedostatak.setDisable(true);
+            cont.cbDefect.setSelected(false);
+            cont.fldDefect.setDisable(true);
         }
-        cont.idOtvorenogIzvjestaja = currentReportId;
+        cont.reportId = currentReportId;
         myStage.setTitle("Modify report");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.showAndWait();

@@ -74,7 +74,7 @@
                                     <Label text="My reports" />
                                  </children>
                               </VBox>
-                              <ListView fx:id="listaIzvjestaja" prefWidth="120.0" />
+                              <ListView fx:id="reportList" prefWidth="120.0" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -100,8 +100,8 @@
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#kreirajIzvjestaj" prefHeight="342.0" prefWidth="432.0" text="Create a report" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteReportBtn" prefHeight="64.0" prefWidth="246.0" text="Delete report" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyReportBtn" prefHeight="432.0" prefWidth="432.0" text="Modify report" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pogledajIzvjestajBtn" prefHeight="235.0" prefWidth="353.0" text="Report details" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportujIzvjestajBtn" prefHeight="432.0" prefWidth="432.0" text="Export report" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showReportDetailsBtn" prefHeight="235.0" prefWidth="353.0" text="Report details" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportReportBtn" prefHeight="432.0" prefWidth="432.0" text="Export report" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" />
@@ -132,15 +132,15 @@
                            <children>
                               <HBox fx:id="tasksHBox" spacing="20.0" VBox.vgrow="NEVER">
                                  <children>
-                                    <RadioButton fx:id="rbSviTermini" mnemonicParsing="false" text="All tasks">
+                                    <RadioButton fx:id="rbAllTasks" mnemonicParsing="false" text="All tasks">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="terminiGroup" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="rbMojiTermini" mnemonicParsing="false" text="My tasks" toggleGroup="$terminiGroup" />
+                                    <RadioButton fx:id="rbMyTasks" mnemonicParsing="false" text="My tasks" toggleGroup="$terminiGroup" />
                                  </children>
                               </HBox>
-                              <ListView fx:id="listaTermina" prefWidth="90.0" VBox.vgrow="ALWAYS" />
+                              <ListView fx:id="tasksList" prefWidth="90.0" VBox.vgrow="ALWAYS" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

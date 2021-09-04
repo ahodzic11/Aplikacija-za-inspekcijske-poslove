@@ -133,12 +133,12 @@ public class ObjectPickingController {
 
     public void otvoriObjekatBtn(ActionEvent actionEvent) throws IOException {
         if(idTrenutnogObjekta!=-1){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             Stage myStage = new Stage();
-            myStage.setTitle("Kreiraj izvještaj!");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/kreirajIzvjestaj.fxml"));
+            myStage.setTitle("Create a report");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createReport.fxml"));
             Parent root = loader.load();
-            KreirajIzvjestajController cont = loader.getController();
+            CreateReportController cont = loader.getController();
             cont.fldObjectName.setText(objekatDao.getNameForID(idTrenutnogObjekta));
             cont.fldObjectAddress.setText(objekatDao.getAddressForObjectID(idTrenutnogObjekta));
             cont.fldOwner.setText(vlasnikdao.getNameLastNameForID(idTrenutnogVlasnika));

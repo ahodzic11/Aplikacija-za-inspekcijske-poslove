@@ -3,7 +3,7 @@ package ba.unsa.etf.rpr.Controller;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-public class PregledIzvjestajaController {
+public class ReportDetailsController {
     public Label labObject;
     public Label labObjectType;
     public TextArea areaInspectorStatement;

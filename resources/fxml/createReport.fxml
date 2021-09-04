@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefWidth="1055.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.KreirajIzvjestajController">
+<BorderPane prefWidth="1055.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.CreateReportController">
    <stylesheets>
       <URL value="@/css/formulars.css" />
    </stylesheets>
@@ -73,7 +73,7 @@
             <Label text="Offense commited" GridPane.columnIndex="4" GridPane.rowIndex="1" />
             <TextField fx:id="fldViolation" GridPane.columnIndex="4" GridPane.rowIndex="2" />
             <TextField fx:id="fldFine" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-            <Label text="Fine (in KM)" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label text="Fine (in $)" GridPane.columnIndex="5" GridPane.rowIndex="1" />
             <Label text="Additional requirements" GridPane.columnIndex="6" GridPane.rowIndex="1" />
             <Label text="Inspection date" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <DatePicker fx:id="inspectionDate" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -110,7 +110,7 @@
                   <Separator prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <CheckBox fx:id="cbWorkban" mnemonicParsing="false" text="Issue a temporary work ban" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+            <CheckBox fx:id="cbWorkban" mnemonicParsing="false" text="Issue a temporary work ban" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="9" />
             <RadioButton fx:id="rbDaysBan" mnemonicParsing="false" text="For a certain number of days" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="10">
                <toggleGroup>
                   <ToggleGroup fx:id="groupZabrana" />
@@ -119,8 +119,8 @@
             <RadioButton fx:id="rbConditionsBan" mnemonicParsing="false" text="Until critieria is met" toggleGroup="$groupZabrana" GridPane.columnIndex="6" GridPane.rowIndex="10" />
             <Label text="Number of days" GridPane.columnIndex="4" GridPane.rowIndex="11" />
             <TextField fx:id="fldClosedDays" GridPane.columnIndex="4" GridPane.rowIndex="12" />
-            <Label text="Required criteria" GridPane.columnIndex="5" GridPane.rowIndex="11" />
-            <TextField fx:id="fldOpeningCondition" GridPane.columnIndex="5" GridPane.rowIndex="12" />
+            <Label text="Required criteria" GridPane.columnIndex="6" GridPane.rowIndex="11" />
+            <TextField fx:id="fldOpeningCondition" GridPane.columnIndex="6" GridPane.rowIndex="12" />
             <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="3" GridPane.rowSpan="24" />
             <Separator prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="3" />
             <CheckBox fx:id="cbWorkersReported" mnemonicParsing="false" text="Report illegal workers" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="4" />
@@ -147,7 +147,7 @@
             <TextField fx:id="fldSecondWitnessJMBG" GridPane.columnIndex="2" GridPane.rowIndex="21" />
             <Label text="Statement" GridPane.rowIndex="22" />
             <TextArea fx:id="secondWitnessStatementArea" prefHeight="92.0" prefWidth="186.0" GridPane.columnSpan="3" GridPane.rowIndex="23" />
-            <ButtonBar buttonMinWidth="30.0" GridPane.columnIndex="6" GridPane.rowIndex="23">
+            <ButtonBar buttonMinWidth="30.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="23">
               <buttons>
                 <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="Create" />
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />

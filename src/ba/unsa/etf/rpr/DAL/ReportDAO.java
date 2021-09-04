@@ -329,10 +329,10 @@ public class ReportDAO {
         return -1;
     }
 
-    public boolean isUzetUzorakZaID(int idIzvjestaja) {
+    public boolean sampleTakenForID(int reportId) {
         try{
-            phytocertificateQuery.setInt(1, idIzvjestaja);
-            ResultSet rs = phytocertificateQuery.executeQuery();
+            sampleTakenQuery.setInt(1, reportId);
+            ResultSet rs = sampleTakenQuery.executeQuery();
             rs.next();
             if(rs.getInt(1)==1) return true;
             return false;
@@ -416,6 +416,8 @@ public class ReportDAO {
     }
 
     public String getWorkProhibitionForReportID(int reportId){
+        if(getDaysClosedForReportID(reportId)==0 && getOpeningConditionsForReportID(reportId).equals(""))
+            return "No temporary work prohibition found";
         if(getDaysClosedForReportID(reportId)!=0){
             return "Work prohibition has been issued for " + getDaysClosedForReportID(reportId) + " day/s";
         }else{
