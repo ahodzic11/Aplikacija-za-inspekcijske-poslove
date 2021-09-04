@@ -53,10 +53,10 @@ public class PreviewController {
         int ostaniUlogovan = 0;
         if(rememberCB.isSelected()) ostaniUlogovan = 1;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        ArrayList<Administrator> listaAdministratora = administratorDAO.dajSveAdministratore();
+        ArrayList<Administrator> listaAdministratora = administratorDAO.getAllAdministrators();
         for(Administrator a : listaAdministratora)
             if(emailFld.getText().equals(a.getEmail()) && pswFld.getText().equals(a.getSifra())){
-                String jedinstvenaSifraAdmina = administratorDAO.dajJedinstvenuSifruZaEmail(emailFld.getText());
+                String jedinstvenaSifraAdmina = administratorDAO.getUniqueIDForEmail(emailFld.getText());
                 prijavljeniUserDao.dodaj(new PrijavljeniUser(-1, LocalDateTime.now().format(formatter), ostaniUlogovan, jedinstvenaSifraAdmina));
                 logDAO.dodaj(new Log(1, LocalDateTime.now().format(formatter), "", jedinstvenaSifraAdmina));
                 Stage myStage = new Stage();

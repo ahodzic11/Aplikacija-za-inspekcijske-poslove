@@ -19,7 +19,7 @@ public class SvjedokDAO {
             modifikujSvjedokaUpit;
 
     private SvjedokDAO() throws SQLException {
-        String url = "jdbc:sqlite:inspekcija.db";
+        String url = "jdbc:sqlite:inspection.db";
         try{
             if(inspektorDao.getConn()!=null)
                 conn = inspektorDao.getConn();

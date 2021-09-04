@@ -16,7 +16,7 @@ public class LogAkcijaDAO {
     private PreparedStatement pretragaUpit, noviIdUpit, dodavanjeUpit, brisanjeUpit, obrisiUpit;
 
     private LogAkcijaDAO() throws SQLException {
-        String url = "jdbc:sqlite:inspekcija.db";
+        String url = "jdbc:sqlite:inspection.db";
         try{
             if(inspektorDao.getConn()!=null)
                 conn = inspektorDao.getConn();

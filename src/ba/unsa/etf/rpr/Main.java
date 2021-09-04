@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ public class Main extends Application {
         AdministratorDAO administratorDAO = AdministratorDAO.getInstance();
         InspektorDAO inspektorDAO = InspektorDAO.getInstance();
         if(prijavljeniUserDao.dajUlogovanost()){
-            ArrayList<Administrator> administratori = administratorDAO.dajSveAdministratore();
+            ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
             for(Administrator a : administratori)
                 if(a.getJedinstvenaSifra().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));

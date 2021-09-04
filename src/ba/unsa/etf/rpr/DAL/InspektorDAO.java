@@ -27,7 +27,7 @@ public class InspektorDAO {
     }
 
     private InspektorDAO(){
-        String url = "jdbc:sqlite:inspekcija.db";
+        String url = "jdbc:sqlite:inspection.db";
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {

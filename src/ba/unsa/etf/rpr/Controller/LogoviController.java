@@ -10,9 +10,6 @@ import ba.unsa.etf.rpr.Model.Log;
 import ba.unsa.etf.rpr.Model.LogAkcije;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,11 +17,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class LogoviController {
     private LogDAO logDAO;
@@ -95,7 +89,7 @@ public class LogoviController {
         ArrayList<Inspektor> inspektori = inspektorDAO.sviUpisaniInspektori();
         for(Inspektor i : inspektori)
             jedinstveneSifreInspektora.add(i.getJedinstvenaSifra());
-        ArrayList<Administrator> administratori = administratorDAO.dajSveAdministratore();
+        ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
         for(Administrator a : administratori)
             jedinstveneSifreAdministratora.add(a.getJedinstvenaSifra());
         for(Log l: logovi){

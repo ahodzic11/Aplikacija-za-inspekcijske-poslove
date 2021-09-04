@@ -27,8 +27,8 @@ public class ModifyAdministratorController {
 
     public void okBtn(ActionEvent actionEvent) {
         String jedinstvenaSifra = prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog();
-        int idAdministratora = administratorDAO.dajIDZaJedinstvenuSifru(jedinstvenaSifra);
-        administratorDAO.modifikuj(idAdministratora, fldEmail.getText(), fldSifra.getText(), fldJedinstvenaSifra.getText());
+        int idAdministratora = administratorDAO.getIdForUniqueID(jedinstvenaSifra);
+        administratorDAO.modify(idAdministratora, fldEmail.getText(), fldSifra.getText(), fldJedinstvenaSifra.getText());
         Stage stage = (Stage) fldEmail.getScene().getWindow();
         stage.close();
         status.setStatus("Administrator profile [" + jedinstvenaSifra + "] login data changed.");

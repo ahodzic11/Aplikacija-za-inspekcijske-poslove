@@ -1,8 +1,6 @@
 package ba.unsa.etf.rpr.DAL;
 
 import ba.unsa.etf.rpr.Model.Administrator;
-import ba.unsa.etf.rpr.Model.Inspektor;
-import ba.unsa.etf.rpr.Model.Log;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,41 +10,41 @@ import java.util.Scanner;
 
 public class AdministratorDAO {
     private static AdministratorDAO instance = null;
-    private static InspektorDAO inspektorDao = InspektorDAO.getInstance();
+    private static InspektorDAO inspectorDAO = InspektorDAO.getInstance();
     private Connection conn;
-    private PreparedStatement pretragaUpit, noviIdUpit, dodavanjeUpit, brisanjeUpit, jedinstvenaSifraUpit, emailUpit,
-            sifraUpit, modifikujUpit, idUpit;
+    private PreparedStatement allAdminsQuery, newIdQuery, addingQuery, deletingQuery, uniqueIdQuery, emailQuery,
+            passwordQuery, modifyQuery, idQuery;
 
     private AdministratorDAO() throws SQLException {
-        String url = "jdbc:sqlite:inspekcija.db";
+        String url = "jdbc:sqlite:inspection.db";
         try{
-            if(inspektorDao.getConn()!=null)
-                conn = inspektorDao.getConn();
+            if(inspectorDAO.getConn()!=null)
+                conn = inspectorDAO.getConn();
             else
                 conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         try{
-            pretragaUpit = conn.prepareStatement("SELECT * FROM administrator");
+            allAdminsQuery = conn.prepareStatement("SELECT * FROM administrator");
         } catch (SQLException e) {
-            kreirajBazu();
-            pretragaUpit = conn.prepareStatement("SELECT * FROM administrator");
+            createDatabase();
+            allAdminsQuery = conn.prepareStatement("SELECT * FROM administrator");
         }
-        noviIdUpit = conn.prepareStatement("SELECT Max(id)+1 FROM administrator");
-        dodavanjeUpit = conn.prepareStatement("INSERT INTO administrator VALUES(?, ?, ?, ?)");
-        brisanjeUpit = conn.prepareStatement("DELETE FROM administrator WHERE id=?");
-        jedinstvenaSifraUpit = conn.prepareStatement("SELECT jedinstvenaSifra FROM administrator WHERE email=?");
-        emailUpit = conn.prepareStatement("SELECT email FROM administrator WHERE jedinstvenaSifra=?");
-        sifraUpit = conn.prepareStatement("SELECT sifra FROM administrator WHERE jedinstvenaSifra=?");
-        modifikujUpit = conn.prepareStatement("UPDATE administrator SET email=?, sifra=?, jedinstvenaSifra=? WHERE id=?");
-        idUpit = conn.prepareStatement("SELECT id FROM administrator WHERE jedinstvenaSifra=?");
+        newIdQuery = conn.prepareStatement("SELECT Max(id)+1 FROM administrator");
+        addingQuery = conn.prepareStatement("INSERT INTO administrator VALUES(?, ?, ?, ?)");
+        deletingQuery = conn.prepareStatement("DELETE FROM administrator WHERE id=?");
+        uniqueIdQuery = conn.prepareStatement("SELECT uniqueId FROM administrator WHERE email=?");
+        emailQuery = conn.prepareStatement("SELECT email FROM administrator WHERE uniqueId=?");
+        passwordQuery = conn.prepareStatement("SELECT password FROM administrator WHERE uniqueId=?");
+        modifyQuery = conn.prepareStatement("UPDATE administrator SET email=?, password=?, uniqueId=? WHERE id=?");
+        idQuery = conn.prepareStatement("SELECT id FROM administrator WHERE uniqueId=?");
     }
 
-    public int dajIDZaJedinstvenuSifru(String jedinstvenaSifra) {
+    public int getIdForUniqueID(String jedinstvenaSifra) {
         try{
-            idUpit.setString(1, jedinstvenaSifra);
-            ResultSet rs = idUpit.executeQuery();
+            idQuery.setString(1, jedinstvenaSifra);
+            ResultSet rs = idQuery.executeQuery();
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
@@ -55,13 +53,13 @@ public class AdministratorDAO {
         return -2;
     }
 
-    public void modifikuj(int id, String email, String sifra, String jedinstvenaSifra){
+    public void modify(int id, String email, String password, String uniqueID){
         try{
-            modifikujUpit.setString(1, email);
-            modifikujUpit.setString(2, sifra);
-            modifikujUpit.setString(3, jedinstvenaSifra);
-            modifikujUpit.setInt(4, id);
-            modifikujUpit.execute();
+            modifyQuery.setString(1, email);
+            modifyQuery.setString(2, password);
+            modifyQuery.setString(3, uniqueID);
+            modifyQuery.setInt(4, id);
+            modifyQuery.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,7 +72,7 @@ public class AdministratorDAO {
 
     public void addAdministrator(Administrator a) throws SQLException {
         try{
-            ResultSet rs = noviIdUpit.executeQuery();
+            ResultSet rs = newIdQuery.executeQuery();
             if(rs.next())
                 a.setId(rs.getInt(1));
             else
@@ -83,40 +81,40 @@ public class AdministratorDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        dodavanjeUpit.setInt(1, a.getId());
-        dodavanjeUpit.setString(2, a.getEmail());
-        dodavanjeUpit.setString(3, a.getSifra());
-        dodavanjeUpit.setString(4, a.getJedinstvenaSifra());
-        dodavanjeUpit.execute();
+        addingQuery.setInt(1, a.getId());
+        addingQuery.setString(2, a.getEmail());
+        addingQuery.setString(3, a.getSifra());
+        addingQuery.setString(4, a.getJedinstvenaSifra());
+        addingQuery.execute();
     }
 
-    private void kreirajBazu() {
-        Scanner ulaz = null;
+    private void createDatabase() {
+        Scanner entry = null;
         try {
-            ulaz = new Scanner(new FileInputStream("inspection.sql"));
-            String sqlUpit = "";
-            while (ulaz.hasNext()) {
-                sqlUpit += ulaz.nextLine();
-                if ( sqlUpit.length() > 1 && sqlUpit.charAt( sqlUpit.length()-1 ) == ';') {
+            entry = new Scanner(new FileInputStream("inspection.sql"));
+            String sqlQuery = "";
+            while (entry.hasNext()) {
+                sqlQuery += entry.nextLine();
+                if ( sqlQuery.length() > 1 && sqlQuery.charAt( sqlQuery.length()-1 ) == ';') {
                     try {
                         Statement stmt = conn.createStatement();
-                        stmt.execute(sqlUpit);
-                        sqlUpit = "";
+                        stmt.execute(sqlQuery);
+                        sqlQuery = "";
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                 }
             }
-            ulaz.close();
+            entry.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Ne postoji SQL datoteka... nastavljam sa praznom bazom");
+            System.out.println("No SQL database found... I'm continuing with an empty database");
         }
     }
 
-    public String dajJedinstvenuSifruZaEmail(String email) {
+    public String getUniqueIDForEmail(String email) {
         try{
-            jedinstvenaSifraUpit.setString(1, email);
-            ResultSet rs = jedinstvenaSifraUpit.executeQuery();
+            uniqueIdQuery.setString(1, email);
+            ResultSet rs = uniqueIdQuery.executeQuery();
             rs.next();
             return rs.getString(1);
         } catch (SQLException e) {
@@ -125,10 +123,10 @@ public class AdministratorDAO {
         return "";
     }
 
-    public String dajEmailZaJedinstvenuSifru(String jedinstvenaSifra) {
+    public String getEmailForUniqueID(String jedinstvenaSifra) {
         try{
-            emailUpit.setString(1, jedinstvenaSifra);
-            ResultSet rs = emailUpit.executeQuery();
+            emailQuery.setString(1, jedinstvenaSifra);
+            ResultSet rs = emailQuery.executeQuery();
             rs.next();
             return rs.getString(1);
         } catch (SQLException e) {
@@ -137,10 +135,10 @@ public class AdministratorDAO {
         return "";
     }
 
-    public String dajSifruZaJedinstvenuSifru(String jedinstvenaSifra) {
+    public String getPasswordForUniqueID(String jedinstvenaSifra) {
         try{
-            sifraUpit.setString(1, jedinstvenaSifra);
-            ResultSet rs = sifraUpit.executeQuery();
+            passwordQuery.setString(1, jedinstvenaSifra);
+            ResultSet rs = passwordQuery.executeQuery();
             rs.next();
             return rs.getString(1);
         } catch (SQLException e) {
@@ -149,16 +147,16 @@ public class AdministratorDAO {
         return "";
     }
 
-    public ArrayList<Administrator> dajSveAdministratore() {
-        ArrayList<Administrator> rezultat = new ArrayList();
+    public ArrayList<Administrator> getAllAdministrators() {
+        ArrayList<Administrator> admins = new ArrayList();
         try{
-            ResultSet rs = pretragaUpit.executeQuery();
+            ResultSet rs = allAdminsQuery.executeQuery();
             while(rs.next()){
-                rezultat.add(new Administrator(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+                admins.add(new Administrator(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return rezultat;
+        return admins;
     }
 }

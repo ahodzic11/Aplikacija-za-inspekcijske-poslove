@@ -17,7 +17,7 @@ public class ObjekatDAO {
     obrisiObjekteVlasnikaUpit, vrstaObjektaUpit, izmjenaUpit;
 
     private ObjekatDAO() throws SQLException {
-        String url = "jdbc:sqlite:inspekcija.db";
+        String url = "jdbc:sqlite:inspection.db";
         try {
             if(inspektorDao.getConn()!=null)
                 conn = inspektorDao.getConn();
