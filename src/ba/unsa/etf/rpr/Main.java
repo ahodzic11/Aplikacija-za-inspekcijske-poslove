@@ -38,6 +38,9 @@ public class Main extends Application {
                 if(i.getUniqueId().equals(userDAO.getLoggedUserUniqueID())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
                     primaryStage.setTitle("Inspector");
+                    primaryStage.setMinWidth(410);
+                    primaryStage.setMinHeight(283);
+                    primaryStage.setMaxWidth(700);
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                     primaryStage.show();
                 }

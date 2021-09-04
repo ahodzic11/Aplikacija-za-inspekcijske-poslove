@@ -10,7 +10,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import java.net.URL?>
 <GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.CreateObjekatController">
+   <stylesheets>
+      <URL value = "@/css/formulars.css"/>
+   </stylesheets>
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
