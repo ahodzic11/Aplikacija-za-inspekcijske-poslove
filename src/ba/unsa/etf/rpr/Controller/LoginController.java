@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
-public class PreviewController {
+public class LoginController {
     private InspectorDAO inspectorDAO;
     private UserDAO userDAO;
     private AdministratorDAO administratorDAO;

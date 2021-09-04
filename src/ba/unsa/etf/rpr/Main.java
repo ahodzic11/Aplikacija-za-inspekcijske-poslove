@@ -19,13 +19,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        UserDAO prijavljeniUserDao = UserDAO.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
         AdministratorDAO administratorDAO = AdministratorDAO.getInstance();
-        InspectorDAO inspektorDAO = InspectorDAO.getInstance();
-        if(prijavljeniUserDao.isLoggedIn()){
+        InspectorDAO inspectorDAO = InspectorDAO.getInstance();
+        if(userDAO.isLoggedIn()){
+            System.out.println("ulogovan");
             ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
             for(Administrator a : administratori)
-                if(a.getUniqueId().equals(prijavljeniUserDao.getLoggedUserUniqueID())){
+                if(a.getUniqueId().equals(userDAO.getLoggedUserUniqueID())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
                     primaryStage.setTitle("Administrator");
                     primaryStage.setMinWidth(603);
@@ -33,16 +34,16 @@ public class Main extends Application {
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                     primaryStage.show();
                 }
-            ArrayList<Inspector> inspektori = inspektorDAO.allValidInspectors();
+            ArrayList<Inspector> inspektori = inspectorDAO.allValidInspectors();
             for(Inspector i : inspektori)
-                if(i.getUniqueId().equals(prijavljeniUserDao.getLoggedUserUniqueID())){
+                if(i.getUniqueId().equals(userDAO.getLoggedUserUniqueID())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
                     primaryStage.setTitle("Inspector");
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                     primaryStage.show();
                 }
         }else{
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/preview.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
             primaryStage.setTitle("Log in");
             primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             primaryStage.setResizable(false);

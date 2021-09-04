@@ -82,7 +82,7 @@ public class GlavniProzorUserController {
         Stage stage = (Stage) listaIzvjestaja.getScene().getWindow();
         stage.close();
         Stage myStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/preview.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         //myStage.initStyle(StageStyle.UNDECORATED);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();

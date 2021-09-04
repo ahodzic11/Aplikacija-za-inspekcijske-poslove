@@ -32,7 +32,7 @@ public class UserDAO {
         }
         addingQuery = conn.prepareStatement("INSERT INTO loginData VALUES(?, ?, ?, ?)");
         deletingQuery = conn.prepareStatement("DELETE FROM loginData");
-        loggedUserIDQuery = conn.prepareStatement("SELECT stayLogged FROM loginData");
+        loggedInQuery = conn.prepareStatement("SELECT stayLogged FROM loginData");
         loggedUserIDQuery = conn.prepareStatement("SELECT userID FROM loginData");
         uniqueIDQuery = conn.prepareStatement("SELECT uniqueId FROM loginData");
     }
@@ -47,7 +47,7 @@ public class UserDAO {
 
     public Boolean isLoggedIn(){
         try{
-            ResultSet rs = loggedUserIDQuery.executeQuery();
+            ResultSet rs = loggedInQuery.executeQuery();
             if(!rs.next()) return false;
             if(rs.getInt(1) == 1) return true;
             return false;

@@ -29,7 +29,7 @@ public class GlavniProzorAdminController {
     public Label labInfo;
     public Label labUniqueID;
     public Inspector currentInspector;
-    public int currentInspectorID;
+    public int currentInspectorID = -1;
     public Button profileBtn;
     public Button reportsBtn;
     public Button modifyBtn;
@@ -64,19 +64,21 @@ public class GlavniProzorAdminController {
         inspectorList.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
             Inspector newInspector = (Inspector) newItem;
             if(newInspector!=null){
-                labInfo.setText(newInspector.getFirstName() + " " + newInspector.getLastName());
-                labUniqueID.setText("UNIQUE ID: " + newInspector.getUniqueId());
                 currentInspectorID = newInspector.getId();
-                labInspectorType.setText(newInspector.getInspectorType());
-                labEmail.setText(newInspector.getLoginEmail());
-                labPhoneNumber.setText(newInspector.getPhoneNumber());
-
-                currentInspector = newInspector;
+                updateShownProfileInfo();
                 enableButtons();
             }else{
                 disableButtons();
             }
         });
+    }
+
+    private void updateShownProfileInfo() {
+        labInfo.setText(inspectorDAO.getFirstNameForID(currentInspectorID) + " " + inspectorDAO.getSurenameForID(currentInspectorID));
+        labUniqueID.setText("UNIQUE ID: " + inspectorDAO.getUniqueIDForID(currentInspectorID));
+        labInspectorType.setText(inspectorDAO.getInspectorTypeForID(currentInspectorID));
+        labEmail.setText(inspectorDAO.getLoginEmailForID(currentInspectorID));
+        labPhoneNumber.setText(inspectorDAO.getPhoneNumberForID(currentInspectorID));
     }
 
     public void openCreateAccount(ActionEvent actionEvent) throws IOException {
@@ -91,7 +93,7 @@ public class GlavniProzorAdminController {
         inspectorList.getSelectionModel().select(inspectorList.getItems().size()-1);
     }
 
-    public void profilBtn(ActionEvent actionEvent) throws IOException, SQLException {
+    public void profileBtn(ActionEvent actionEvent) throws IOException, SQLException {
         status.setStatus("Inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened.");
         updateStatus();
 
@@ -138,13 +140,12 @@ public class GlavniProzorAdminController {
 
         inspectorDAO.deleteInspector(currentInspector);
         refreshInspectorsList();
-
+        currentInspectorID = -1;
         labInfo.setText("");
         labUniqueID.setText("");
         labInspectorType.setText("");
         labPhoneNumber.setText("");
         labEmail.setText("");
-
         updateStatus();
     }
 
@@ -176,9 +177,8 @@ public class GlavniProzorAdminController {
         refreshInspectorsList();
 
         inspectorList.getSelectionModel().select(currentInspectorID);
-        labInfo.setText(inspectorDAO.getFirstNameForID(currentInspectorID) + " " + inspectorDAO.getSurenameForID(currentInspectorID));
-        labUniqueID.setText("UNIQUE ID: " + inspectorDAO.getUniqueIDForID(currentInspectorID));
         updateStatus();
+        updateShownProfileInfo();
     }
 
     public void refreshInspectorsList(){
@@ -189,7 +189,7 @@ public class GlavniProzorAdminController {
         loginLogDAO.logout(userDAO.getLoggedUserUniqueID());
         userDAO.deleteLoggedUser();
         Stage myStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/preview.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.show();
@@ -247,7 +247,7 @@ public class GlavniProzorAdminController {
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/logs.fxml"));
         Parent root = loader.load();
-        LogoviController cont = loader.getController();
+        LogsController cont = loader.getController();
         myStage.setTitle("Logs");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.showAndWait();
@@ -284,7 +284,6 @@ public class GlavniProzorAdminController {
         updateStatus();
     }
 
-
     private void disableButtons() {
         profileBtn.setDisable(true);
         modifyBtn.setDisable(true);
@@ -306,6 +305,7 @@ public class GlavniProzorAdminController {
     }
 
     public void exportBtn(ActionEvent actionEvent) throws IOException {
+        if(currentInspectorID == -1) return;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text document", "*.txt"));
