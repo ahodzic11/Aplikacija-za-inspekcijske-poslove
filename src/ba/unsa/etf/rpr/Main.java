@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr;
 
-import ba.unsa.etf.rpr.DAL.AdministratorDAO;
+import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.InspektorDAO;
 import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
@@ -25,7 +25,7 @@ public class Main extends Application {
         if(prijavljeniUserDao.dajUlogovanost()){
             ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
             for(Administrator a : administratori)
-                if(a.getJedinstvenaSifra().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
+                if(a.getUniqueId().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
                     primaryStage.setTitle("Administrator");
                     primaryStage.setMinWidth(603);

@@ -1,5 +1,6 @@
-package ba.unsa.etf.rpr.DAL;
+package ba.unsa.etf.rpr.DAL.done;
 
+import ba.unsa.etf.rpr.DAL.InspektorDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 
 import java.io.FileInputStream;
@@ -53,7 +54,7 @@ public class AdministratorDAO {
         return -2;
     }
 
-    public void modify(int id, String email, String password, String uniqueID){
+    public void modifyAdministrator(int id, String email, String password, String uniqueID){
         try{
             modifyQuery.setString(1, email);
             modifyQuery.setString(2, password);
@@ -83,8 +84,8 @@ public class AdministratorDAO {
         }
         addingQuery.setInt(1, a.getId());
         addingQuery.setString(2, a.getEmail());
-        addingQuery.setString(3, a.getSifra());
-        addingQuery.setString(4, a.getJedinstvenaSifra());
+        addingQuery.setString(3, a.getPassword());
+        addingQuery.setString(4, a.getUniqueId());
         addingQuery.execute();
     }
 

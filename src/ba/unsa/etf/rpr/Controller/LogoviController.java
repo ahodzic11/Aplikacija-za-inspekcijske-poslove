@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.AdministratorDAO;
+import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.InspektorDAO;
 import ba.unsa.etf.rpr.DAL.LogAkcijaDAO;
 import ba.unsa.etf.rpr.DAL.LogDAO;
@@ -91,7 +91,7 @@ public class LogoviController {
             jedinstveneSifreInspektora.add(i.getJedinstvenaSifra());
         ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
         for(Administrator a : administratori)
-            jedinstveneSifreAdministratora.add(a.getJedinstvenaSifra());
+            jedinstveneSifreAdministratora.add(a.getUniqueId());
         for(Log l: logovi){
             String imePrijavljenog ="";
             if(jedinstveneSifreInspektora.contains(l.getJedinstvenaSifra())){

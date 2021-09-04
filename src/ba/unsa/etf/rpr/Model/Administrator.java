@@ -1,17 +1,16 @@
 package ba.unsa.etf.rpr.Model;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Administrator {
     private int id;
-    private SimpleStringProperty email, sifra, jedinstvenaSifra;
+    private SimpleStringProperty email, password, uniqueId;
 
-    public Administrator(int id, String email, String sifra, String jedinstvenaSifra) {
+    public Administrator(int id, String email, String password, String uniqueId) {
         this.id = id;
         this.email = new SimpleStringProperty(email);
-        this.sifra = new SimpleStringProperty(sifra);
-        this.jedinstvenaSifra = new SimpleStringProperty(jedinstvenaSifra);
+        this.password = new SimpleStringProperty(password);
+        this.uniqueId = new SimpleStringProperty(uniqueId);
     }
 
     public int getId() {
@@ -34,27 +33,27 @@ public class Administrator {
         this.email.set(email);
     }
 
-    public String getSifra() {
-        return sifra.get();
+    public String getPassword() {
+        return password.get();
     }
 
-    public SimpleStringProperty sifraProperty() {
-        return sifra;
+    public SimpleStringProperty passwordProperty() {
+        return password;
     }
 
-    public void setSifra(String sifra) {
-        this.sifra.set(sifra);
+    public void setPassword(String password) {
+        this.password.set(password);
     }
 
-    public String getJedinstvenaSifra() {
-        return jedinstvenaSifra.get();
+    public String getUniqueId() {
+        return uniqueId.get();
     }
 
-    public SimpleStringProperty jedinstvenaSifraProperty() {
-        return jedinstvenaSifra;
+    public SimpleStringProperty uniqueIdProperty() {
+        return uniqueId;
     }
 
-    public void setJedinstvenaSifra(String jedinstvenaSifra) {
-        this.jedinstvenaSifra.set(jedinstvenaSifra);
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId.set(uniqueId);
     }
 }

@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.AdministratorDAO;
+import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
 import ba.unsa.etf.rpr.Model.Status;
 import javafx.event.ActionEvent;
@@ -28,7 +28,7 @@ public class ModifyAdministratorController {
     public void okBtn(ActionEvent actionEvent) {
         String jedinstvenaSifra = prijavljeniUserDAO.dajJedinstvenuSifruUlogovanog();
         int idAdministratora = administratorDAO.getIdForUniqueID(jedinstvenaSifra);
-        administratorDAO.modify(idAdministratora, fldEmail.getText(), fldSifra.getText(), fldJedinstvenaSifra.getText());
+        administratorDAO.modifyAdministrator(idAdministratora, fldEmail.getText(), fldSifra.getText(), fldJedinstvenaSifra.getText());
         Stage stage = (Stage) fldEmail.getScene().getWindow();
         stage.close();
         status.setStatus("Administrator profile [" + jedinstvenaSifra + "] login data changed.");

@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.AdministratorDAO;
+import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.InspektorDAO;
 import ba.unsa.etf.rpr.DAL.LogDAO;
 import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
@@ -55,7 +55,7 @@ public class PreviewController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         ArrayList<Administrator> listaAdministratora = administratorDAO.getAllAdministrators();
         for(Administrator a : listaAdministratora)
-            if(emailFld.getText().equals(a.getEmail()) && pswFld.getText().equals(a.getSifra())){
+            if(emailFld.getText().equals(a.getEmail()) && pswFld.getText().equals(a.getPassword())){
                 String jedinstvenaSifraAdmina = administratorDAO.getUniqueIDForEmail(emailFld.getText());
                 prijavljeniUserDao.dodaj(new PrijavljeniUser(-1, LocalDateTime.now().format(formatter), ostaniUlogovan, jedinstvenaSifraAdmina));
                 logDAO.dodaj(new Log(1, LocalDateTime.now().format(formatter), "", jedinstvenaSifraAdmina));
