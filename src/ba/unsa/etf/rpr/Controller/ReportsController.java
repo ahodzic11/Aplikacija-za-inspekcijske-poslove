@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -26,6 +27,10 @@ public class ReportsController {
     public Label labUniqueID;
     public Label labObjectNameAddress;
     public Label labInspectionDate;
+    public Button detailsBtn;
+    public Button deleteBtn;
+    public Button modifyBtn;
+    public Button exportBtn;
     private ReportDAO reportDAO;
     public ListView reportsList;
     private int currentReportId =- 1;
@@ -40,9 +45,11 @@ public class ReportsController {
         objectDAO = ObjectDAO.getInstance();
         witnessDAO = WitnessDAO.getInstance();
         reportsList.setItems(reportDAO.getReportsForInspectorID(inspectorId));
+        disableButtons();
         reportsList.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
             Report newReport = (Report) newItem;
             if(newReport != null){
+                enableButtons();
                 currentReportId = newReport.getId();
                 int objectId = reportDAO.getObjectIDForReport(currentReportId);
                 labObjectNameAddress.setText(objectDAO.getNameForID(objectId) + ", " + objectDAO.getAddressForObjectID(objectId));
@@ -52,7 +59,7 @@ public class ReportsController {
                 labObjectStatus.setText("In function");
                 labUniqueID.setText(reportDAO.getUniqueIDForReportID(currentReportId));
             }else{
-
+                disableButtons();
             }
         });
     }
@@ -232,5 +239,19 @@ public class ReportsController {
     public void cancelBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) reportsList.getScene().getWindow();
         stage.close();
+    }
+
+    public void disableButtons(){
+        detailsBtn.setDisable(true);
+        modifyBtn.setDisable(true);
+        exportBtn.setDisable(true);
+        deleteBtn.setDisable(true);
+    }
+
+    public void enableButtons(){
+        detailsBtn.setDisable(false);
+        modifyBtn.setDisable(false);
+        exportBtn.setDisable(false);
+        deleteBtn.setDisable(false);
     }
 }

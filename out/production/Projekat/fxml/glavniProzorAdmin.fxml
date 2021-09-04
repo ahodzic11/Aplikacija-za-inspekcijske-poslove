@@ -92,7 +92,7 @@
                      <children>
                         <Label fx:id="labInspectorType" />
                         <Label fx:id="labInfo" />
-                        <Label fx:id="labUniqueID" />
+                        <Label fx:id="labUniqueID" text="Choose an inspector" />
                         <Label fx:id="labEmail" />
                         <Label fx:id="labPhoneNumber" />
                         <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">

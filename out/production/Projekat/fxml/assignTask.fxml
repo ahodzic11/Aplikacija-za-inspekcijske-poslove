@@ -20,6 +20,7 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
+      <RowConstraints />
    </rowConstraints>
    <children>
       <HBox spacing="70.0">
@@ -31,10 +32,10 @@
             <RadioButton fx:id="rbUntakenTasks" mnemonicParsing="false" text="Untaken tasks" toggleGroup="$terminiGroup" />
          </children>
       </HBox>
-      <ListView fx:id="tasksList" prefHeight="120.0" prefWidth="50.0" GridPane.rowIndex="1" />
+      <ListView fx:id="tasksList" prefHeight="120.0" prefWidth="50.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
       <ButtonBar GridPane.rowIndex="2">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="OK" />
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="Assign" />
             <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
         </buttons>
       </ButtonBar>

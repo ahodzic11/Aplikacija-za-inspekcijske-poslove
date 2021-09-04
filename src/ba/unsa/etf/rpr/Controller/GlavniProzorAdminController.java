@@ -48,6 +48,7 @@ public class GlavniProzorAdminController {
     private ActionLogDAO actionLogDAO;
     private Status status;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    DateTimeFormatter logFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @FXML
     public void initialize() throws SQLException {
@@ -94,7 +95,10 @@ public class GlavniProzorAdminController {
     }
 
     public void profileBtn(ActionEvent actionEvent) throws IOException, SQLException {
-        status.setStatus("Inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened.");
+        DateTimeFormatter logFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        status.setStatus("Inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened. (" + LocalDateTime.now().format(logFormatter) + ")");
+        String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] opened account - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), action, userDAO.getLoggedUserUniqueID()));
         updateStatus();
 
         Stage myStage = new Stage();
@@ -119,11 +123,6 @@ public class GlavniProzorAdminController {
         profileController.labInspectorType.setText(inspectorDAO.getInspectorTypeForID(currentInspectorID));
         if(inspectorDAO.getDriversLicenseForID(currentInspectorID)==1) profileController.labDriversLicense.setText("owns a license");
         else profileController.labDriversLicense.setText("doesn't own a license");
-
-        String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] opened account - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
-
-        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), action, userDAO.getLoggedUserUniqueID()));
-
         myStage.setTitle("Inspector profile");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
@@ -133,16 +132,15 @@ public class GlavniProzorAdminController {
     }
 
     public void deleteBtn(ActionEvent actionEvent) throws SQLException {
-        status.setStatus("Inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] deleted.");
-
-        String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] deleted account - " + inspectorDAO.getInspectorTypeForID(currentInspectorID) + " " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
+        status.setStatus("Inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] deleted. (" + LocalDateTime.now().format(logFormatter) + ")");
+        String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] deleted account - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
         actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), action, userDAO.getLoggedUserUniqueID()));
 
         inspectorDAO.deleteInspector(currentInspectorID);
         refreshInspectorsList();
         currentInspectorID = -1;
         labInfo.setText("");
-        labUniqueID.setText("");
+        labUniqueID.setText("Choose an inspector");
         labInspectorType.setText("");
         labPhoneNumber.setText("");
         labEmail.setText("");
@@ -197,17 +195,19 @@ public class GlavniProzorAdminController {
         stage.close();
     }
 
-    public void reportsBtn(ActionEvent actionEvent) throws IOException {
-        status.setStatus("Reports for inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened.");
+    public void reportsBtn(ActionEvent actionEvent) throws IOException, SQLException {
+        status.setStatus("Reports for inspector profile - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + " [" + inspectorDAO.getUniqueIDForID(currentInspectorID) + "] opened. (" + LocalDateTime.now().format(logFormatter) + ")");
+        String action = "Administrator[" + userDAO.getLoggedUserUniqueID()+"] open reports for inspector - " + inspectorDAO.getNameSurenameForID(currentInspectorID) + "[" + inspectorDAO.getUniqueIDForID(currentInspectorID)+"]";
+        actionLogDAO.addLog(new ActionLog(1, LocalDateTime.now().format(formatter), action, userDAO.getLoggedUserUniqueID()));
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/reports"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/reports.fxml"));
         Parent root = loader.load();
         ReportsController reportsController = loader.getController();
         reportsController.setInspectorId(currentInspectorID);
         reportsController.refreshReports();
-
         myStage.setTitle("Reports");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setResizable(false);
         myStage.showAndWait();
         updateStatus();
     }
@@ -272,6 +272,9 @@ public class GlavniProzorAdminController {
         cont.setInspectorID(currentInspectorID);
         myStage.setTitle("Assign a task");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setMinWidth(260);
+        myStage.setMinHeight(202);
+        myStage.setMaxWidth(400);
         myStage.showAndWait();
         updateStatus();
     }
