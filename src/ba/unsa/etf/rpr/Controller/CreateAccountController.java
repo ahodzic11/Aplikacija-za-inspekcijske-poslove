@@ -18,20 +18,19 @@ import java.util.regex.Pattern;
 
 public class CreateAccountController {
     public TextField fldUniqueID;
-    public ComboBox comboVrstaInspektora;
-    public RadioButton rbGlavniInspektor;
-    public ToggleGroup vrstaInspektoraGroup;
-    public RadioButton rbFederalniInspektor;
-    private InspectorDAO inspektorDAO;
-    public TextField fldBrojTelefona;
-    public TextField fldPersonalniMail;
-    public TextField fldKorisnickiMail;
-    public TextField fldSifra;
-    public TextField fldBrojLicne;
-    public CheckBox vozackaCB;
-    public TextField fldMjestoPrebivalista;
-    public TextField fldIme;
-    public TextField fldPrezime;
+    public ComboBox comboInspectorType;
+    public RadioButton rbMajorInspector;
+    public RadioButton rbFederalInspector;
+    private InspectorDAO inspectorDAO;
+    public TextField fldPhoneNumber;
+    public TextField fldEmail;
+    public TextField fldLoginEmail;
+    public TextField fldPassword;
+    public TextField fldIDNumber;
+    public CheckBox cbDriversLicense;
+    public TextField fldResidence;
+    public TextField fldName;
+    public TextField fldSurename;
     public DatePicker birthdate;
     public TextField fldJMBG;
     public RadioButton maleRB;
@@ -40,27 +39,27 @@ public class CreateAccountController {
 
     @FXML
     public void initialize() throws SQLException {
-        inspektorDAO = InspectorDAO.getInstance();
-        rbFederalniInspektor.setSelected(true);
+        inspectorDAO = InspectorDAO.getInstance();
+        rbFederalInspector.setSelected(true);
         status = Status.getInstance();
         federalInspectorComboSetup();
         // validation
-        fldIme.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if (fldIme.getText().isBlank() || containsNumber(fldIme.getText())) {
-                fldIme.getStyleClass().removeAll("poljeIspravno");
-                fldIme.getStyleClass().add("poljeNeispravno");
+        fldName.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
+            if (fldName.getText().isBlank() || containsNumber(fldName.getText())) {
+                fldName.getStyleClass().removeAll("poljeIspravno");
+                fldName.getStyleClass().add("poljeNeispravno");
             } else {
-                fldIme.getStyleClass().removeAll("poljeNeispravno");
-                fldIme.getStyleClass().add("poljeIspravno");
+                fldName.getStyleClass().removeAll("poljeNeispravno");
+                fldName.getStyleClass().add("poljeIspravno");
             }
         });
-        fldPrezime.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if(fldPrezime.getText().isBlank() || containsNumber(fldPrezime.getText())){
-                fldPrezime.getStyleClass().removeAll("poljeIspravno");
-                fldPrezime.getStyleClass().add("poljeNeispravno");
+        fldSurename.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
+            if(fldSurename.getText().isBlank() || containsNumber(fldSurename.getText())){
+                fldSurename.getStyleClass().removeAll("poljeIspravno");
+                fldSurename.getStyleClass().add("poljeNeispravno");
             }else{
-                fldPrezime.getStyleClass().removeAll("poljeNeispravno");
-                fldPrezime.getStyleClass().add("poljeIspravno");
+                fldSurename.getStyleClass().removeAll("poljeNeispravno");
+                fldSurename.getStyleClass().add("poljeIspravno");
             }
         });
         birthdate.getEditor().textProperty().addListener((observableValue, oldvalue, newvalue) -> {
@@ -82,81 +81,81 @@ public class CreateAccountController {
                 fldJMBG.getStyleClass().add("poljeIspravno");
             }
         });
-        fldBrojLicne.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if(fldBrojLicne.getText().isBlank()){
-                fldBrojLicne.getStyleClass().removeAll("poljeIspravno");
-                fldBrojLicne.getStyleClass().add("poljeNeispravno");
+        fldIDNumber.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
+            if(fldIDNumber.getText().isBlank()){
+                fldIDNumber.getStyleClass().removeAll("poljeIspravno");
+                fldIDNumber.getStyleClass().add("poljeNeispravno");
             }else{
-                fldBrojLicne.getStyleClass().removeAll("poljeNeispravno");
-                fldBrojLicne.getStyleClass().add("poljeIspravno");
+                fldIDNumber.getStyleClass().removeAll("poljeNeispravno");
+                fldIDNumber.getStyleClass().add("poljeIspravno");
             }
         });
-        fldMjestoPrebivalista.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if(fldMjestoPrebivalista.getText().isBlank()){
-                fldMjestoPrebivalista.getStyleClass().removeAll("poljeIspravno");
-                fldMjestoPrebivalista.getStyleClass().add("poljeNeispravno");
+        fldResidence.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
+            if(fldResidence.getText().isBlank()){
+                fldResidence.getStyleClass().removeAll("poljeIspravno");
+                fldResidence.getStyleClass().add("poljeNeispravno");
             }else{
-                fldMjestoPrebivalista.getStyleClass().removeAll("poljeNeispravno");
-                fldMjestoPrebivalista.getStyleClass().add("poljeIspravno");
+                fldResidence.getStyleClass().removeAll("poljeNeispravno");
+                fldResidence.getStyleClass().add("poljeIspravno");
             }
         });
-        fldBrojTelefona.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-            if(fldBrojTelefona.getText().isBlank() || containsLetter(fldBrojTelefona.getText())){
-                fldBrojTelefona.getStyleClass().removeAll("poljeIspravno");
-                fldBrojTelefona.getStyleClass().add("poljeNeispravno");
+        fldPhoneNumber.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
+            if(fldPhoneNumber.getText().isBlank() || containsLetter(fldPhoneNumber.getText())){
+                fldPhoneNumber.getStyleClass().removeAll("poljeIspravno");
+                fldPhoneNumber.getStyleClass().add("poljeNeispravno");
             }else{
-                fldBrojTelefona.getStyleClass().removeAll("poljeNeispravno");
-                fldBrojTelefona.getStyleClass().add("poljeIspravno");
+                fldPhoneNumber.getStyleClass().removeAll("poljeNeispravno");
+                fldPhoneNumber.getStyleClass().add("poljeIspravno");
             }
         });
-        fldPersonalniMail.textProperty().addListener((observableValue, o, n) -> {
-            if(!validEmail(fldPersonalniMail.getText())){
-                fldPersonalniMail.getStyleClass().removeAll("poljeIspravno");
-                fldPersonalniMail.getStyleClass().add("poljeNeispravno");
+        fldEmail.textProperty().addListener((observableValue, o, n) -> {
+            if(!validEmail(fldEmail.getText())){
+                fldEmail.getStyleClass().removeAll("poljeIspravno");
+                fldEmail.getStyleClass().add("poljeNeispravno");
             }else{
-                fldPersonalniMail.getStyleClass().removeAll("poljeNeispravno");
-                fldPersonalniMail.getStyleClass().add("poljeIspravno");
+                fldEmail.getStyleClass().removeAll("poljeNeispravno");
+                fldEmail.getStyleClass().add("poljeIspravno");
             }
         });
-        fldKorisnickiMail.textProperty().addListener((observableValue, o, n) -> {
-            if(!validEmail(fldKorisnickiMail.getText())){
-                fldKorisnickiMail.getStyleClass().removeAll("poljeIspravno");
-                fldKorisnickiMail.getStyleClass().add("poljeNeispravno");
+        fldLoginEmail.textProperty().addListener((observableValue, o, n) -> {
+            if(!validEmail(fldLoginEmail.getText())){
+                fldLoginEmail.getStyleClass().removeAll("poljeIspravno");
+                fldLoginEmail.getStyleClass().add("poljeNeispravno");
             }else{
-                fldKorisnickiMail.getStyleClass().removeAll("poljeNeispravno");
-                fldKorisnickiMail.getStyleClass().add("poljeIspravno");
+                fldLoginEmail.getStyleClass().removeAll("poljeNeispravno");
+                fldLoginEmail.getStyleClass().add("poljeIspravno");
             }
         });
-        fldSifra.textProperty().addListener((observableValue, o, n) -> {
-            if(fldSifra.getText().length()<6){
-                fldSifra.getStyleClass().removeAll("poljeIspravno");
-                fldSifra.getStyleClass().add("poljeNeispravno");
+        fldPassword.textProperty().addListener((observableValue, o, n) -> {
+            if(fldPassword.getText().length()<6){
+                fldPassword.getStyleClass().removeAll("poljeIspravno");
+                fldPassword.getStyleClass().add("poljeNeispravno");
             }else{
-                fldSifra.getStyleClass().removeAll("poljeNeispravno");
-                fldSifra.getStyleClass().add("poljeIspravno");
+                fldPassword.getStyleClass().removeAll("poljeNeispravno");
+                fldPassword.getStyleClass().add("poljeIspravno");
             }
         });
-        comboVrstaInspektora.getEditor().textProperty().addListener((obs, oldItem, newItem)->{
+        comboInspectorType.getEditor().textProperty().addListener((obs, oldItem, newItem)->{
             if(newItem.isBlank() || newItem.length()<14){
-                comboVrstaInspektora.getStyleClass().removeAll("poljeIspravno");
-                comboVrstaInspektora.getStyleClass().add("poljeNeispravno");
+                comboInspectorType.getStyleClass().removeAll("poljeIspravno");
+                comboInspectorType.getStyleClass().add("poljeNeispravno");
             }else{
-                comboVrstaInspektora.getStyleClass().removeAll("poljeNeispravno");
-                comboVrstaInspektora.getStyleClass().add("poljeIspravno");
+                comboInspectorType.getStyleClass().removeAll("poljeNeispravno");
+                comboInspectorType.getStyleClass().add("poljeIspravno");
             }
         });
-        rbFederalniInspektor.selectedProperty().addListener((obs, oldItem, newItem)->{
+        rbFederalInspector.selectedProperty().addListener((obs, oldItem, newItem)->{
             federalInspectorComboSetup();
         });
-        rbGlavniInspektor.selectedProperty().addListener((obs, oldItem, newItem)->{
-            comboVrstaInspektora.getItems().removeAll();
+        rbMajorInspector.selectedProperty().addListener((obs, oldItem, newItem)->{
+            comboInspectorType.getItems().removeAll();
             ObservableList<String> listaInspektora = FXCollections.observableArrayList();
             listaInspektora.addAll("Tržišni inspektor", "Inspektor za hranu", "Zdravstveni inspektor", "Inspektor rada",
                     "Urbanističko-ekološki inspektor", "Saobraćajni inspektor", "Poljoprivredni inspektor", "Inspektor za šumarstvo",
                     "Vodni inspektor", "Veterinarski inspektor", "Elektro-energetski inspektor");
             java.util.Collections.sort(listaInspektora);
-            comboVrstaInspektora.setItems(listaInspektora);
-            comboVrstaInspektora.getItems().addAll();
+            comboInspectorType.setItems(listaInspektora);
+            comboInspectorType.getItems().addAll();
         });
         fldUniqueID.textProperty().addListener((observableValue, o, n) -> {
             if(fldUniqueID.getText().length()!=6){
@@ -170,15 +169,15 @@ public class CreateAccountController {
     }
 
     private boolean containsLetter(String text) {
-        char[] charovi = text.toCharArray();
-        for(char c : charovi)
+        char[] charArray = text.toCharArray();
+        for(char c : charArray)
             if(Character.isLetter(c)) return true;
         return false;
     }
 
     private boolean containsNumber(String text){
-        char[] charovi = text.toCharArray();
-        for(char c : charovi)
+        char[] charArray = text.toCharArray();
+        for(char c : charArray)
             if(Character.isDigit(c)) return true;
         return false;
     }
@@ -191,49 +190,49 @@ public class CreateAccountController {
     }
 
     public void actionCancel(ActionEvent actionEvent) {
-        Stage stage = (Stage) fldIme.getScene().getWindow();
+        Stage stage = (Stage) fldName.getScene().getWindow();
         stage.close();
     }
 
     public void createInspectorBtn(ActionEvent actionEvent) throws SQLException {
         //if(!isValid()) return;
-        int spol=0, vozacka=0;
-        if(vozackaCB.isSelected()) vozacka=1;
-        if(maleRB.isSelected()) spol=1;
-        else if(femaleRB.isSelected()) spol = 2; // gender = 1 - male / 2 - female
+        int gender=0, driversLicense=0;
+        if(cbDriversLicense.isSelected()) driversLicense=1;
+        if(maleRB.isSelected()) gender=1;
+        else if(femaleRB.isSelected()) gender = 2; // gender = 1 - male / 2 - female
         String tipInspektora = "";
-        if(rbGlavniInspektor.isSelected()) tipInspektora = "Major federal inspector";
+        if(rbMajorInspector.isSelected()) tipInspektora = "Major federal inspector";
         else tipInspektora = "Federal inspector";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        inspektorDAO.addInspector(new Inspector(0, fldIme.getText(), fldPrezime.getText(), birthdate.getValue().format(formatter), fldJMBG.getText(),
-                spol, fldBrojLicne.getText(), fldMjestoPrebivalista.getText(), fldBrojTelefona.getText(), fldPersonalniMail.getText(),
-                fldKorisnickiMail.getText(), fldSifra.getText(), vozacka, fldUniqueID.getText(), tipInspektora, comboVrstaInspektora.getEditor().getText()));
-        status.setStatus("New inspector profile added - " + fldIme.getText() + " " + fldPrezime.getText() + " [" + fldJMBG.getText() + "].");
-        Stage stage = (Stage) fldIme.getScene().getWindow();
+        inspectorDAO.addInspector(new Inspector(0, fldName.getText(), fldSurename.getText(), birthdate.getValue().format(formatter), fldJMBG.getText(),
+                gender, fldIDNumber.getText(), fldResidence.getText(), fldPhoneNumber.getText(), fldEmail.getText(),
+                fldLoginEmail.getText(), fldPassword.getText(), driversLicense, fldUniqueID.getText(), tipInspektora, comboInspectorType.getEditor().getText()));
+        status.setStatus("New inspector profile added - " + fldName.getText() + " " + fldSurename.getText() + " [" + fldJMBG.getText() + "].");
+        Stage stage = (Stage) fldName.getScene().getWindow();
         stage.close();
     }
 
     private void federalInspectorComboSetup(){
-        comboVrstaInspektora.getItems().removeAll();
+        comboInspectorType.getItems().removeAll();
         ObservableList<String> listaInspektora = FXCollections.observableArrayList();
         listaInspektora.addAll("Zdravstveni inspektor", "Farmaceutski inspektor", "Inspektor za hranu", "Urbanistički inspektor",
                 "Građevinski Inspektor", "Inspektor za ceste", "Inspektor zaštite prirode", "Inspektor zaštite okoliša", "Sanitarni inspektor",
                 "Turističko-ugostiteljski inspektor", "Šumarski inspektor", "Vodni inspektor", "Veterinarski inspektor", "Rudarski inspektor",
                 "Geološki inspektor");
         java.util.Collections.sort(listaInspektora);
-        comboVrstaInspektora.setItems(listaInspektora);
-        comboVrstaInspektora.getItems().addAll();
+        comboInspectorType.setItems(listaInspektora);
+        comboInspectorType.getItems().addAll();
     }
 
     private boolean isValid(){
-        if(fldIme.getText().isBlank() || containsNumber(fldIme.getText())) return false;
-        if(fldPrezime.getText().isBlank() || containsNumber(fldPrezime.getText())) return false;
+        if(fldName.getText().isBlank() || containsNumber(fldName.getText())) return false;
+        if(fldSurename.getText().isBlank() || containsNumber(fldSurename.getText())) return false;
         if(birthdate.getValue().isAfter(LocalDate.now())) return false;
         if(fldJMBG.getLength()!=13 || containsLetter(fldJMBG.getText())) return false;
-        if(fldBrojLicne.getText().isBlank() || fldMjestoPrebivalista.getText().isBlank()) return false;
-        if(fldBrojTelefona.getText().isBlank() || containsLetter(fldBrojTelefona.getText())) return false;
-        if(!validEmail(fldPersonalniMail.getText()) || !validEmail(fldKorisnickiMail.getText())) return false;
-        if(fldSifra.getText().length()<6 || fldUniqueID.getText().length()!=6) return false;
+        if(fldIDNumber.getText().isBlank() || fldResidence.getText().isBlank()) return false;
+        if(fldPhoneNumber.getText().isBlank() || containsLetter(fldPhoneNumber.getText())) return false;
+        if(!validEmail(fldEmail.getText()) || !validEmail(fldLoginEmail.getText())) return false;
+        if(fldPassword.getText().length()<6 || fldUniqueID.getText().length()!=6) return false;
         return true;
     }
 }

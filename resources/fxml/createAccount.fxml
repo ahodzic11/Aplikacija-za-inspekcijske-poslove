@@ -56,8 +56,8 @@
          <children>
             <Label text="First name:" GridPane.rowIndex="3" />
             <Label text="Last name:" GridPane.rowIndex="4" />
-            <TextField fx:id="fldIme" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="fldPrezime" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="fldName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="fldSurename" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <DatePicker fx:id="birthdate" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Birthdate:" GridPane.rowIndex="5" />
             <Label text="JMBG:" GridPane.rowIndex="6" />
@@ -76,33 +76,33 @@
             <Label text="Phone number:" GridPane.rowIndex="12" />
             <Label text="Personal e-mail:" GridPane.rowIndex="13" />
             <Label text="Login e-mail:" GridPane.rowIndex="14" />
-            <TextField fx:id="fldBrojTelefona" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-            <TextField fx:id="fldPersonalniMail" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-            <TextField fx:id="fldKorisnickiMail" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+            <TextField fx:id="fldPhoneNumber" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <TextField fx:id="fldEmail" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+            <TextField fx:id="fldLoginEmail" GridPane.columnIndex="1" GridPane.rowIndex="14" />
             <Label text="Password:" GridPane.rowIndex="15" />
             <Label text="ID number:" GridPane.rowIndex="8" />
-            <TextField fx:id="fldBrojLicne" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="fldIDNumber" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <Label text="Driver's license" GridPane.rowIndex="18" />
-            <CheckBox fx:id="vozackaCB" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+            <CheckBox fx:id="cbDriversLicense" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="18" />
             <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="11" />
             <Label text="Residency:" GridPane.rowIndex="10" />
-            <TextField fx:id="fldMjestoPrebivalista" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <TextField fx:id="fldSifra" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+            <TextField fx:id="fldResidence" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="fldPassword" GridPane.columnIndex="1" GridPane.rowIndex="15" />
             <Label text="Unique ID:" GridPane.rowIndex="16" />
             <TextField fx:id="fldUniqueID" GridPane.columnIndex="1" GridPane.rowIndex="16" />
             <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="17" />
             <Label text="Inspector type:" GridPane.rowIndex="1" />
-            <ComboBox fx:id="comboVrstaInspektora" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="comboInspectorType" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="19" />
             <Separator GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <HBox spacing="25.0" GridPane.columnSpan="2">
                <children>
-                  <RadioButton fx:id="rbGlavniInspektor" mnemonicParsing="false" text="Major federal inspector" toggleGroup="$inspectorTypeGroup">
+                  <RadioButton fx:id="rbMajorInspector" mnemonicParsing="false" text="Major federal inspector" toggleGroup="$inspectorTypeGroup">
                      <toggleGroup>
                         <ToggleGroup fx:id="inspectorTypeGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbFederalniInspektor" mnemonicParsing="false" text="Federal inspector" toggleGroup="$inspectorTypeGroup" />
+                  <RadioButton fx:id="rbFederalInspector" mnemonicParsing="false" text="Federal inspector" toggleGroup="$inspectorTypeGroup" />
                </children>
             </HBox>
          </children>
