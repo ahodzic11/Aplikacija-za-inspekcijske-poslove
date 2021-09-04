@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.AboutController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Label text="Application for inspection work" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+      <Label text="Version:" GridPane.rowIndex="2" />
+      <Label text="V1.1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="Made in:" GridPane.rowIndex="3" />
+      <Label text="2021" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+      <Label text="Made by:" GridPane.rowIndex="6" />
+      <Label text="E-mail:" GridPane.rowIndex="7" />
+      <Label text="Adnan Hodžić" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Label text="ahodzic11@etf.unsa.ba" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Label text="Git:" GridPane.rowIndex="8" />
+      <Label text="Project link:" GridPane.rowIndex="4" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+        <buttons>
+          <Button mnemonicParsing="false" text="OK" />
+        </buttons>
+      </ButtonBar>
+      <ImageView fitHeight="104.0" fitWidth="319.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647">
+         <image>
+            <Image url="@/img/inspection.jpg" />
+         </image>
+      </ImageView>
+      <Hyperlink onAction="#openProjectLink" text="https://github.com/ahodzic11/rpr-projekat" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Hyperlink onAction="#openAuthorsGit" text="https://github.com/ahodzic11" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

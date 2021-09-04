@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.ModifyProfileController">
+   <stylesheets>
+      <URL value="@/css/formulars.css" />
+   </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" />
+      <RowConstraints minHeight="10.0" />
+      <RowConstraints minHeight="10.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Label text="First name" GridPane.rowIndex="4" />
+      <TextField fx:id="fldIme" GridPane.rowIndex="5" />
+      <Label text="Last name" GridPane.rowIndex="6" />
+      <TextField fx:id="fldPrezime" GridPane.rowIndex="7" />
+      <Label text="ID number" GridPane.rowIndex="9" />
+      <TextField fx:id="fldBrojLicne" GridPane.rowIndex="10" />
+      <Label text="Residence" GridPane.rowIndex="11" />
+      <TextField fx:id="fldMjestoPrebivalista" GridPane.rowIndex="12" />
+      <Label text="Phone number" GridPane.rowIndex="13" />
+      <TextField fx:id="fldKontaktTelefon" GridPane.rowIndex="14" />
+      <Label text="Personal e-mail" GridPane.rowIndex="15" />
+      <TextField fx:id="fldPersonalniMail" GridPane.rowIndex="16" />
+      <Label text="Login e-mail" GridPane.rowIndex="17" />
+      <TextField fx:id="fldPristupniMail" GridPane.rowIndex="18" />
+      <Label text="Password" GridPane.rowIndex="19" />
+      <TextField fx:id="fldPristupnaSifra" GridPane.rowIndex="20" />
+      <CheckBox fx:id="cbVozacka" contentDisplay="RIGHT" mnemonicParsing="false" text="Driver's license" GridPane.rowIndex="23" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="27">
+        <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="OK" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+      <HBox spacing="20.0" GridPane.rowIndex="24" />
+      <Label text="Inspection area:" GridPane.rowIndex="1" />
+      <ComboBox fx:id="comboOblastInspekcije" editable="true" GridPane.rowIndex="2" />
+      <HBox spacing="30.0">
+         <children>
+            <RadioButton fx:id="rbGlavniInspektor" mnemonicParsing="false" text="Major federal inspector">
+               <toggleGroup>
+                  <ToggleGroup fx:id="tipInspektoraGroup" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="rbFederalniInspektor" mnemonicParsing="false" text="Federal inspector" toggleGroup="$tipInspektoraGroup" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <Separator prefWidth="200.0" GridPane.rowIndex="3" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>
