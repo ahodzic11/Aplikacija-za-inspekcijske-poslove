@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.DAL;
 
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.Model.Svjedok;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 
 public class SvjedokDAO {
     private static SvjedokDAO instance = null;
-    private static InspektorDAO inspektorDao = InspektorDAO.getInstance();
+    private static InspectorDAO inspektorDao = InspectorDAO.getInstance();
     private Connection conn;
     private PreparedStatement pretragaUpit, noviIdUpit, dodavanjeUpit, sviSvjedociUpit, obrisiSveSvjedokeUpit,
             dajImeSvjedokaUpit, dajPrezimeSvjedokaUpit, dajJMBGSvjedokaUpit, dajSvjedokeZaIzvjestajUpit, dajIzjavuSvjedokaUpit,

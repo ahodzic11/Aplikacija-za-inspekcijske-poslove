@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.DAL;
 
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.Model.PrijavljeniUser;
 
 import java.io.FileInputStream;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 
 public class PrijavljeniUserDAO {
     private static PrijavljeniUserDAO instance = null;
-    private InspektorDAO inspektorDao = InspektorDAO.getInstance();
+    private InspectorDAO inspektorDao = InspectorDAO.getInstance();
     private Connection conn;
     private PreparedStatement pretragaUpit, dodavanjeUpit, brisanjeUpit, prijavljenUpit, idUlogovanogInspektoraUpit,
             jedinstvenaSifraUpit;

@@ -1,9 +1,7 @@
 package ba.unsa.etf.rpr.DAL;
 
-import ba.unsa.etf.rpr.Model.Administrator;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.Model.Log;
-import ba.unsa.etf.rpr.Model.Svjedok;
-import ba.unsa.etf.rpr.Model.Termin;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,7 +13,7 @@ import java.util.Scanner;
 
 public class LogDAO {
     private static LogDAO instance = null;
-    private static InspektorDAO inspektorDao = InspektorDAO.getInstance();
+    private static InspectorDAO inspektorDao = InspectorDAO.getInstance();
     private Connection conn;
     private PreparedStatement pretragaUpit, noviIdUpit, dodavanjeUpit, brisanjeUpit, odjaviUpit, obrisiUpit;
 

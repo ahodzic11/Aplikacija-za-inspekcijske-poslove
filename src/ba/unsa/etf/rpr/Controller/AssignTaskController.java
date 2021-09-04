@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.InspektorDAO;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.DAL.ObjekatDAO;
 import ba.unsa.etf.rpr.DAL.TerminDAO;
 import ba.unsa.etf.rpr.Model.Status;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class AssignTaskController {
     private TerminDAO taskDAO;
     private ObjekatDAO objectDAO;
-    private InspektorDAO inspectorDAO;
+    private InspectorDAO inspectorDAO;
     public RadioButton rbAllTasks;
     public RadioButton rbUntakenTasks;
     public ListView tasksList;
@@ -29,7 +29,7 @@ public class AssignTaskController {
         taskDAO = TerminDAO.getInstance();
         status = Status.getInstance();
         objectDAO = ObjekatDAO.getInstance();
-        inspectorDAO = InspektorDAO.getInstance();
+        inspectorDAO = InspectorDAO.getInstance();
 
         rbAllTasks.setSelected(true);
         tasksList.setItems(taskDAO.dajSveTermine());
@@ -54,7 +54,7 @@ public class AssignTaskController {
             taskDAO.assignTaskToInspectorID(inspectorID, currentTaskID);
             int objectId = taskDAO.dajIDObjektaZaIDTermina(currentTaskID);
             status.setStatus("Task [" + objectDAO.dajNazivObjektaZaID(objectId) + ", " + objectDAO.dajAdresuObjektaZaID(objectId) + " - "
-            + taskDAO.dajVrijemeZaID(currentTaskID) + "] assigned to inspector " + inspectorDAO.dajImePrezimeInspektora(inspectorID) + " [" + inspectorDAO.dajJedinstvenuSifruZaID(inspectorID) + "].");
+            + taskDAO.dajVrijemeZaID(currentTaskID) + "] assigned to inspector " + inspectorDAO.getNameSurenameForID(inspectorID) + " [" + inspectorDAO.getUniqueIDForID(inspectorID) + "].");
         }
         Stage stage = (Stage) rbAllTasks.getScene().getWindow();
         stage.close();

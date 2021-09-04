@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.InspektorDAO;
-import ba.unsa.etf.rpr.Model.Inspektor;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
+import ba.unsa.etf.rpr.Model.Inspector;
 import ba.unsa.etf.rpr.Model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +22,7 @@ public class CreateAccountController {
     public RadioButton rbGlavniInspektor;
     public ToggleGroup vrstaInspektoraGroup;
     public RadioButton rbFederalniInspektor;
-    private InspektorDAO inspektorDAO;
+    private InspectorDAO inspektorDAO;
     public TextField fldBrojTelefona;
     public TextField fldPersonalniMail;
     public TextField fldKorisnickiMail;
@@ -40,7 +40,7 @@ public class CreateAccountController {
 
     @FXML
     public void initialize() throws SQLException {
-        inspektorDAO = InspektorDAO.getInstance();
+        inspektorDAO = InspectorDAO.getInstance();
         rbFederalniInspektor.setSelected(true);
         status = Status.getInstance();
         federalInspectorComboSetup();
@@ -205,7 +205,7 @@ public class CreateAccountController {
         if(rbGlavniInspektor.isSelected()) tipInspektora = "Major federal inspector";
         else tipInspektora = "Federal inspector";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        inspektorDAO.dodaj(new Inspektor(0, fldIme.getText(), fldPrezime.getText(), birthdate.getValue().format(formatter), fldJMBG.getText(),
+        inspektorDAO.addInspector(new Inspector(0, fldIme.getText(), fldPrezime.getText(), birthdate.getValue().format(formatter), fldJMBG.getText(),
                 spol, fldBrojLicne.getText(), fldMjestoPrebivalista.getText(), fldBrojTelefona.getText(), fldPersonalniMail.getText(),
                 fldKorisnickiMail.getText(), fldSifra.getText(), vozacka, fldUniqueID.getText(), tipInspektora, comboVrstaInspektora.getEditor().getText()));
         status.setStatus("New inspector profile added - " + fldIme.getText() + " " + fldPrezime.getText() + " [" + fldJMBG.getText() + "].");

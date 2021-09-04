@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr.DAL.done;
 
-import ba.unsa.etf.rpr.DAL.InspektorDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 
 import java.io.FileInputStream;
@@ -11,7 +10,7 @@ import java.util.Scanner;
 
 public class AdministratorDAO {
     private static AdministratorDAO instance = null;
-    private static InspektorDAO inspectorDAO = InspektorDAO.getInstance();
+    private static InspectorDAO inspectorDAO = InspectorDAO.getInstance();
     private Connection conn;
     private PreparedStatement allAdminsQuery, newIdQuery, addingQuery, deletingQuery, uniqueIdQuery, emailQuery,
             passwordQuery, modifyQuery, idQuery;

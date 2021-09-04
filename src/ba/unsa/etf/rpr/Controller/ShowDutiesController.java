@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.InspektorDAO;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.DAL.ObjekatDAO;
 import ba.unsa.etf.rpr.DAL.TerminDAO;
 import ba.unsa.etf.rpr.Model.Status;
@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class ShowDutiesController {
-    private InspektorDAO inspectorDAO;
+    private InspectorDAO inspectorDAO;
     private ObjekatDAO objectDAO;
     private TerminDAO taskDAO;
     private Status status;
@@ -30,7 +30,7 @@ public class ShowDutiesController {
     @FXML
     public void initialize() throws SQLException {
         taskDAO = TerminDAO.getInstance();
-        inspectorDAO = InspektorDAO.getInstance();
+        inspectorDAO = InspectorDAO.getInstance();
         objectDAO = ObjekatDAO.getInstance();
         status = Status.getInstance();
 
@@ -52,13 +52,13 @@ public class ShowDutiesController {
         PregledTerminaController cont = loader.getController();
         int idInspektora = taskDAO.dajInspektoraZaIDTermina(currentTaskID);
         int idObjekta = taskDAO.dajIDObjektaZaIDTermina(currentTaskID);
-        cont.labTerminZakazao.setText(inspectorDAO.dajImePrezimeInspektora(idInspektora));
+        cont.labTerminZakazao.setText(inspectorDAO.getNameSurenameForID(idInspektora));
         cont.labNazivObjekta.setText(objectDAO.dajNazivObjektaZaID(idObjekta));
         cont.labAdresaObjekta.setText(objectDAO.dajAdresuObjektaZaID(idObjekta));
         cont.labDatumVrijemeTermina.setText(taskDAO.dajVrijemeZaID(currentTaskID));
         cont.areaNapomeneTermina.setText(taskDAO.dajNapomeneTerminaZaID(currentTaskID));
         int idZaduzenogInspektora = taskDAO.dajIDZaduzenogInspektora(currentTaskID);
-        if(idZaduzenogInspektora != -1) cont.labZaduzeniInspektor.setText(inspectorDAO.dajImePrezimeInspektora(idZaduzenogInspektora));
+        if(idZaduzenogInspektora != -1) cont.labZaduzeniInspektor.setText(inspectorDAO.getNameSurenameForID(idZaduzenogInspektora));
         else cont.labZaduzeniInspektor.setText("No assigned inspector");
         boolean terminObavljen = taskDAO.isObavljen(currentTaskID);
         if(terminObavljen) cont.labTerminObavljen.setText("Done");

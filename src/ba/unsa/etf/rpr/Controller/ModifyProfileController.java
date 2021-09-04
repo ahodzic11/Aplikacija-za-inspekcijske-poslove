@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.InspektorDAO;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.Model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +24,7 @@ public class ModifyProfileController {
     public RadioButton rbGlavniInspektor;
     public RadioButton rbFederalniInspektor;
     public ComboBox comboOblastInspekcije;
-    private InspektorDAO inspektorDao;
+    private InspectorDAO inspektorDao;
     public TextField fldIme;
     public TextField fldPrezime;
     public TextField fldBrojLicne;
@@ -38,7 +38,7 @@ public class ModifyProfileController {
 
     @FXML
     public void initialize(){
-        inspektorDao = InspektorDAO.getInstance();
+        inspektorDao = InspectorDAO.getInstance();
         status = Status.getInstance();
 
         fldIme.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
@@ -153,13 +153,13 @@ public class ModifyProfileController {
         String tipInspektora = "";
         if(rbGlavniInspektor.isSelected()) tipInspektora = "Major federal inspector";
         else tipInspektora = "Federal inspector";
-        inspektorDao.modifikuj(idOtvorenog, fldIme.getText(), fldPrezime.getText(), fldBrojLicne.getText(), fldMjestoPrebivalista.getText(),
+        inspektorDao.modifyInspector(idOtvorenog, fldIme.getText(), fldPrezime.getText(), fldBrojLicne.getText(), fldMjestoPrebivalista.getText(),
                 fldKontaktTelefon.getText(), fldPersonalniMail.getText(), fldPristupniMail.getText(), fldPristupnaSifra.getText(), vozacka, tipInspektora, comboOblastInspekcije.getEditor().getText());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
         Parent root = loader.load();
         GlavniProzorAdminController glavni = loader.getController();
         glavni.refreshInspectorsList();
-        status.setStatus("Inspector profile - " + inspektorDao.dajImePrezimeInspektora(idOtvorenog) + " [" + inspektorDao.dajJedinstvenuSifruZaID(idOtvorenog) + "] modified.");
+        status.setStatus("Inspector profile - " + inspektorDao.getNameSurenameForID(idOtvorenog) + " [" + inspektorDao.getUniqueIDForID(idOtvorenog) + "] modified.");
 
         Stage stage = (Stage) fldIme.getScene().getWindow();
         stage.close();

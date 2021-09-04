@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
 import ba.unsa.etf.rpr.Model.Termin;
 import javafx.event.ActionEvent;
@@ -11,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,7 +30,7 @@ public class GlavniProzorUserController {
     private ObjekatDAO objekatDao;
     private VlasnikDAO vlasnikDao;
     private TerminDAO terminDao;
-    private InspektorDAO inspektorDao;
+    private InspectorDAO inspektorDao;
     private LogDAO logDAO;
     private int idTrenutnogTermina = -1;
 
@@ -42,7 +42,7 @@ public class GlavniProzorUserController {
         objekatDao = ObjekatDAO.getInstance();
         vlasnikDao = VlasnikDAO.getInstance();
         terminDao = TerminDAO.getInstance();
-        inspektorDao = InspektorDAO.getInstance();
+        inspektorDao = InspectorDAO.getInstance();
         logDAO = LogDAO.getInstance();
         listaIzvjestaja.setItems(izvjestajDAO.dajIzvjestajeInspektoraSaIDem(prijavljeniDao.dajIdUlogovanogInspektora()));
         listaIzvjestaja.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
@@ -78,7 +78,7 @@ public class GlavniProzorUserController {
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException {
-        logDAO.logout(inspektorDao.dajJedinstvenuSifruZaID(prijavljeniDao.dajIdUlogovanogInspektora()));
+        logDAO.logout(inspektorDao.getUniqueIDForID(prijavljeniDao.dajIdUlogovanogInspektora()));
         prijavljeniDao.obrisiPrijavljenog();
         Stage stage = (Stage) listaIzvjestaja.getScene().getWindow();
         stage.close();
@@ -282,14 +282,14 @@ public class GlavniProzorUserController {
         PregledTerminaController cont = loader.getController();
         int idInspektora = terminDao.dajInspektoraZaIDTermina(idTrenutnogTermina);
         int idObjekta = terminDao.dajIDObjektaZaIDTermina(idTrenutnogTermina);
-        cont.labTerminZakazao.setText(inspektorDao.dajImePrezimeInspektora(idInspektora));
+        cont.labTerminZakazao.setText(inspektorDao.getNameSurenameForID(idInspektora));
         cont.labNazivObjekta.setText(objekatDao.dajNazivObjektaZaID(idObjekta));
         cont.labAdresaObjekta.setText(objekatDao.dajAdresuObjektaZaID(idObjekta));
         cont.labDatumVrijemeTermina.setText(terminDao.dajVrijemeZaID(idTrenutnogTermina));
         cont.areaNapomeneTermina.setText(terminDao.dajNapomeneTerminaZaID(idTrenutnogTermina));
         int idZaduzenogInspektora = terminDao.dajIDZaduzenogInspektora(idTrenutnogTermina);
         System.out.println(idZaduzenogInspektora);
-        if(idZaduzenogInspektora != -1) cont.labZaduzeniInspektor.setText(inspektorDao.dajImePrezimeInspektora(idZaduzenogInspektora));
+        if(idZaduzenogInspektora != -1) cont.labZaduzeniInspektor.setText(inspektorDao.getNameSurenameForID(idZaduzenogInspektora));
         else cont.labZaduzeniInspektor.setText("Nema zaduženog inspektora");
         boolean terminObavljen = terminDao.isObavljen(idTrenutnogTermina);
         if(terminObavljen) cont.labTerminObavljen.setText("Obavljen");

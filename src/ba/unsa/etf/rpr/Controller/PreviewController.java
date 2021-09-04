@@ -1,11 +1,11 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
-import ba.unsa.etf.rpr.DAL.InspektorDAO;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.DAL.LogDAO;
 import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
-import ba.unsa.etf.rpr.Model.Inspektor;
+import ba.unsa.etf.rpr.Model.Inspector;
 import ba.unsa.etf.rpr.Model.Log;
 import ba.unsa.etf.rpr.Model.PrijavljeniUser;
 import javafx.event.ActionEvent;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class PreviewController {
-    private InspektorDAO inspektorDao;
+    private InspectorDAO inspektorDao;
     private PrijavljeniUserDAO prijavljeniUserDao;
     private AdministratorDAO administratorDAO;
     private LogDAO logDAO;
@@ -38,7 +38,7 @@ public class PreviewController {
 
     @FXML
     public void initialize() throws SQLException {
-        inspektorDao = InspektorDAO.getInstance();
+        inspektorDao = InspectorDAO.getInstance();
         prijavljeniUserDao = PrijavljeniUserDAO.getInstance();
         logDAO = LogDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
@@ -69,12 +69,12 @@ public class PreviewController {
                 Stage stage = (Stage) emailFld.getScene().getWindow();
                 stage.close();
             }
-        ArrayList<Inspektor> upisaniInspektori = inspektorDao.sviUpisaniInspektori();
-        for(Inspektor i : upisaniInspektori)
-            if(emailFld.getText().equals(i.getPristupniEmail()) && pswFld.getText().equals(i.getPristupnaSifra())){
-                int idInspektora = inspektorDao.dajIdInspektoraZaEmail(emailFld.getText());
-                prijavljeniUserDao.dodaj(new PrijavljeniUser(idInspektora, LocalDateTime.now().format(formatter), ostaniUlogovan, inspektorDao.dajJedinstvenuSifruZaID(idInspektora)));
-                logDAO.dodaj(new Log(1, LocalDateTime.now().format(formatter), "", inspektorDao.dajJedinstvenuSifruZaID(idInspektora)));
+        ArrayList<Inspector> upisaniInspektori = inspektorDao.allValidInspectors();
+        for(Inspector i : upisaniInspektori)
+            if(emailFld.getText().equals(i.getLoginEmail()) && pswFld.getText().equals(i.getPassword())){
+                int idInspektora = inspektorDao.getInspectorIDForEmail(emailFld.getText());
+                prijavljeniUserDao.dodaj(new PrijavljeniUser(idInspektora, LocalDateTime.now().format(formatter), ostaniUlogovan, inspektorDao.getUniqueIDForID(idInspektora)));
+                logDAO.dodaj(new Log(1, LocalDateTime.now().format(formatter), "", inspektorDao.getUniqueIDForID(idInspektora)));
                 Stage myStage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
                 myStage.setTitle("Inspekcijski poslovi - User");

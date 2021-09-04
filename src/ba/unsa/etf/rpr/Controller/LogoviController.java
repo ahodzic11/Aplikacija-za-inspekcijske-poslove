@@ -1,11 +1,11 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
-import ba.unsa.etf.rpr.DAL.InspektorDAO;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.DAL.LogAkcijaDAO;
 import ba.unsa.etf.rpr.DAL.LogDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
-import ba.unsa.etf.rpr.Model.Inspektor;
+import ba.unsa.etf.rpr.Model.Inspector;
 import ba.unsa.etf.rpr.Model.Log;
 import ba.unsa.etf.rpr.Model.LogAkcije;
 import javafx.event.ActionEvent;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class LogoviController {
     private LogDAO logDAO;
     private LogAkcijaDAO logAkcijaDAO;
-    private InspektorDAO inspektorDAO;
+    private InspectorDAO inspektorDAO;
     private AdministratorDAO administratorDAO;
     public TextArea areaPrijavljivanja;
     public TextArea areaAkcije;
@@ -31,7 +31,7 @@ public class LogoviController {
     @FXML
     public void initialize() throws SQLException {
         logDAO = LogDAO.getInstance();
-        inspektorDAO = InspektorDAO.getInstance();
+        inspektorDAO = InspectorDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
         logAkcijaDAO = LogAkcijaDAO.getInstance();
         refresujLogove();
@@ -86,17 +86,17 @@ public class LogoviController {
         ArrayList<String> jedinstveneSifreInspektora = new ArrayList<>();
         ArrayList<String> jedinstveneSifreAdministratora = new ArrayList<>();
         String historijaPrijavljivanja = "";
-        ArrayList<Inspektor> inspektori = inspektorDAO.sviUpisaniInspektori();
-        for(Inspektor i : inspektori)
-            jedinstveneSifreInspektora.add(i.getJedinstvenaSifra());
+        ArrayList<Inspector> inspektori = inspektorDAO.allValidInspectors();
+        for(Inspector i : inspektori)
+            jedinstveneSifreInspektora.add(i.getUniqueId());
         ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
         for(Administrator a : administratori)
             jedinstveneSifreAdministratora.add(a.getUniqueId());
         for(Log l: logovi){
             String imePrijavljenog ="";
             if(jedinstveneSifreInspektora.contains(l.getJedinstvenaSifra())){
-                int idInspektora = inspektorDAO.dajIdZaJedinstvenuSifru(l.getJedinstvenaSifra());
-                imePrijavljenog = inspektorDAO.dajTipInspektoraZaID(idInspektora);
+                int idInspektora = inspektorDAO.getIdForUniqueID(l.getJedinstvenaSifra());
+                imePrijavljenog = inspektorDAO.getInspectorTypeForID(idInspektora);
                 historijaPrijavljivanja += imePrijavljenog + " | login: " + l.getPrijava() + " logout: " + l.getOdjava() + "\n";
             }else if(jedinstveneSifreAdministratora.contains(l.getJedinstvenaSifra())){
                 historijaPrijavljivanja += "Administrator | login: " + l.getPrijava() + " logout: " + l.getOdjava() + "\n";

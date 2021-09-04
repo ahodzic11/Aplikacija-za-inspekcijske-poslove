@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
 import ba.unsa.etf.rpr.Model.Svjedok;
 import javafx.event.ActionEvent;
@@ -21,7 +22,7 @@ public class KreirajIzvjestajController {
     public DatePicker datumInspekcije;
     public ToggleGroup groupZabrana;
     public TextField fldJedinstvenaSifra;
-    private InspektorDAO inspektorDao;
+    private InspectorDAO inspektorDao;
     private ObjekatDAO objekatDao;
     private VlasnikDAO vlasnikDao;
     private SvjedokDAO svjedokDao;
@@ -31,7 +32,7 @@ public class KreirajIzvjestajController {
 
     @FXML
     public void initialize() throws SQLException, IOException {
-        inspektorDao = InspektorDAO.getInstance();
+        inspektorDao = InspectorDAO.getInstance();
         objekatDao = ObjekatDAO.getInstance();
         vlasnikDao = VlasnikDAO.getInstance();
         izvjestajDao = IzvjestajDAO.getInstance();

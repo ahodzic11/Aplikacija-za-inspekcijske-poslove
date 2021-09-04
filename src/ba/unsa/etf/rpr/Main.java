@@ -1,10 +1,10 @@
 package ba.unsa.etf.rpr;
 
 import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
-import ba.unsa.etf.rpr.DAL.InspektorDAO;
+import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.DAL.PrijavljeniUserDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
-import ba.unsa.etf.rpr.Model.Inspektor;
+import ba.unsa.etf.rpr.Model.Inspector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +21,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         PrijavljeniUserDAO prijavljeniUserDao = PrijavljeniUserDAO.getInstance();
         AdministratorDAO administratorDAO = AdministratorDAO.getInstance();
-        InspektorDAO inspektorDAO = InspektorDAO.getInstance();
+        InspectorDAO inspektorDAO = InspectorDAO.getInstance();
         if(prijavljeniUserDao.dajUlogovanost()){
             ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
             for(Administrator a : administratori)
@@ -33,9 +33,9 @@ public class Main extends Application {
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                     primaryStage.show();
                 }
-            ArrayList<Inspektor> inspektori = inspektorDAO.sviUpisaniInspektori();
-            for(Inspektor i : inspektori)
-                if(i.getJedinstvenaSifra().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
+            ArrayList<Inspector> inspektori = inspektorDAO.allValidInspectors();
+            for(Inspector i : inspektori)
+                if(i.getUniqueId().equals(prijavljeniUserDao.dajJedinstvenuSifruUlogovanog())){
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
                     primaryStage.setTitle("Inspector");
                     primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
