@@ -43,8 +43,7 @@ public class Main extends Application {
                 }
         }else{
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/preview.fxml"));
-            //primaryStage.initStyle(StageStyle.UNDECORATED);
-            primaryStage.setTitle("Preview");
+            primaryStage.setTitle("Log in");
             primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             primaryStage.setResizable(false);
             primaryStage.show();

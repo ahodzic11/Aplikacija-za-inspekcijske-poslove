@@ -61,7 +61,7 @@ public class PreviewController {
                 logDAO.addLog(new LoginLog(1, LocalDateTime.now().format(formatter), "", jedinstvenaSifraAdmina));
                 Stage myStage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
-                myStage.setTitle("Inspekcijski poslovi - Administrator");
+                myStage.setTitle("Administrator");
                 myStage.setMinWidth(603);
                 myStage.setMinHeight(505);
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -77,7 +77,7 @@ public class PreviewController {
                 logDAO.addLog(new LoginLog(1, LocalDateTime.now().format(formatter), "", inspektorDao.getUniqueIDForID(idInspektora)));
                 Stage myStage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
-                myStage.setTitle("Inspekcijski poslovi - User");
+                myStage.setTitle("Inspector");
                 myStage.setMinWidth(60);
                 myStage.setMaxHeight(60);
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));

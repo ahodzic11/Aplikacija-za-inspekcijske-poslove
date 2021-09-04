@@ -55,7 +55,7 @@ public class InspectorDAO {
             birthdateQuery = conn.prepareStatement("SELECT birthdate FROM inspector WHERE id=?");
             jmbgQuery = conn.prepareStatement("SELECT jmbg FROM inspector WHERE id=?");
             genderQuery = conn.prepareStatement("SELECT gender FROM inspector WHERE id=?");
-            idNumberQuery = conn.prepareStatement("SELECT idNumber FROM inspektor WHERE id=?");
+            idNumberQuery = conn.prepareStatement("SELECT idNumber FROM inspector WHERE id=?");
             residenceQuery = conn.prepareStatement("SELECT residence FROM inspector WHERE id=?");
             phoneNumberQuery = conn.prepareStatement("SELECT phoneNumber FROM inspector WHERE id=?");
             emailQuery = conn.prepareStatement("SELECT email FROM inspector WHERE id=?");

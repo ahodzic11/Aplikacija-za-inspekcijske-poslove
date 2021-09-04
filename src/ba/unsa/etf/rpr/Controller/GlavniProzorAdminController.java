@@ -141,6 +141,9 @@ public class GlavniProzorAdminController {
 
         labInfo.setText("");
         labUniqueID.setText("");
+        labInspectorType.setText("");
+        labPhoneNumber.setText("");
+        labEmail.setText("");
 
         updateStatus();
     }
@@ -332,6 +335,7 @@ public class GlavniProzorAdminController {
                 System.out.println("Error exporting file!");
             }
         }
+        updateStatus();
     }
 
     public void aboutBtn(ActionEvent actionEvent) throws IOException {
