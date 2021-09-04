@@ -20,7 +20,7 @@ public class CreateObjekatController {
     @FXML
     public void initialize() throws SQLException {
         objectDAO = ObjectDAO.getInstance();
-        comboObjectType.getItems().addAll("Obrazovna institucija", "Zdravstvena institucija", "Ugostiteljski objekat");
+        comboObjectType.getItems().addAll("Educational institution", "Health institution", "Catering facility");
     }
 
 

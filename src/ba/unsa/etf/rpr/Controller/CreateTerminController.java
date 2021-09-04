@@ -22,7 +22,7 @@ public class CreateTerminController {
     public DatePicker datePickTask;
     private TaskDAO taskDAO;
     private UserDAO userDAO;
-    public int idObjekta;
+    public int objectId;
 
     @FXML
     public void initialize() throws SQLException {
@@ -32,7 +32,7 @@ public class CreateTerminController {
 
     public void okBtn(ActionEvent actionEvent) throws SQLException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        taskDAO.addTask(new Task(1, idObjekta, userDAO.getLoggedUserID(), datePickTask.getValue().format(formatter), areaNotes.getText(), 0, -1));
+        taskDAO.addTask(new Task(1, objectId, userDAO.getLoggedUserID(), datePickTask.getValue().format(formatter), areaNotes.getText(), 0, -1));
         Stage stage = (Stage) fldObjectName.getScene().getWindow();
         stage.close();
     }

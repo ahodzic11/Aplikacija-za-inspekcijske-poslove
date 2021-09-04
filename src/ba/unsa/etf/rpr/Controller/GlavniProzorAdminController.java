@@ -199,9 +199,9 @@ public class GlavniProzorAdminController {
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/izvjestaji.fxml"));
         Parent root = loader.load();
-        IzvjestajiController cont = loader.getController();
-        cont.setIdInspektora(currentInspectorID);
-        cont.refresujIzvjestaj();
+        ReportsController cont = loader.getController();
+        cont.setInspectorId(currentInspectorID);
+        cont.refreshReports();
 
         myStage.setTitle("Reports");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));

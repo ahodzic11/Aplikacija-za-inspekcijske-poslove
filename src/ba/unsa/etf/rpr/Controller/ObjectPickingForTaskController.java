@@ -140,7 +140,7 @@ public class ObjectPickingForTaskController {
             cont.fldObjectName.setText(objekatDao.dajNazivObjektaZaID(idTrenutnogObjekta));
             cont.fldObjectAddress.setText(objekatDao.dajAdresuObjektaZaID(idTrenutnogObjekta));
             cont.datePickTask.getEditor().setText(LocalDate.now().format(formatter));
-            cont.idObjekta = idTrenutnogObjekta;
+            cont.objectId = idTrenutnogObjekta;
             myStage.setResizable(false);
             myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             myStage.showAndWait();

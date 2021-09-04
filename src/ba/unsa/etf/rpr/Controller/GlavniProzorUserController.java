@@ -191,7 +191,7 @@ public class GlavniProzorUserController {
 
     public void pogledajIzvjestajBtn(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledIzvjestaja.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/reportDetails.fxml"));
         Parent root = loader.load();
         PregledIzvjestajaController cont = loader.getController();
         int idObjekta = izvjestajDAO.getObjectIDForReport(idTrenutnogIzvjestaja);
