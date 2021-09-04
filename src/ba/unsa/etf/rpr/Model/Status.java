@@ -1,9 +1,6 @@
 package ba.unsa.etf.rpr.Model;
 
-import ba.unsa.etf.rpr.DAL.LogAkcijaDAO;
 import javafx.beans.property.SimpleStringProperty;
-
-import java.sql.SQLException;
 
 public class Status {
     private static Status instance = null;

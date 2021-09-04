@@ -2,12 +2,12 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.LogAkcijaDAO;
+import ba.unsa.etf.rpr.DAL.done.ActionLogDAO;
 import ba.unsa.etf.rpr.DAL.LogDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 import ba.unsa.etf.rpr.Model.Inspector;
 import ba.unsa.etf.rpr.Model.Log;
-import ba.unsa.etf.rpr.Model.LogAkcije;
+import ba.unsa.etf.rpr.Model.ActionLog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class LogoviController {
     private LogDAO logDAO;
-    private LogAkcijaDAO logAkcijaDAO;
+    private ActionLogDAO logAkcijaDAO;
     private InspectorDAO inspektorDAO;
     private AdministratorDAO administratorDAO;
     public TextArea areaPrijavljivanja;
@@ -33,7 +33,7 @@ public class LogoviController {
         logDAO = LogDAO.getInstance();
         inspektorDAO = InspectorDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
-        logAkcijaDAO = LogAkcijaDAO.getInstance();
+        logAkcijaDAO = ActionLogDAO.getInstance();
         refresujLogove();
         refresujLogoveAkcija();
     }
@@ -68,15 +68,15 @@ public class LogoviController {
     }
 
     public void obrisiLogoveAkcijaBtn(ActionEvent actionEvent) {
-        logAkcijaDAO.obrisiLogove();
+        logAkcijaDAO.deleteLogs();
         refresujLogoveAkcija();
     }
 
     private void refresujLogoveAkcija() {
-        ArrayList<LogAkcije> logoviAkcija = logAkcijaDAO.dajSveLogove();
+        ArrayList<ActionLog> logoviAkcija = logAkcijaDAO.dajSveLogove();
         String akcije = "";
-        for(LogAkcije l : logoviAkcija){
-            akcije += l.getAkcija() + " date/time: " + l.getDatumVrijeme() + "\n";
+        for(ActionLog l : logoviAkcija){
+            akcije += l.getAction() + " date/time: " + l.getDateTime() + "\n";
         }
         areaAkcije.setText(akcije);
     }
