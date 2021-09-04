@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.DAL.done;
 
-import ba.unsa.etf.rpr.Model.Objekat;
+import ba.unsa.etf.rpr.Model.Object;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.FileInputStream;
@@ -59,12 +59,12 @@ public class ObjectDAO {
         }
     }
 
-    public ObservableList<Objekat> getAllObjects(){
-        ObservableList<Objekat> result = FXCollections.observableArrayList();
+    public ObservableList<Object> getAllObjects(){
+        ObservableList<Object> result = FXCollections.observableArrayList();
         try{
             ResultSet rs = searchQuery.executeQuery();
             while(rs.next()){
-                result.add(new Objekat(rs.getInt(1), rs.getInt(2), rs.getString(3),
+                result.add(new Object(rs.getInt(1), rs.getInt(2), rs.getString(3),
                         rs.getString(4), rs.getString(5)));
             }
         } catch (SQLException e) {
@@ -101,7 +101,7 @@ public class ObjectDAO {
         }
     }
 
-    public void addObject(Objekat o) throws SQLException {
+    public void addObject(Object o) throws SQLException {
         try{
             ResultSet rs = newIdQuery.executeQuery();
             if(rs.next())
@@ -120,13 +120,13 @@ public class ObjectDAO {
         addingQuery.execute();
     }
 
-    public ObservableList<Objekat> getObjectsFromOwner(int ownerId) {
-        ObservableList<Objekat> result = FXCollections.observableArrayList();
+    public ObservableList<Object> getObjectsFromOwner(int ownerId) {
+        ObservableList<Object> result = FXCollections.observableArrayList();
         try{
             allObjectsFromOwnerQuery.setInt(1, ownerId);
             ResultSet rs = allObjectsFromOwnerQuery.executeQuery();
             while(rs.next()){
-                result.add(new Objekat(rs.getInt(1), rs.getInt(2), rs.getString(3),
+                result.add(new Object(rs.getInt(1), rs.getInt(2), rs.getString(3),
                         rs.getString(4), rs.getString(5)));
             }
         } catch (SQLException e) {

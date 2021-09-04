@@ -1,10 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
-import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
-import ba.unsa.etf.rpr.DAL.done.UserDAO;
-import ba.unsa.etf.rpr.DAL.done.WitnessDAO;
+import ba.unsa.etf.rpr.DAL.done.*;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
 import ba.unsa.etf.rpr.Model.Witness;
 import javafx.event.ActionEvent;
@@ -27,7 +24,7 @@ public class KreirajIzvjestajController {
     public TextField fldJedinstvenaSifra;
     private InspectorDAO inspektorDao;
     private ObjectDAO objekatDao;
-    private VlasnikDAO vlasnikDao;
+    private OwnerDAO vlasnikDao;
     private WitnessDAO svjedokDao;
     private IzvjestajDAO izvjestajDao;
     private UserDAO prijavljeniUserDao;
@@ -37,7 +34,7 @@ public class KreirajIzvjestajController {
     public void initialize() throws SQLException, IOException {
         inspektorDao = InspectorDAO.getInstance();
         objekatDao = ObjectDAO.getInstance();
-        vlasnikDao = VlasnikDAO.getInstance();
+        vlasnikDao = OwnerDAO.getInstance();
         izvjestajDao = IzvjestajDAO.getInstance();
         svjedokDao = WitnessDAO.getInstance();
         prijavljeniUserDao = UserDAO.getInstance();

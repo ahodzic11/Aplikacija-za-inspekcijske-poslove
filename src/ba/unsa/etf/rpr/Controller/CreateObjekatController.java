@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
-import ba.unsa.etf.rpr.Model.Objekat;
+import ba.unsa.etf.rpr.Model.Object;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -25,7 +25,7 @@ public class CreateObjekatController {
 
 
     public void okBtn(ActionEvent actionEvent) throws SQLException {
-        objectDAO.addObject(new Objekat(1, ownerId, fldName.getText(), fldAddress.getText(), (String) comboObjectType.getValue()));
+        objectDAO.addObject(new Object(1, ownerId, fldName.getText(), fldAddress.getText(), (String) comboObjectType.getValue()));
         Stage stage = (Stage) fldName.getScene().getWindow();
         stage.close();
     }

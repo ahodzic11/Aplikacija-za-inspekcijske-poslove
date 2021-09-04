@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.TerminDAO;
+import ba.unsa.etf.rpr.DAL.done.TaskDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -18,21 +18,21 @@ public class ModifyTerminController {
     public TextField fldMinuta;
     public TextArea areaNapomene;
     public DatePicker datePickTermin;
-    private TerminDAO terminDAO;
+    private TaskDAO terminDAO;
     public int idTermina;
 
     @FXML
     public void initialize() throws SQLException {
-        terminDAO = TerminDAO.getInstance();
+        terminDAO = TaskDAO.getInstance();
         fldNazivObjekta.setDisable(true);
         fldAdresaObjekta.setDisable(true);
     }
 
     public void modifikujBtn(ActionEvent actionEvent) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        terminDAO.modifikuj(idTermina, terminDAO.dajIDObjektaZaIDTermina(idTermina), terminDAO.dajInspektoraZaIDTermina(idTermina),
-                datePickTermin.getValue().format(formatter), areaNapomene.getText(), terminDAO.dajOdradjen(idTermina),
-                terminDAO.dajIDZaduzenogInspektora(idTermina));
+        terminDAO.modifyTask(idTermina, terminDAO.getObjectID(idTermina), terminDAO.getInspectorForID(idTermina),
+                datePickTermin.getValue().format(formatter), areaNapomene.getText(), terminDAO.getTaskDoneStatus(idTermina),
+                terminDAO.getAssignedInspectorID(idTermina));
         Stage stage = (Stage) fldNazivObjekta.getScene().getWindow();
         stage.close();
     }

@@ -2,9 +2,9 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.TerminDAO;
+import ba.unsa.etf.rpr.DAL.done.TaskDAO;
 import ba.unsa.etf.rpr.Model.Status;
-import ba.unsa.etf.rpr.Model.Termin;
+import ba.unsa.etf.rpr.Model.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 public class AssignTaskController {
-    private TerminDAO taskDAO;
+    private TaskDAO taskDAO;
     private ObjectDAO objectDAO;
     private InspectorDAO inspectorDAO;
     public RadioButton rbAllTasks;
@@ -26,35 +26,35 @@ public class AssignTaskController {
 
     @FXML
     public void initialize() throws SQLException {
-        taskDAO = TerminDAO.getInstance();
+        taskDAO = TaskDAO.getInstance();
         status = Status.getInstance();
         objectDAO = ObjectDAO.getInstance();
         inspectorDAO = InspectorDAO.getInstance();
 
         rbAllTasks.setSelected(true);
-        tasksList.setItems(taskDAO.dajSveTermine());
+        tasksList.setItems(taskDAO.getAllTasks());
         tasksList.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
-            Termin newTask = (Termin) newItem;
+            Task newTask = (Task) newItem;
             if(newTask != null)
                 currentTaskID = newTask.getId();
         });
 
         rbAllTasks.selectedProperty().addListener((obs, oldItem, newItem)->{
             if(newItem)
-                tasksList.setItems(taskDAO.dajSveTermine());
+                tasksList.setItems(taskDAO.getAllTasks());
         });
         rbUntakenTasks.selectedProperty().addListener((obs, oldItem, newItem)->{
             if(newItem)
-                tasksList.setItems(taskDAO.dajSlobodneTermine());
+                tasksList.setItems(taskDAO.getUntakenTasks());
         });
     }
 
     public void okBtn(ActionEvent actionEvent) {
         if(currentTaskID != -1){
             taskDAO.assignTaskToInspectorID(inspectorID, currentTaskID);
-            int objectId = taskDAO.dajIDObjektaZaIDTermina(currentTaskID);
+            int objectId = taskDAO.getObjectID(currentTaskID);
             status.setStatus("Task [" + objectDAO.getNameForID(objectId) + ", " + objectDAO.getAddressForObjectID(objectId) + " - "
-            + taskDAO.dajVrijemeZaID(currentTaskID) + "] assigned to inspector " + inspectorDAO.getNameSurenameForID(inspectorID) + " [" + inspectorDAO.getUniqueIDForID(inspectorID) + "].");
+            + taskDAO.getDatetime(currentTaskID) + "] assigned to inspector " + inspectorDAO.getNameSurenameForID(inspectorID) + " [" + inspectorDAO.getUniqueIDForID(inspectorID) + "].");
         }
         Stage stage = (Stage) rbAllTasks.getScene().getWindow();
         stage.close();

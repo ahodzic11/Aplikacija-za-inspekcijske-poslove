@@ -3,9 +3,9 @@ package ba.unsa.etf.rpr.Controller;
 import ba.unsa.etf.rpr.DAL.IzvjestajDAO;
 import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
 import ba.unsa.etf.rpr.DAL.done.WitnessDAO;
-import ba.unsa.etf.rpr.DAL.VlasnikDAO;
-import ba.unsa.etf.rpr.Model.Objekat;
-import ba.unsa.etf.rpr.Model.Vlasnik;
+import ba.unsa.etf.rpr.DAL.done.OwnerDAO;
+import ba.unsa.etf.rpr.Model.Object;
+import ba.unsa.etf.rpr.Model.Owner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +34,7 @@ public class ObjectPickingController {
     public TextField fldJMBG;
     public TextField fldTelefon;
     public TextField fldEmail;
-    private VlasnikDAO vlasnikdao;
+    private OwnerDAO vlasnikdao;
     private ObjectDAO objekatDao;
     private WitnessDAO svjedokDao;
     public ListView vlasnici;
@@ -43,25 +43,25 @@ public class ObjectPickingController {
 
     @FXML
     public void initialize() throws SQLException {
-        vlasnikdao = VlasnikDAO.getInstance();
+        vlasnikdao = OwnerDAO.getInstance();
         objekatDao = ObjectDAO.getInstance();
         izvjestajDao = IzvjestajDAO.getInstance();
         svjedokDao = WitnessDAO.getInstance();
         comboVrstaObjekta.getItems().addAll("Obrazovna institucija", "Zdravstvena institucija", "Ugostiteljski objekat");
-        vlasnici.setItems(vlasnikdao.sviVlasnici());
+        vlasnici.setItems(vlasnikdao.allOwners());
         vlasnici.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
-            Vlasnik novi = (Vlasnik) newItem;
+            Owner novi = (Owner) newItem;
             if(novi != null){
                 idTrenutnogVlasnika = novi.getId();
-                fldIme.setText(novi.getIme());
-                fldPrezime.setText(novi.getPrezime());
+                fldIme.setText(novi.getName());
+                fldPrezime.setText(novi.getSurename());
                 fldJMBG.setText(novi.getJmbg());
-                fldTelefon.setText(String.valueOf(novi.getTelefon()));
+                fldTelefon.setText(String.valueOf(novi.getPhoneNumber()));
                 fldEmail.setText(novi.getEmail());
                 if(objekatDao.getObjectsFromOwner(idTrenutnogVlasnika) != null)
                 objektiVlasnika.setItems(objekatDao.getObjectsFromOwner(idTrenutnogVlasnika));
                 objektiVlasnika.getSelectionModel().selectedItemProperty().addListener((obs1, oldObjekat, newObjekat)->{
-                    Objekat noviObjekat = (Objekat) newObjekat;
+                    Object noviObjekat = (Object) newObjekat;
                     if(noviObjekat != null){
                         idTrenutnogObjekta = noviObjekat.getId();
                         fldNaziv.setText(noviObjekat.getName());
@@ -124,12 +124,12 @@ public class ObjectPickingController {
     }
 
     public void refreshOwnersList() {
-        vlasnici.setItems(vlasnikdao.sviVlasnici());
+        vlasnici.setItems(vlasnikdao.allOwners());
     }
 
     public void deleteVlasnikBtn(ActionEvent actionEvent) {
         objekatDao.deleteOwnersObjects(idTrenutnogVlasnika);
-        vlasnikdao.obrisiVlasnika(idTrenutnogVlasnika);
+        vlasnikdao.deleteOwner(idTrenutnogVlasnika);
         refreshOwnersList();
         refresujObjekte();
     }
@@ -144,7 +144,7 @@ public class ObjectPickingController {
             KreirajIzvjestajController cont = loader.getController();
             cont.fldNazivObjekta.setText(objekatDao.getNameForID(idTrenutnogObjekta));
             cont.fldAdresaObjekta.setText(objekatDao.getAddressForObjectID(idTrenutnogObjekta));
-            cont.fldVlasnik.setText(vlasnikdao.dajPodatkeVlasnikaZaId(idTrenutnogVlasnika));
+            cont.fldVlasnik.setText(vlasnikdao.getNameLastNameForID(idTrenutnogVlasnika));
             cont.datumInspekcije.setValue(LocalDate.now());
             cont.idObjekta = idTrenutnogObjekta;
             Stage stage = (Stage) fldIme.getScene().getWindow();

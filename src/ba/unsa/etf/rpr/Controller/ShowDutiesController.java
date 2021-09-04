@@ -2,9 +2,9 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.TerminDAO;
+import ba.unsa.etf.rpr.DAL.done.TaskDAO;
 import ba.unsa.etf.rpr.Model.Status;
-import ba.unsa.etf.rpr.Model.Termin;
+import ba.unsa.etf.rpr.Model.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,7 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 public class ShowDutiesController {
     private InspectorDAO inspectorDAO;
     private ObjectDAO objectDAO;
-    private TerminDAO taskDAO;
+    private TaskDAO taskDAO;
     private Status status;
     public ListView tasksList;
     public int inspectorId = 0;
@@ -29,38 +29,38 @@ public class ShowDutiesController {
 
     @FXML
     public void initialize() throws SQLException {
-        taskDAO = TerminDAO.getInstance();
+        taskDAO = TaskDAO.getInstance();
         inspectorDAO = InspectorDAO.getInstance();
         objectDAO = ObjectDAO.getInstance();
         status = Status.getInstance();
 
-        tasksList.setItems(taskDAO.dajSveTermineInspektora(inspectorId));
+        tasksList.setItems(taskDAO.getAllTasksForInspector(inspectorId));
         tasksList.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
-            Termin newTask = (Termin) newItem;
+            Task newTask = (Task) newItem;
             if(newTask != null)
                 currentTaskID = newTask.getId();
         });
     }
 
     public void taskDetailsBtn(ActionEvent actionEvent) throws IOException {
-        int objectId = taskDAO.dajIDObjektaZaIDTermina(currentTaskID);
+        int objectId = taskDAO.getObjectID(currentTaskID);
         status.setStatus("Task details for task [" + objectDAO.getNameForID(objectId) + ", " + objectDAO.getAddressForObjectID(objectId) + " - "
-                + taskDAO.dajVrijemeZaID(currentTaskID) + "] have been shown.");
+                + taskDAO.getDatetime(currentTaskID) + "] have been shown.");
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledTermina.fxml"));
         Parent root = loader.load();
         PregledTerminaController cont = loader.getController();
         int idInspektora = taskDAO.dajInspektoraZaIDTermina(currentTaskID);
-        int idObjekta = taskDAO.dajIDObjektaZaIDTermina(currentTaskID);
+        int idObjekta = taskDAO.getObjectID(currentTaskID);
         cont.labTerminZakazao.setText(inspectorDAO.getNameSurenameForID(idInspektora));
         cont.labNazivObjekta.setText(objectDAO.getNameForID(idObjekta));
         cont.labAdresaObjekta.setText(objectDAO.getAddressForObjectID(idObjekta));
-        cont.labDatumVrijemeTermina.setText(taskDAO.dajVrijemeZaID(currentTaskID));
-        cont.areaNapomeneTermina.setText(taskDAO.dajNapomeneTerminaZaID(currentTaskID));
-        int idZaduzenogInspektora = taskDAO.dajIDZaduzenogInspektora(currentTaskID);
+        cont.labDatumVrijemeTermina.setText(taskDAO.getDatetime(currentTaskID));
+        cont.areaNapomeneTermina.setText(taskDAO.getNotesForTask(currentTaskID));
+        int idZaduzenogInspektora = taskDAO.getAssignedInspectorID(currentTaskID);
         if(idZaduzenogInspektora != -1) cont.labZaduzeniInspektor.setText(inspectorDAO.getNameSurenameForID(idZaduzenogInspektora));
         else cont.labZaduzeniInspektor.setText("No assigned inspector");
-        boolean terminObavljen = taskDAO.isObavljen(currentTaskID);
+        boolean terminObavljen = taskDAO.isCompleted(currentTaskID);
         if(terminObavljen) cont.labTerminObavljen.setText("Done");
         else cont.labTerminObavljen.setText("Not done");
         myStage.setTitle("Task details");

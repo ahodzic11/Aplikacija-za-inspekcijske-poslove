@@ -3,7 +3,7 @@ package ba.unsa.etf.rpr.Controller;
 import ba.unsa.etf.rpr.DAL.*;
 import ba.unsa.etf.rpr.DAL.done.*;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
-import ba.unsa.etf.rpr.Model.Termin;
+import ba.unsa.etf.rpr.Model.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,8 +28,8 @@ public class GlavniProzorUserController {
     private UserDAO prijavljeniDao;
     private int idTrenutnogIzvjestaja = -1;
     private ObjectDAO objekatDao;
-    private VlasnikDAO vlasnikDao;
-    private TerminDAO terminDao;
+    private OwnerDAO vlasnikDao;
+    private TaskDAO terminDao;
     private InspectorDAO inspektorDao;
     private LoginLogDAO logDAO;
     private int idTrenutnogTermina = -1;
@@ -40,8 +40,8 @@ public class GlavniProzorUserController {
         prijavljeniDao = UserDAO.getInstance();
         izvjestajDAO = IzvjestajDAO.getInstance();
         objekatDao = ObjectDAO.getInstance();
-        vlasnikDao = VlasnikDAO.getInstance();
-        terminDao = TerminDAO.getInstance();
+        vlasnikDao = OwnerDAO.getInstance();
+        terminDao = TaskDAO.getInstance();
         inspektorDao = InspectorDAO.getInstance();
         logDAO = LoginLogDAO.getInstance();
         listaIzvjestaja.setItems(izvjestajDAO.dajIzvjestajeInspektoraSaIDem(prijavljeniDao.getLoggedUserID()));
@@ -50,9 +50,9 @@ public class GlavniProzorUserController {
             if(noviIzvjestaj!=null)
                 idTrenutnogIzvjestaja = noviIzvjestaj.getId();
         });
-        listaTermina.setItems(terminDao.dajSveTermine());
+        listaTermina.setItems(terminDao.getAllTasks());
         listaTermina.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
-            Termin noviTermin = (Termin) newItem;
+            Task noviTermin = (Task) newItem;
             if(noviTermin != null){
                 idTrenutnogTermina = noviTermin.getId();
             }
@@ -60,11 +60,11 @@ public class GlavniProzorUserController {
         rbSviTermini.setSelected(true);
         rbSviTermini.selectedProperty().addListener((obs, oldItem, newItem)->{
             if(newItem)
-                listaTermina.setItems(terminDao.dajSveTermine());
+                listaTermina.setItems(terminDao.getAllTasks());
         });
         rbMojiTermini.selectedProperty().addListener((obs, oldItem, newItem)->{
             if(newItem)
-                listaTermina.setItems(terminDao.dajSveTermineInspektora(prijavljeniDao.getLoggedUserID()));
+                listaTermina.setItems(terminDao.getAllTasksForInspector(prijavljeniDao.getLoggedUserID()));
         });
     }
 
@@ -167,7 +167,7 @@ public class GlavniProzorUserController {
         if(izvjestajDAO.isPrijavljenoRadilisteZaID(idTrenutnogIzvjestaja)){
             int idVlasnika = objekatDao.getOwnerForID(idObjekta);
             cont.cbPrijaviRadiliste.setSelected(true);
-            cont.fldVlasnik.setText(vlasnikDao.dajPodatkeVlasnikaZaId(idVlasnika));
+            cont.fldVlasnik.setText(vlasnikDao.getNameLastNameForID(idVlasnika));
             cont.fldBrojZaposlenih.setText(String.valueOf(izvjestajDAO.dajBrojZaposlenihZaID(idTrenutnogIzvjestaja)));
             cont.fldPotvrdaORadu.setText(String.valueOf(izvjestajDAO.dajBrojPotvrdeORaduZaID(idTrenutnogIzvjestaja)));
         }else{
@@ -201,7 +201,7 @@ public class GlavniProzorUserController {
         cont.labAdresaObjekta.setText(objekatDao.getAddressForObjectID(idObjekta));
         cont.areaOpisTerena.setText(izvjestajDAO.dajOpisTerenaZaID(idTrenutnogIzvjestaja));
         int idVlasnika = objekatDao.getOwnerForID(idObjekta);
-        cont.labVlasnik.setText(vlasnikDao.dajPodatkeVlasnikaZaId(idVlasnika));
+        cont.labVlasnik.setText(vlasnikDao.getNameLastNameForID(idVlasnika));
         int idPrvogSvjedoka = svjedokDAO.getFirstWitnessID(idTrenutnogIzvjestaja);
         int idDrugogSvjedoka = svjedokDAO.getSecondWitnessID(idTrenutnogIzvjestaja);
         cont.labPodaciPrvogSvjedoka.setText(svjedokDAO.getWitnessName(idPrvogSvjedoka) + " " + svjedokDAO.getWitnessSurename(idPrvogSvjedoka) + ", (" + svjedokDAO.getWitnessJMBG(idPrvogSvjedoka) + ")");
@@ -280,18 +280,18 @@ public class GlavniProzorUserController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledTermina.fxml"));
         Parent root = loader.load();
         PregledTerminaController cont = loader.getController();
-        int idInspektora = terminDao.dajInspektoraZaIDTermina(idTrenutnogTermina);
-        int idObjekta = terminDao.dajIDObjektaZaIDTermina(idTrenutnogTermina);
+        int idInspektora = terminDao.getInspectorForID(idTrenutnogTermina);
+        int idObjekta = terminDao.getObjectID(idTrenutnogTermina);
         cont.labTerminZakazao.setText(inspektorDao.getNameSurenameForID(idInspektora));
         cont.labNazivObjekta.setText(objekatDao.getNameForID(idObjekta));
         cont.labAdresaObjekta.setText(objekatDao.getAddressForObjectID(idObjekta));
-        cont.labDatumVrijemeTermina.setText(terminDao.dajVrijemeZaID(idTrenutnogTermina));
-        cont.areaNapomeneTermina.setText(terminDao.dajNapomeneTerminaZaID(idTrenutnogTermina));
-        int idZaduzenogInspektora = terminDao.dajIDZaduzenogInspektora(idTrenutnogTermina);
+        cont.labDatumVrijemeTermina.setText(terminDao.getDatetime(idTrenutnogTermina));
+        cont.areaNapomeneTermina.setText(terminDao.getNotesForTask(idTrenutnogTermina));
+        int idZaduzenogInspektora = terminDao.getAssignedInspectorID(idTrenutnogTermina);
         System.out.println(idZaduzenogInspektora);
         if(idZaduzenogInspektora != -1) cont.labZaduzeniInspektor.setText(inspektorDao.getNameSurenameForID(idZaduzenogInspektora));
         else cont.labZaduzeniInspektor.setText("Nema zaduženog inspektora");
-        boolean terminObavljen = terminDao.isObavljen(idTrenutnogTermina);
+        boolean terminObavljen = terminDao.isCompleted(idTrenutnogTermina);
         if(terminObavljen) cont.labTerminObavljen.setText("Obavljen");
         else cont.labTerminObavljen.setText("Nije obavljen");
         myStage.setTitle("Pregledaj termin");
@@ -309,11 +309,11 @@ public class GlavniProzorUserController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/modifyTermin.fxml"));
         Parent root = loader.load();
         ModifyTerminController cont = loader.getController();
-        int idObjekta = terminDao.dajIDObjektaZaIDTermina(idTrenutnogTermina);
+        int idObjekta = terminDao.getObjectID(idTrenutnogTermina);
         cont.fldNazivObjekta.setText(objekatDao.getNameForID(idObjekta));
         cont.fldAdresaObjekta.setText(objekatDao.getAddressForObjectID(idObjekta));
-        cont.datePickTermin.getEditor().setText(terminDao.dajVrijemeZaID(idTrenutnogTermina));
-        cont.areaNapomene.setText(terminDao.dajNapomeneTerminaZaID(idTrenutnogTermina));
+        cont.datePickTermin.getEditor().setText(terminDao.getDatetime(idTrenutnogTermina));
+        cont.areaNapomene.setText(terminDao.getNotesForTask(idTrenutnogTermina));
         cont.fldSati.setText("");
         cont.fldMinuta.setText("");
         cont.idTermina = idTrenutnogTermina;
@@ -324,15 +324,15 @@ public class GlavniProzorUserController {
     }
 
     public void obrisiTerminBtn(ActionEvent actionEvent) {
-        terminDao.obrisiTermin(idTrenutnogTermina);
+        terminDao.deleteTask(idTrenutnogTermina);
         refreshTasks();
     }
 
     private void refreshTasks() {
-        listaTermina.setItems(terminDao.dajSveTermineInspektora(prijavljeniDao.getLoggedUserID()));
+        listaTermina.setItems(terminDao.getAllTasksForInspector(prijavljeniDao.getLoggedUserID()));
     }
 
     public void uzmiTerminBtn(ActionEvent actionEvent) {
-        if(!terminDao.isZauzetTermin(idTrenutnogTermina))terminDao.uzmiTermin(idTrenutnogTermina, prijavljeniDao.getLoggedUserID());
+        if(!terminDao.isTaken(idTrenutnogTermina))terminDao.takeTask(idTrenutnogTermina, prijavljeniDao.getLoggedUserID());
     }
 }

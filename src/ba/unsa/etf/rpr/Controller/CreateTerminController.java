@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.done.UserDAO;
-import ba.unsa.etf.rpr.DAL.TerminDAO;
-import ba.unsa.etf.rpr.Model.Termin;
+import ba.unsa.etf.rpr.DAL.done.TaskDAO;
+import ba.unsa.etf.rpr.Model.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -20,19 +20,19 @@ public class CreateTerminController {
     public TextField fldMinutes;
     public TextArea areaNotes;
     public DatePicker datePickTask;
-    private TerminDAO taskDAO;
+    private TaskDAO taskDAO;
     private UserDAO userDAO;
     public int idObjekta;
 
     @FXML
     public void initialize() throws SQLException {
-        taskDAO = TerminDAO.getInstance();
+        taskDAO = TaskDAO.getInstance();
         userDAO = UserDAO.getInstance();
     }
 
     public void okBtn(ActionEvent actionEvent) throws SQLException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        taskDAO.addTask(new Termin(1, idObjekta, userDAO.getLoggedUserID(), datePickTask.getValue().format(formatter), areaNotes.getText(), 0, -1));
+        taskDAO.addTask(new Task(1, idObjekta, userDAO.getLoggedUserID(), datePickTask.getValue().format(formatter), areaNotes.getText(), 0, -1));
         Stage stage = (Stage) fldObjectName.getScene().getWindow();
         stage.close();
     }

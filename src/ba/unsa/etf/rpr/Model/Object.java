@@ -2,11 +2,11 @@ package ba.unsa.etf.rpr.Model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Objekat {
+public class Object {
     private int id, ownerId;
     private SimpleStringProperty name, address, type;
 
-    public Objekat(int id, int ownerId, String name, String address, String type) {
+    public Object(int id, int ownerId, String name, String address, String type) {
         this.id = id;
         this.ownerId = ownerId;
         this.name = new SimpleStringProperty(name);

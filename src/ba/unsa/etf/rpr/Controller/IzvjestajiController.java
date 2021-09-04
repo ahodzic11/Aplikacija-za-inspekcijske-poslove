@@ -3,7 +3,7 @@ package ba.unsa.etf.rpr.Controller;
 import ba.unsa.etf.rpr.DAL.IzvjestajDAO;
 import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
 import ba.unsa.etf.rpr.DAL.done.WitnessDAO;
-import ba.unsa.etf.rpr.DAL.VlasnikDAO;
+import ba.unsa.etf.rpr.DAL.done.OwnerDAO;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,12 +31,12 @@ public class IzvjestajiController {
     private int idTrenutnogIzvjestaja =- 1;
     private ObjectDAO objekatDAO;
     private WitnessDAO svjedokDAO;
-    private VlasnikDAO vlasnikDAO;
+    private OwnerDAO vlasnikDAO;
 
     @FXML
     public void initialize() throws SQLException {
         izvjestajDAO = IzvjestajDAO.getInstance();
-        vlasnikDAO = VlasnikDAO.getInstance();
+        vlasnikDAO = OwnerDAO.getInstance();
         objekatDAO = ObjectDAO.getInstance();
         svjedokDAO = WitnessDAO.getInstance();
         listaIzvjestaja.setItems(izvjestajDAO.dajIzvjestajeInspektoraSaIDem(idInspektora));
@@ -47,7 +47,7 @@ public class IzvjestajiController {
                 int idObjekta = izvjestajDAO.dajIDObjektaZaIzvjestajID(idTrenutnogIzvjestaja);
                 labNazivAdresaObjekta.setText(objekatDAO.getNameForID(idObjekta) + ", " + objekatDAO.getAddressForObjectID(idObjekta));
                 int vlasnikObjekta = objekatDAO.getOwnerForID(idObjekta);
-                labVlasnikObjekta.setText(vlasnikDAO.dajPodatkeVlasnikaZaId(vlasnikObjekta));
+                labVlasnikObjekta.setText(vlasnikDAO.getNameLastNameForID(vlasnikObjekta));
                 labDatumInspekcije.setText(izvjestajDAO.dajDatumInspekcije(idTrenutnogIzvjestaja));
                 labStanjeObjekta.setText("Radi");
                 labJedinstvenaSifra.setText(izvjestajDAO.dajJedinstvenuSifruZaID(idTrenutnogIzvjestaja));
@@ -76,7 +76,7 @@ public class IzvjestajiController {
         cont.labAdresaObjekta.setText(objekatDAO.getAddressForObjectID(idObjekta));
         cont.areaOpisTerena.setText(izvjestajDAO.dajOpisTerenaZaID(idTrenutnogIzvjestaja));
         int idVlasnika = objekatDAO.getOwnerForID(idObjekta);
-        cont.labVlasnik.setText(vlasnikDAO.dajPodatkeVlasnikaZaId(idVlasnika));
+        cont.labVlasnik.setText(vlasnikDAO.getNameLastNameForID(idVlasnika));
         int idPrvogSvjedoka = svjedokDAO.getFirstWitnessID(idTrenutnogIzvjestaja);
         int idDrugogSvjedoka = svjedokDAO.getSecondWitnessID(idTrenutnogIzvjestaja);
         cont.labPodaciPrvogSvjedoka.setText(svjedokDAO.getWitnessName(idPrvogSvjedoka) + " " + svjedokDAO.getWitnessSurename(idPrvogSvjedoka) + ", (" + svjedokDAO.getWitnessJMBG(idPrvogSvjedoka) + ")");
@@ -196,7 +196,7 @@ public class IzvjestajiController {
         if(izvjestajDAO.isPrijavljenoRadilisteZaID(idTrenutnogIzvjestaja)){
             int idVlasnika = objekatDAO.getOwnerForID(idObjekta);
             cont.cbPrijaviRadiliste.setSelected(true);
-            cont.fldVlasnik.setText(vlasnikDAO.dajPodatkeVlasnikaZaId(idVlasnika));
+            cont.fldVlasnik.setText(vlasnikDAO.getNameLastNameForID(idVlasnika));
             cont.fldBrojZaposlenih.setText(String.valueOf(izvjestajDAO.dajBrojZaposlenihZaID(idTrenutnogIzvjestaja)));
             cont.fldPotvrdaORadu.setText(String.valueOf(izvjestajDAO.dajBrojPotvrdeORaduZaID(idTrenutnogIzvjestaja)));
         }else{
