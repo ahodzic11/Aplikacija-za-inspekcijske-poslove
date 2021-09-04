@@ -225,8 +225,8 @@ public class GlavniProzorAdminController {
         ModifyAdministratorController cont = loader.getController();
         String adminUniqueID = userDAO.getLoggedUserUniqueID();
         cont.fldEmail.setText(administratorDAO.getEmailForUniqueID(adminUniqueID));
-        cont.fldSifra.setText(administratorDAO.getPasswordForUniqueID(adminUniqueID));
-        cont.fldJedinstvenaSifra.setText(adminUniqueID);
+        cont.fldPassword.setText(administratorDAO.getPasswordForUniqueID(adminUniqueID));
+        cont.fldUniqueID.setText(adminUniqueID);
 
         myStage.setTitle("Modify the administrator");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));

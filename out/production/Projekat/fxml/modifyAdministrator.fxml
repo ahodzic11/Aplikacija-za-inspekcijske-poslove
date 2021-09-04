@@ -9,14 +9,18 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import java.net.URL?>
 <GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.ModifyAdministratorController">
+   <stylesheets>
+      <URL value = "@/css/formulars.css" />
+   </stylesheets>
    <children>
       <Label text="E-mail" />
       <Label text="Password" GridPane.rowIndex="2" />
       <Label text="Unique ID" GridPane.rowIndex="4" />
       <TextField fx:id="fldEmail" GridPane.rowIndex="1" />
-      <TextField fx:id="fldSifra" GridPane.rowIndex="3" />
-      <TextField fx:id="fldJedinstvenaSifra" GridPane.rowIndex="5" />
+      <TextField fx:id="fldPassword" GridPane.rowIndex="3" />
+      <TextField fx:id="fldUniqueID" GridPane.rowIndex="5" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="6">
         <buttons>
           <Button defaultButton="true" mnemonicParsing="false" onAction="#okBtn" text="OK" />

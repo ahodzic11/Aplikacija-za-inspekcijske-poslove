@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.LogoviController">
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.LogsController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -28,11 +28,11 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Label text="Historija prijavljivanja i odjavljivanja" />
-      <TextArea fx:id="areaPrijavljivanja" editable="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Historija akcija" GridPane.rowIndex="5" />
+      <Label text="Login/logout history" />
+      <TextArea fx:id="areaLogins" editable="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Actions history" GridPane.rowIndex="5" />
       <Separator prefWidth="200.0" GridPane.rowIndex="4" />
-      <TextArea fx:id="areaAkcije" editable="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS" />
+      <TextArea fx:id="areaActions" editable="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="8">
         <buttons>
             <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelBtn" text="Cancel" />
@@ -40,14 +40,14 @@
       </ButtonBar>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="2">
         <buttons>
-            <Button mnemonicParsing="false" onAction="#exportPrijavljivanjaBtn" text="Exportuj" />
-          <Button mnemonicParsing="false" onAction="#obrisiLogovePrijavljivanjaBtn" text="Obriši logove" />
+            <Button mnemonicParsing="false" onAction="#loginLogsExportBtn" text="Export" />
+          <Button mnemonicParsing="false" onAction="#deleteLoginLogsBtn" text="Delete logs" />
         </buttons>
       </ButtonBar>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="7">
         <buttons>
-            <Button mnemonicParsing="false" onAction="#exportAkcijaBtn" text="Exportuj" />
-          <Button mnemonicParsing="false" onAction="#obrisiLogoveAkcijaBtn" text="Obriši logove" />
+            <Button mnemonicParsing="false" onAction="#actionLogsExportBtn" text="Export" />
+          <Button mnemonicParsing="false" onAction="#deleteActionLogsBtn" text="Delete logs" />
         </buttons>
       </ButtonBar>
    </children>

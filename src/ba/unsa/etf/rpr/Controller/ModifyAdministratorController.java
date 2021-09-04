@@ -9,33 +9,70 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ModifyAdministratorController {
-    private UserDAO prijavljeniUserDAO;
+    private UserDAO userDAO;
     private AdministratorDAO administratorDAO;
     public TextField fldEmail;
-    public TextField fldSifra;
-    public TextField fldJedinstvenaSifra;
+    public TextField fldPassword;
+    public TextField fldUniqueID;
     private Status status;
 
     @FXML
     public void initialize() throws SQLException {
-        prijavljeniUserDAO = UserDAO.getInstance();
+        userDAO = UserDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
         status = Status.getInstance();
+
+        fldEmail.textProperty().addListener((observableValue, o, n) -> {
+            if(!validEmail(fldEmail.getText())){
+                fldEmail.getStyleClass().removeAll("poljeIspravno");
+                fldEmail.getStyleClass().add("poljeNeispravno");
+            }else{
+                fldEmail.getStyleClass().removeAll("poljeNeispravno");
+                fldEmail.getStyleClass().add("poljeIspravno");
+            }
+        });
+        fldPassword.textProperty().addListener((observableValue, o, n) -> {
+            if(fldPassword.getText().length()<6){
+                fldPassword.getStyleClass().removeAll("poljeIspravno");
+                fldPassword.getStyleClass().add("poljeNeispravno");
+            }else{
+                fldPassword.getStyleClass().removeAll("poljeNeispravno");
+                fldPassword.getStyleClass().add("poljeIspravno");
+            }
+        });
+        fldUniqueID.textProperty().addListener((observableValue, o, n) -> {
+            if(fldUniqueID.getText().length()!=6){
+                fldUniqueID.getStyleClass().removeAll("poljeIspravno");
+                fldUniqueID.getStyleClass().add("poljeNeispravno");
+            }else{
+                fldUniqueID.getStyleClass().removeAll("poljeNeispravno");
+                fldUniqueID.getStyleClass().add("poljeIspravno");
+            }
+        });
     }
 
     public void okBtn(ActionEvent actionEvent) {
-        String jedinstvenaSifra = prijavljeniUserDAO.getLoggedUserUniqueID();
-        int idAdministratora = administratorDAO.getIdForUniqueID(jedinstvenaSifra);
-        administratorDAO.modifyAdministrator(idAdministratora, fldEmail.getText(), fldSifra.getText(), fldJedinstvenaSifra.getText());
+        String userUniqueID = userDAO.getLoggedUserUniqueID();
+        int administratorID = administratorDAO.getIdForUniqueID(userUniqueID);
+        administratorDAO.modifyAdministrator(administratorID, fldEmail.getText(), fldPassword.getText(), fldUniqueID.getText());
         Stage stage = (Stage) fldEmail.getScene().getWindow();
         stage.close();
-        status.setStatus("Administrator profile [" + jedinstvenaSifra + "] login data changed.");
+        status.setStatus("Administrator profile [" + userUniqueID + "] login data changed.");
     }
 
     public void cancelBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) fldEmail.getScene().getWindow();
         stage.close();
+    }
+
+    private boolean validEmail(String input){
+        String emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+        Pattern emailPat = Pattern.compile(emailRegex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = emailPat.matcher(input);
+        return matcher.find();
     }
 }
