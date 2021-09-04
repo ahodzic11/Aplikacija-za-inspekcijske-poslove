@@ -27,38 +27,33 @@ import java.util.ArrayList;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class PreviewController {
-    private InspectorDAO inspektorDao;
-    private UserDAO prijavljeniUserDao;
+    private InspectorDAO inspectorDAO;
+    private UserDAO userDAO;
     private AdministratorDAO administratorDAO;
-    private LoginLogDAO logDAO;
+    private LoginLogDAO loginLogDAO;
     public Button loginBtn;
-    public TextField emailFld;
-    public PasswordField pswFld;
-    public CheckBox rememberCB;
+    public TextField fldEmail;
+    public PasswordField fldPassword;
+    public CheckBox cbRememberMe;
 
     @FXML
     public void initialize() throws SQLException {
-        inspektorDao = InspectorDAO.getInstance();
-        prijavljeniUserDao = UserDAO.getInstance();
-        logDAO = LoginLogDAO.getInstance();
+        inspectorDAO = InspectorDAO.getInstance();
+        userDAO = UserDAO.getInstance();
+        loginLogDAO = LoginLogDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
     }
 
-    public void zatvoriPreview(ActionEvent actionEvent) {
-        Stage stage = (Stage) emailFld.getScene().getWindow();
-        stage.close();
-    }
-
     public void login(ActionEvent actionEvent) throws Exception {
-        int ostaniUlogovan = 0;
-        if(rememberCB.isSelected()) ostaniUlogovan = 1;
+        int stayLogged = 0;
+        if(cbRememberMe.isSelected()) stayLogged = 1;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        ArrayList<Administrator> listaAdministratora = administratorDAO.getAllAdministrators();
-        for(Administrator a : listaAdministratora)
-            if(emailFld.getText().equals(a.getEmail()) && pswFld.getText().equals(a.getPassword())){
-                String jedinstvenaSifraAdmina = administratorDAO.getUniqueIDForEmail(emailFld.getText());
-                prijavljeniUserDao.addUser(new User(-1, LocalDateTime.now().format(formatter), ostaniUlogovan, jedinstvenaSifraAdmina));
-                logDAO.addLog(new LoginLog(1, LocalDateTime.now().format(formatter), "", jedinstvenaSifraAdmina));
+        ArrayList<Administrator> administrators = administratorDAO.getAllAdministrators();
+        for(Administrator a : administrators)
+            if(fldEmail.getText().equals(a.getEmail()) && fldPassword.getText().equals(a.getPassword())){
+                String adminUniqueID = administratorDAO.getUniqueIDForEmail(fldEmail.getText());
+                userDAO.addUser(new User(-1, LocalDateTime.now().format(formatter), stayLogged, adminUniqueID));
+                loginLogDAO.addLog(new LoginLog(1, LocalDateTime.now().format(formatter), "", adminUniqueID));
                 Stage myStage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
                 myStage.setTitle("Administrator");
@@ -66,15 +61,15 @@ public class PreviewController {
                 myStage.setMinHeight(505);
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 myStage.show();
-                Stage stage = (Stage) emailFld.getScene().getWindow();
+                Stage stage = (Stage) fldEmail.getScene().getWindow();
                 stage.close();
             }
-        ArrayList<Inspector> upisaniInspektori = inspektorDao.allValidInspectors();
-        for(Inspector i : upisaniInspektori)
-            if(emailFld.getText().equals(i.getLoginEmail()) && pswFld.getText().equals(i.getPassword())){
-                int idInspektora = inspektorDao.getInspectorIDForEmail(emailFld.getText());
-                prijavljeniUserDao.addUser(new User(idInspektora, LocalDateTime.now().format(formatter), ostaniUlogovan, inspektorDao.getUniqueIDForID(idInspektora)));
-                logDAO.addLog(new LoginLog(1, LocalDateTime.now().format(formatter), "", inspektorDao.getUniqueIDForID(idInspektora)));
+        ArrayList<Inspector> inspectors = inspectorDAO.allValidInspectors();
+        for(Inspector i : inspectors)
+            if(fldEmail.getText().equals(i.getLoginEmail()) && fldPassword.getText().equals(i.getPassword())){
+                int inspectorId = inspectorDAO.getInspectorIDForEmail(fldEmail.getText());
+                userDAO.addUser(new User(inspectorId, LocalDateTime.now().format(formatter), stayLogged, inspectorDAO.getUniqueIDForID(inspectorId)));
+                loginLogDAO.addLog(new LoginLog(1, LocalDateTime.now().format(formatter), "", inspectorDAO.getUniqueIDForID(inspectorId)));
                 Stage myStage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
                 myStage.setTitle("Inspector");
@@ -82,7 +77,7 @@ public class PreviewController {
                 myStage.setMaxHeight(60);
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 myStage.show();
-                Stage stage = (Stage) emailFld.getScene().getWindow();
+                Stage stage = (Stage) fldEmail.getScene().getWindow();
                 stage.close();
             }
 

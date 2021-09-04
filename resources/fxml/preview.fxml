@@ -35,9 +35,9 @@
             <Image url="@/img/pravilock.png" />
          </image>
       </ImageView>
-      <TextField fx:id="emailFld" prefHeight="25.0" prefWidth="217.0" promptText="E-mail" styleClass="text-field" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-      <PasswordField fx:id="pswFld" prefHeight="25.0" prefWidth="217.0" promptText="Password" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <CheckBox fx:id="rememberCB" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="20.0" styleClass="checkBox" text="Remember Me" GridPane.rowIndex="2">
+      <TextField fx:id="fldEmail" prefHeight="25.0" prefWidth="217.0" promptText="E-mail" styleClass="text-field" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+      <PasswordField fx:id="fldPassword" prefHeight="25.0" prefWidth="217.0" promptText="Password" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+      <CheckBox fx:id="cbRememberMe" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="20.0" styleClass="checkBox" text="Remember Me" GridPane.rowIndex="2">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
