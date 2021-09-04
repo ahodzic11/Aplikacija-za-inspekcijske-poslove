@@ -1,9 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
-import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.done.LoginLogDAO;
-import ba.unsa.etf.rpr.DAL.done.UserDAO;
+import ba.unsa.etf.rpr.DAL.done.*;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
 import ba.unsa.etf.rpr.Model.Termin;
 import javafx.event.ActionEvent;
@@ -25,11 +23,11 @@ public class GlavniProzorUserController {
     public ListView listaTermina;
     public RadioButton rbSviTermini;
     public RadioButton rbMojiTermini;
-    private SvjedokDAO svjedokDAO;
+    private WitnessDAO svjedokDAO;
     private IzvjestajDAO izvjestajDAO;
     private UserDAO prijavljeniDao;
     private int idTrenutnogIzvjestaja = -1;
-    private ObjekatDAO objekatDao;
+    private ObjectDAO objekatDao;
     private VlasnikDAO vlasnikDao;
     private TerminDAO terminDao;
     private InspectorDAO inspektorDao;
@@ -38,10 +36,10 @@ public class GlavniProzorUserController {
 
     @FXML
     public void initialize() throws SQLException {
-        svjedokDAO = SvjedokDAO.getInstance();
+        svjedokDAO = WitnessDAO.getInstance();
         prijavljeniDao = UserDAO.getInstance();
         izvjestajDAO = IzvjestajDAO.getInstance();
-        objekatDao = ObjekatDAO.getInstance();
+        objekatDao = ObjectDAO.getInstance();
         vlasnikDao = VlasnikDAO.getInstance();
         terminDao = TerminDAO.getInstance();
         inspektorDao = InspectorDAO.getInstance();
@@ -121,20 +119,20 @@ public class GlavniProzorUserController {
         Parent root = loader.load();
         ModifikujIzvjestajController cont = loader.getController();
         int idObjekta = izvjestajDAO.dajIDObjektaZaIzvjestajID(idTrenutnogIzvjestaja);
-        cont.fldNazivObjekta.setText(objekatDao.dajNazivObjektaZaID(idObjekta));
-        cont.fldAdresaObjekta.setText(objekatDao.dajAdresuObjektaZaID(idObjekta));
+        cont.fldNazivObjekta.setText(objekatDao.getNameForID(idObjekta));
+        cont.fldAdresaObjekta.setText(objekatDao.getAddressForObjectID(idObjekta));
         cont.datumInspekcije.getEditor().setText(izvjestajDAO.dajDatumInspekcije(idTrenutnogIzvjestaja));
         cont.opisTerena.setText(izvjestajDAO.dajOpisTerenaZaID(idTrenutnogIzvjestaja));
-        int idPrvogSvjedoka = svjedokDAO.dajIdPrvogSvjedoka(idTrenutnogIzvjestaja);
-        int idDrugogSvjedoka = svjedokDAO.dajIdDrugogSvjedoka(idTrenutnogIzvjestaja);
-        cont.s1Ime.setText(svjedokDAO.dajImeSvjedoka(idPrvogSvjedoka));
-        cont.s1prezime.setText(svjedokDAO.dajPrezimeSvjedoka(idPrvogSvjedoka));
-        cont.s1JMBG.setText(svjedokDAO.dajJMBGSvjedoka(idPrvogSvjedoka));
-        cont.s1Izjava.setText(svjedokDAO.dajIzjavuSvjedoka(idPrvogSvjedoka));
-        cont.s2ime.setText(svjedokDAO.dajImeSvjedoka(idDrugogSvjedoka));
-        cont.s2prezime.setText(svjedokDAO.dajPrezimeSvjedoka(idDrugogSvjedoka));
-        cont.s2JMBG.setText(svjedokDAO.dajJMBGSvjedoka(idDrugogSvjedoka));
-        cont.s2Izjava.setText(svjedokDAO.dajIzjavuSvjedoka(idDrugogSvjedoka));
+        int idPrvogSvjedoka = svjedokDAO.getFirstWitnessID(idTrenutnogIzvjestaja);
+        int idDrugogSvjedoka = svjedokDAO.getSecondWitnessID(idTrenutnogIzvjestaja);
+        cont.s1Ime.setText(svjedokDAO.getWitnessName(idPrvogSvjedoka));
+        cont.s1prezime.setText(svjedokDAO.getWitnessSurename(idPrvogSvjedoka));
+        cont.s1JMBG.setText(svjedokDAO.getWitnessJMBG(idPrvogSvjedoka));
+        cont.s1Izjava.setText(svjedokDAO.getWitnessStatementForWitness(idPrvogSvjedoka));
+        cont.s2ime.setText(svjedokDAO.getWitnessName(idDrugogSvjedoka));
+        cont.s2prezime.setText(svjedokDAO.getWitnessSurename(idDrugogSvjedoka));
+        cont.s2JMBG.setText(svjedokDAO.getWitnessJMBG(idDrugogSvjedoka));
+        cont.s2Izjava.setText(svjedokDAO.getWitnessStatementForWitness(idDrugogSvjedoka));
         if(izvjestajDAO.dajPrekrsajZaID(idTrenutnogIzvjestaja).isBlank()){
             cont.cbPrekrsaj.setSelected(false);
         }else{
@@ -167,7 +165,7 @@ public class GlavniProzorUserController {
             cont.fldUslovZabrane.setText(izvjestajDAO.dajUslovZabraneZaID(idTrenutnogIzvjestaja));
         }
         if(izvjestajDAO.isPrijavljenoRadilisteZaID(idTrenutnogIzvjestaja)){
-            int idVlasnika = objekatDao.dajVlasnikaZaID(idObjekta);
+            int idVlasnika = objekatDao.getOwnerForID(idObjekta);
             cont.cbPrijaviRadiliste.setSelected(true);
             cont.fldVlasnik.setText(vlasnikDao.dajPodatkeVlasnikaZaId(idVlasnika));
             cont.fldBrojZaposlenih.setText(String.valueOf(izvjestajDAO.dajBrojZaposlenihZaID(idTrenutnogIzvjestaja)));
@@ -198,18 +196,18 @@ public class GlavniProzorUserController {
         Parent root = loader.load();
         PregledIzvjestajaController cont = loader.getController();
         int idObjekta = izvjestajDAO.dajIDObjektaZaIzvjestajID(idTrenutnogIzvjestaja);
-        cont.labObjekat.setText(objekatDao.dajNazivObjektaZaID(idObjekta));
+        cont.labObjekat.setText(objekatDao.getNameForID(idObjekta));
         cont.labVrstaObjekta.setText("Kafana");
-        cont.labAdresaObjekta.setText(objekatDao.dajAdresuObjektaZaID(idObjekta));
+        cont.labAdresaObjekta.setText(objekatDao.getAddressForObjectID(idObjekta));
         cont.areaOpisTerena.setText(izvjestajDAO.dajOpisTerenaZaID(idTrenutnogIzvjestaja));
-        int idVlasnika = objekatDao.dajVlasnikaZaID(idObjekta);
+        int idVlasnika = objekatDao.getOwnerForID(idObjekta);
         cont.labVlasnik.setText(vlasnikDao.dajPodatkeVlasnikaZaId(idVlasnika));
-        int idPrvogSvjedoka = svjedokDAO.dajIdPrvogSvjedoka(idTrenutnogIzvjestaja);
-        int idDrugogSvjedoka = svjedokDAO.dajIdDrugogSvjedoka(idTrenutnogIzvjestaja);
-        cont.labPodaciPrvogSvjedoka.setText(svjedokDAO.dajImeSvjedoka(idPrvogSvjedoka) + " " + svjedokDAO.dajPrezimeSvjedoka(idPrvogSvjedoka) + ", (" + svjedokDAO.dajJMBGSvjedoka(idPrvogSvjedoka) + ")");
-        cont.areaIzjavaPrvogSvjedoka.setText(svjedokDAO.dajIzjavuSvjedoka(idPrvogSvjedoka));
-        cont.labPodaciDrugogSvjedoka.setText(svjedokDAO.dajImeSvjedoka(idDrugogSvjedoka) + " " + svjedokDAO.dajPrezimeSvjedoka(idDrugogSvjedoka) + ", (" + svjedokDAO.dajJMBGSvjedoka(idDrugogSvjedoka) + ")");
-        cont.areaIzjavaDrugogSvjedoka.setText(svjedokDAO.dajIzjavuSvjedoka(idDrugogSvjedoka));
+        int idPrvogSvjedoka = svjedokDAO.getFirstWitnessID(idTrenutnogIzvjestaja);
+        int idDrugogSvjedoka = svjedokDAO.getSecondWitnessID(idTrenutnogIzvjestaja);
+        cont.labPodaciPrvogSvjedoka.setText(svjedokDAO.getWitnessName(idPrvogSvjedoka) + " " + svjedokDAO.getWitnessSurename(idPrvogSvjedoka) + ", (" + svjedokDAO.getWitnessJMBG(idPrvogSvjedoka) + ")");
+        cont.areaIzjavaPrvogSvjedoka.setText(svjedokDAO.getWitnessStatementForWitness(idPrvogSvjedoka));
+        cont.labPodaciDrugogSvjedoka.setText(svjedokDAO.getWitnessName(idDrugogSvjedoka) + " " + svjedokDAO.getWitnessSurename(idDrugogSvjedoka) + ", (" + svjedokDAO.getWitnessJMBG(idDrugogSvjedoka) + ")");
+        cont.areaIzjavaDrugogSvjedoka.setText(svjedokDAO.getWitnessStatementForWitness(idDrugogSvjedoka));
         cont.labDatumInspekcije.setText(izvjestajDAO.dajDatumInspekcije(idTrenutnogIzvjestaja));
         boolean izdatNalog = izvjestajDAO.izdatPrekršajniNalog(idTrenutnogIzvjestaja);
         if(izdatNalog) {
@@ -285,8 +283,8 @@ public class GlavniProzorUserController {
         int idInspektora = terminDao.dajInspektoraZaIDTermina(idTrenutnogTermina);
         int idObjekta = terminDao.dajIDObjektaZaIDTermina(idTrenutnogTermina);
         cont.labTerminZakazao.setText(inspektorDao.getNameSurenameForID(idInspektora));
-        cont.labNazivObjekta.setText(objekatDao.dajNazivObjektaZaID(idObjekta));
-        cont.labAdresaObjekta.setText(objekatDao.dajAdresuObjektaZaID(idObjekta));
+        cont.labNazivObjekta.setText(objekatDao.getNameForID(idObjekta));
+        cont.labAdresaObjekta.setText(objekatDao.getAddressForObjectID(idObjekta));
         cont.labDatumVrijemeTermina.setText(terminDao.dajVrijemeZaID(idTrenutnogTermina));
         cont.areaNapomeneTermina.setText(terminDao.dajNapomeneTerminaZaID(idTrenutnogTermina));
         int idZaduzenogInspektora = terminDao.dajIDZaduzenogInspektora(idTrenutnogTermina);
@@ -312,8 +310,8 @@ public class GlavniProzorUserController {
         Parent root = loader.load();
         ModifyTerminController cont = loader.getController();
         int idObjekta = terminDao.dajIDObjektaZaIDTermina(idTrenutnogTermina);
-        cont.fldNazivObjekta.setText(objekatDao.dajNazivObjektaZaID(idObjekta));
-        cont.fldAdresaObjekta.setText(objekatDao.dajAdresuObjektaZaID(idObjekta));
+        cont.fldNazivObjekta.setText(objekatDao.getNameForID(idObjekta));
+        cont.fldAdresaObjekta.setText(objekatDao.getAddressForObjectID(idObjekta));
         cont.datePickTermin.getEditor().setText(terminDao.dajVrijemeZaID(idTrenutnogTermina));
         cont.areaNapomene.setText(terminDao.dajNapomeneTerminaZaID(idTrenutnogTermina));
         cont.fldSati.setText("");

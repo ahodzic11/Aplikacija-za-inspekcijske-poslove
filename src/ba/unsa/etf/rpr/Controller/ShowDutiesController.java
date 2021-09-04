@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
+import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
-import ba.unsa.etf.rpr.DAL.ObjekatDAO;
 import ba.unsa.etf.rpr.DAL.TerminDAO;
 import ba.unsa.etf.rpr.Model.Status;
 import ba.unsa.etf.rpr.Model.Termin;
@@ -20,7 +20,7 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class ShowDutiesController {
     private InspectorDAO inspectorDAO;
-    private ObjekatDAO objectDAO;
+    private ObjectDAO objectDAO;
     private TerminDAO taskDAO;
     private Status status;
     public ListView tasksList;
@@ -31,7 +31,7 @@ public class ShowDutiesController {
     public void initialize() throws SQLException {
         taskDAO = TerminDAO.getInstance();
         inspectorDAO = InspectorDAO.getInstance();
-        objectDAO = ObjekatDAO.getInstance();
+        objectDAO = ObjectDAO.getInstance();
         status = Status.getInstance();
 
         tasksList.setItems(taskDAO.dajSveTermineInspektora(inspectorId));
@@ -44,7 +44,7 @@ public class ShowDutiesController {
 
     public void taskDetailsBtn(ActionEvent actionEvent) throws IOException {
         int objectId = taskDAO.dajIDObjektaZaIDTermina(currentTaskID);
-        status.setStatus("Task details for task [" + objectDAO.dajNazivObjektaZaID(objectId) + ", " + objectDAO.dajAdresuObjektaZaID(objectId) + " - "
+        status.setStatus("Task details for task [" + objectDAO.getNameForID(objectId) + ", " + objectDAO.getAddressForObjectID(objectId) + " - "
                 + taskDAO.dajVrijemeZaID(currentTaskID) + "] have been shown.");
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledTermina.fxml"));
@@ -53,8 +53,8 @@ public class ShowDutiesController {
         int idInspektora = taskDAO.dajInspektoraZaIDTermina(currentTaskID);
         int idObjekta = taskDAO.dajIDObjektaZaIDTermina(currentTaskID);
         cont.labTerminZakazao.setText(inspectorDAO.getNameSurenameForID(idInspektora));
-        cont.labNazivObjekta.setText(objectDAO.dajNazivObjektaZaID(idObjekta));
-        cont.labAdresaObjekta.setText(objectDAO.dajAdresuObjektaZaID(idObjekta));
+        cont.labNazivObjekta.setText(objectDAO.getNameForID(idObjekta));
+        cont.labAdresaObjekta.setText(objectDAO.getAddressForObjectID(idObjekta));
         cont.labDatumVrijemeTermina.setText(taskDAO.dajVrijemeZaID(currentTaskID));
         cont.areaNapomeneTermina.setText(taskDAO.dajNapomeneTerminaZaID(currentTaskID));
         int idZaduzenogInspektora = taskDAO.dajIDZaduzenogInspektora(currentTaskID);

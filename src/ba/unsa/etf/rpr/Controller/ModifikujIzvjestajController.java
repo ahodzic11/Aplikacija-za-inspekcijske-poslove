@@ -1,7 +1,9 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
+import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
 import ba.unsa.etf.rpr.DAL.done.UserDAO;
+import ba.unsa.etf.rpr.DAL.done.WitnessDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -48,15 +50,15 @@ public class ModifikujIzvjestajController {
     private IzvjestajDAO izvjestajDao;
     private UserDAO prijavljeniUserDao;
     public int idOtvorenogIzvjestaja;
-    private SvjedokDAO svjedokDao;
-    private ObjekatDAO objekatDao;
+    private WitnessDAO svjedokDao;
+    private ObjectDAO objekatDao;
 
     @FXML
     public void initialize() throws SQLException {
         izvjestajDao = IzvjestajDAO.getInstance();
         prijavljeniUserDao = UserDAO.getInstance();
-        objekatDao = ObjekatDAO.getInstance();
-        svjedokDao = SvjedokDAO.getInstance();
+        objekatDao = ObjectDAO.getInstance();
+        svjedokDao = WitnessDAO.getInstance();
         cbPrekrsaj.selectedProperty().addListener((obs, oldItem, newItem)->{
             if(newItem){
                 fldPrekrsaj.setDisable(false);
@@ -119,18 +121,18 @@ public class ModifikujIzvjestajController {
         if(cbFitocertifikat.isSelected()) fitocertifikat = 1;
         if(cbUzorak.isSelected()) uzorak = 1;
         if(cbPrijaviRadiliste.isSelected()) prijavljenoRadiliste = 1;
-        int idPrvogSvjedoka = svjedokDao.dajIdPrvogSvjedoka(idOtvorenogIzvjestaja);
-        int idDrugogSvjedoka = svjedokDao.dajIdDrugogSvjedoka(idOtvorenogIzvjestaja);
+        int idPrvogSvjedoka = svjedokDao.getFirstWitnessID(idOtvorenogIzvjestaja);
+        int idDrugogSvjedoka = svjedokDao.getSecondWitnessID(idOtvorenogIzvjestaja);
         String stringDatumInspekcije = datumInspekcije.getEditor().getText();
-        svjedokDao.modifikuj(idPrvogSvjedoka, idOtvorenogIzvjestaja, s1Ime.getText(), s1prezime.getText(), s1JMBG.getText(), s1Izjava.getText());
-        svjedokDao.modifikuj(idDrugogSvjedoka, idOtvorenogIzvjestaja, s2ime.getText(), s2prezime.getText(), s2JMBG.getText(), s2Izjava.getText());
+        svjedokDao.modifyWitness(idPrvogSvjedoka, idOtvorenogIzvjestaja, s1Ime.getText(), s1prezime.getText(), s1JMBG.getText(), s1Izjava.getText());
+        svjedokDao.modifyWitness(idDrugogSvjedoka, idOtvorenogIzvjestaja, s2ime.getText(), s2prezime.getText(), s2JMBG.getText(), s2Izjava.getText());
         int idObjekta = izvjestajDao.dajIDObjektaZaIzvjestajID(idOtvorenogIzvjestaja);
         izvjestajDao.modifikuj(idOtvorenogIzvjestaja, prijavljeniUserDao.getLoggedUserID(), stringDatumInspekcije,
                 opisTerena.getText(), fldPrekrsaj.getText(), Integer.parseInt(fldKazna.getText()), fldZahtjevi.getText(), evidencijaRadnika, krivicnoDjelo, fitocertifikat, uzorak,
                 Integer.parseInt(fldBrojDanaZabrane.getText()), fldUslovZabrane.getText(), prijavljenoRadiliste,
                 Integer.parseInt(fldBrojZaposlenih.getText()), Integer.parseInt(fldPotvrdaORadu.getText()), fldNedostatak.getText(), idPrvogSvjedoka, idDrugogSvjedoka, idObjekta,
                 fldNazivObjekta.getText(), fldAdresaObjekta.getText(), fldJedinstvenaSifra.getText());
-        objekatDao.modifikuj(idObjekta, objekatDao.dajVlasnikaZaID(idObjekta), fldNazivObjekta.getText(), fldAdresaObjekta.getText(), objekatDao.dajVrstuObjektaZaID(idObjekta));
+        objekatDao.modifyObject(idObjekta, objekatDao.getOwnerForID(idObjekta), fldNazivObjekta.getText(), fldAdresaObjekta.getText(), objekatDao.getObjectTypeForID(idObjekta));
         Stage stage = (Stage) fldAdresaObjekta.getScene().getWindow();
         stage.close();
     }

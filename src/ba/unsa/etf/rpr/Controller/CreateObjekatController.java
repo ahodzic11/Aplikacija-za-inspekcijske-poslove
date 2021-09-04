@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.Controller;
 
-import ba.unsa.etf.rpr.DAL.ObjekatDAO;
+import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
 import ba.unsa.etf.rpr.Model.Objekat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,11 +15,11 @@ public class CreateObjekatController {
     public TextField fldName;
     public TextField fldAddress;
     public ComboBox comboObjectType;
-    private ObjekatDAO objectDAO;
+    private ObjectDAO objectDAO;
 
     @FXML
     public void initialize() throws SQLException {
-        objectDAO = ObjekatDAO.getInstance();
+        objectDAO = ObjectDAO.getInstance();
         comboObjectType.getItems().addAll("Obrazovna institucija", "Zdravstvena institucija", "Ugostiteljski objekat");
     }
 

@@ -3,27 +3,27 @@ package ba.unsa.etf.rpr.Model;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Objekat {
-    private int id, vlasnikId;
-    private SimpleStringProperty nazivObjekta, adresa, vrstaObjekta;
+    private int id, ownerId;
+    private SimpleStringProperty name, address, type;
 
-    public Objekat(int id, int vlasnikId, String nazivObjekta, String adresa, String vrsta) {
+    public Objekat(int id, int ownerId, String name, String address, String type) {
         this.id = id;
-        this.vlasnikId = vlasnikId;
-        this.nazivObjekta = new SimpleStringProperty(nazivObjekta);
-        this.adresa = new SimpleStringProperty(adresa);
-        this.vrstaObjekta = new SimpleStringProperty(vrsta);
+        this.ownerId = ownerId;
+        this.name = new SimpleStringProperty(name);
+        this.address = new SimpleStringProperty(address);
+        this.type = new SimpleStringProperty(type);
     }
 
-    public String getVrstaObjekta() {
-        return vrstaObjekta.get();
+    public String getType() {
+        return type.get();
     }
 
-    public SimpleStringProperty vrstaObjektaProperty() {
-        return vrstaObjekta;
+    public SimpleStringProperty typeProperty() {
+        return type;
     }
 
-    public void setVrstaObjekta(String vrstaObjekta) {
-        this.vrstaObjekta.set(vrstaObjekta);
+    public void setType(String type) {
+        this.type.set(type);
     }
 
     public int getId() {
@@ -36,38 +36,38 @@ public class Objekat {
 
     @Override
     public String toString() {
-        return nazivObjekta.get() + ", " + adresa.get();
+        return name.get() + ", " + address.get();
     }
 
-    public int getVlasnikId() {
-        return vlasnikId;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public void setVlasnikId(int vlasnikId) {
-        this.vlasnikId = vlasnikId;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getNazivObjekta() {
-        return nazivObjekta.get();
+    public String getName() {
+        return name.get();
     }
 
-    public SimpleStringProperty nazivObjektaProperty() {
-        return nazivObjekta;
+    public SimpleStringProperty nameProperty() {
+        return name;
     }
 
-    public void setNazivObjekta(String nazivObjekta) {
-        this.nazivObjekta.set(nazivObjekta);
+    public void setName(String name) {
+        this.name.set(name);
     }
 
-    public String getAdresa() {
-        return adresa.get();
+    public String getAddress() {
+        return address.get();
     }
 
-    public SimpleStringProperty adresaProperty() {
-        return adresa;
+    public SimpleStringProperty addressProperty() {
+        return address;
     }
 
-    public void setAdresa(String adresa) {
-        this.adresa.set(adresa);
+    public void setAddress(String address) {
+        this.address.set(address);
     }
 }

@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.IzvjestajDAO;
-import ba.unsa.etf.rpr.DAL.ObjekatDAO;
-import ba.unsa.etf.rpr.DAL.SvjedokDAO;
+import ba.unsa.etf.rpr.DAL.done.ObjectDAO;
+import ba.unsa.etf.rpr.DAL.done.WitnessDAO;
 import ba.unsa.etf.rpr.DAL.VlasnikDAO;
 import ba.unsa.etf.rpr.Model.Objekat;
 import ba.unsa.etf.rpr.Model.Vlasnik;
@@ -35,8 +35,8 @@ public class ObjectPickingController {
     public TextField fldTelefon;
     public TextField fldEmail;
     private VlasnikDAO vlasnikdao;
-    private ObjekatDAO objekatDao;
-    private SvjedokDAO svjedokDao;
+    private ObjectDAO objekatDao;
+    private WitnessDAO svjedokDao;
     public ListView vlasnici;
     private int idTrenutnogVlasnika;
     private int idTrenutnogObjekta = -1;
@@ -44,9 +44,9 @@ public class ObjectPickingController {
     @FXML
     public void initialize() throws SQLException {
         vlasnikdao = VlasnikDAO.getInstance();
-        objekatDao = ObjekatDAO.getInstance();
+        objekatDao = ObjectDAO.getInstance();
         izvjestajDao = IzvjestajDAO.getInstance();
-        svjedokDao = SvjedokDAO.getInstance();
+        svjedokDao = WitnessDAO.getInstance();
         comboVrstaObjekta.getItems().addAll("Obrazovna institucija", "Zdravstvena institucija", "Ugostiteljski objekat");
         vlasnici.setItems(vlasnikdao.sviVlasnici());
         vlasnici.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
@@ -58,15 +58,15 @@ public class ObjectPickingController {
                 fldJMBG.setText(novi.getJmbg());
                 fldTelefon.setText(String.valueOf(novi.getTelefon()));
                 fldEmail.setText(novi.getEmail());
-                if(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika) != null)
-                objektiVlasnika.setItems(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika));
+                if(objekatDao.getObjectsFromOwner(idTrenutnogVlasnika) != null)
+                objektiVlasnika.setItems(objekatDao.getObjectsFromOwner(idTrenutnogVlasnika));
                 objektiVlasnika.getSelectionModel().selectedItemProperty().addListener((obs1, oldObjekat, newObjekat)->{
                     Objekat noviObjekat = (Objekat) newObjekat;
                     if(noviObjekat != null){
                         idTrenutnogObjekta = noviObjekat.getId();
-                        fldNaziv.setText(noviObjekat.getNazivObjekta());
-                        fldAdresa.setText(noviObjekat.getAdresa());
-                        comboVrstaObjekta.getSelectionModel().select(objekatDao.dajVrstuObjektaZaID(idTrenutnogObjekta));
+                        fldNaziv.setText(noviObjekat.getName());
+                        fldAdresa.setText(noviObjekat.getAddress());
+                        comboVrstaObjekta.getSelectionModel().select(objekatDao.getObjectTypeForID(idTrenutnogObjekta));
                     }else{
                         fldNaziv.setText("");
                         fldAdresa.setText("");
@@ -115,12 +115,12 @@ public class ObjectPickingController {
     }
 
     public void deleteObjekat(ActionEvent actionEvent) {
-        objekatDao.obrisiSaIDem(idTrenutnogObjekta);
+        objekatDao.deleteObjectWithID(idTrenutnogObjekta);
         refresujObjekte();
     }
 
     private void refresujObjekte() {
-        objektiVlasnika.setItems(objekatDao.sviObjektiZaVlasnika(idTrenutnogVlasnika));
+        objektiVlasnika.setItems(objekatDao.getObjectsFromOwner(idTrenutnogVlasnika));
     }
 
     public void refreshOwnersList() {
@@ -128,7 +128,7 @@ public class ObjectPickingController {
     }
 
     public void deleteVlasnikBtn(ActionEvent actionEvent) {
-        objekatDao.obrisiObjekteVlasnika(idTrenutnogVlasnika);
+        objekatDao.deleteOwnersObjects(idTrenutnogVlasnika);
         vlasnikdao.obrisiVlasnika(idTrenutnogVlasnika);
         refreshOwnersList();
         refresujObjekte();
@@ -142,8 +142,8 @@ public class ObjectPickingController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/kreirajIzvjestaj.fxml"));
             Parent root = loader.load();
             KreirajIzvjestajController cont = loader.getController();
-            cont.fldNazivObjekta.setText(objekatDao.dajNazivObjektaZaID(idTrenutnogObjekta));
-            cont.fldAdresaObjekta.setText(objekatDao.dajAdresuObjektaZaID(idTrenutnogObjekta));
+            cont.fldNazivObjekta.setText(objekatDao.getNameForID(idTrenutnogObjekta));
+            cont.fldAdresaObjekta.setText(objekatDao.getAddressForObjectID(idTrenutnogObjekta));
             cont.fldVlasnik.setText(vlasnikdao.dajPodatkeVlasnikaZaId(idTrenutnogVlasnika));
             cont.datumInspekcije.setValue(LocalDate.now());
             cont.idObjekta = idTrenutnogObjekta;
@@ -160,6 +160,6 @@ public class ObjectPickingController {
     }
 
     public void obrisiSvjedokeBtn(ActionEvent actionEvent) {
-        svjedokDao.obrisiSveSvjedoke();
+        svjedokDao.deleteAllWitnesses();
     }
 }
