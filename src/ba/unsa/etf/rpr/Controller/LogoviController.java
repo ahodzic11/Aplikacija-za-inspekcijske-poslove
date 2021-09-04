@@ -3,10 +3,10 @@ package ba.unsa.etf.rpr.Controller;
 import ba.unsa.etf.rpr.DAL.done.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
 import ba.unsa.etf.rpr.DAL.done.ActionLogDAO;
-import ba.unsa.etf.rpr.DAL.LogDAO;
+import ba.unsa.etf.rpr.DAL.done.LoginLogDAO;
 import ba.unsa.etf.rpr.Model.Administrator;
 import ba.unsa.etf.rpr.Model.Inspector;
-import ba.unsa.etf.rpr.Model.Log;
+import ba.unsa.etf.rpr.Model.LoginLog;
 import ba.unsa.etf.rpr.Model.ActionLog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LogoviController {
-    private LogDAO logDAO;
+    private LoginLogDAO logDAO;
     private ActionLogDAO logAkcijaDAO;
     private InspectorDAO inspektorDAO;
     private AdministratorDAO administratorDAO;
@@ -30,7 +30,7 @@ public class LogoviController {
 
     @FXML
     public void initialize() throws SQLException {
-        logDAO = LogDAO.getInstance();
+        logDAO = LoginLogDAO.getInstance();
         inspektorDAO = InspectorDAO.getInstance();
         administratorDAO = AdministratorDAO.getInstance();
         logAkcijaDAO = ActionLogDAO.getInstance();
@@ -63,7 +63,7 @@ public class LogoviController {
     }
 
     public void obrisiLogovePrijavljivanjaBtn(ActionEvent actionEvent) {
-        logDAO.obrisiSveLogove();
+        logDAO.deleteAllLogs();
         refresujLogove();
     }
 
@@ -82,7 +82,7 @@ public class LogoviController {
     }
 
     private void refresujLogove() {
-        ArrayList<Log> logovi = logDAO.dajSveLogove();
+        ArrayList<LoginLog> logovi = logDAO.getAllLogs();
         ArrayList<String> jedinstveneSifreInspektora = new ArrayList<>();
         ArrayList<String> jedinstveneSifreAdministratora = new ArrayList<>();
         String historijaPrijavljivanja = "";
@@ -92,16 +92,16 @@ public class LogoviController {
         ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
         for(Administrator a : administratori)
             jedinstveneSifreAdministratora.add(a.getUniqueId());
-        for(Log l: logovi){
+        for(LoginLog l: logovi){
             String imePrijavljenog ="";
-            if(jedinstveneSifreInspektora.contains(l.getJedinstvenaSifra())){
-                int idInspektora = inspektorDAO.getIdForUniqueID(l.getJedinstvenaSifra());
+            if(jedinstveneSifreInspektora.contains(l.getUniqueId())){
+                int idInspektora = inspektorDAO.getIdForUniqueID(l.getUniqueId());
                 imePrijavljenog = inspektorDAO.getInspectorTypeForID(idInspektora);
-                historijaPrijavljivanja += imePrijavljenog + " | login: " + l.getPrijava() + " logout: " + l.getOdjava() + "\n";
-            }else if(jedinstveneSifreAdministratora.contains(l.getJedinstvenaSifra())){
-                historijaPrijavljivanja += "Administrator | login: " + l.getPrijava() + " logout: " + l.getOdjava() + "\n";
+                historijaPrijavljivanja += imePrijavljenog + " | login: " + l.getLogin() + " logout: " + l.getLogout() + "\n";
+            }else if(jedinstveneSifreAdministratora.contains(l.getUniqueId())){
+                historijaPrijavljivanja += "Administrator | login: " + l.getLogin() + " logout: " + l.getLogout() + "\n";
             }else{
-                historijaPrijavljivanja += "Obrisan račun | login: " + l.getPrijava() + " logout: " + l.getOdjava() + "\n";
+                historijaPrijavljivanja += "Obrisan račun | login: " + l.getLogin() + " logout: " + l.getLogout() + "\n";
             }
         }
         areaPrijavljivanja.setText(historijaPrijavljivanja);

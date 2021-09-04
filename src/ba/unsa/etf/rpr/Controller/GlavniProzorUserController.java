@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
 import ba.unsa.etf.rpr.DAL.done.InspectorDAO;
+import ba.unsa.etf.rpr.DAL.done.LoginLogDAO;
 import ba.unsa.etf.rpr.DAL.done.UserDAO;
 import ba.unsa.etf.rpr.Model.Izvjestaj;
 import ba.unsa.etf.rpr.Model.Termin;
@@ -32,7 +33,7 @@ public class GlavniProzorUserController {
     private VlasnikDAO vlasnikDao;
     private TerminDAO terminDao;
     private InspectorDAO inspektorDao;
-    private LogDAO logDAO;
+    private LoginLogDAO logDAO;
     private int idTrenutnogTermina = -1;
 
     @FXML
@@ -44,7 +45,7 @@ public class GlavniProzorUserController {
         vlasnikDao = VlasnikDAO.getInstance();
         terminDao = TerminDAO.getInstance();
         inspektorDao = InspectorDAO.getInstance();
-        logDAO = LogDAO.getInstance();
+        logDAO = LoginLogDAO.getInstance();
         listaIzvjestaja.setItems(izvjestajDAO.dajIzvjestajeInspektoraSaIDem(prijavljeniDao.getLoggedUserID()));
         listaIzvjestaja.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem)->{
             Izvjestaj noviIzvjestaj = (Izvjestaj) newItem;
