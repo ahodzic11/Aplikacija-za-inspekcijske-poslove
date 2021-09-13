@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.DAL;
 
+import ba.unsa.etf.rpr.Model.Owner;
 import ba.unsa.etf.rpr.Model.Report;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +18,7 @@ public class ReportDAO {
             deleteReportQuery, reportObjectIdQuery, descriptionQuery, inspectionDateQuery, violationQuery, fineQuery,
             additionalRequirementsQuery, recordedWorkersQuery, criminalOffenseQuery, phytocertificateQuery,
             sampleTakenQuery, daysClosedQuery, openingConditionQuery, reportedWorksiteQuery, employeesQuery, openingCertificateQuery,
-            defectQuery, modifyReportQuery, uniqueIDQuery;
+            defectQuery, modifyReportQuery, uniqueIDQuery, allReportsQuery;
 
     private ReportDAO(){
         String url = "jdbc:sqlite:inspection.db";
@@ -63,6 +64,7 @@ public class ReportDAO {
             defectQuery = conn.prepareStatement("SELECT defect FROM report WHERE id=?");
             modifyReportQuery = conn.prepareStatement("UPDATE report SET inspectorId=?, objectId=?, inspectionDate=?, description=?, violation=?, fine=?, additionalRequirements=?, recordedWorkersNumber=?, criminalOffense=?, phytocertificate=?, sampleTaken=?, daysClosed=?, openingCondition=?, reportedWorksite=?, employeeNumber=?, openingCertificateNumber=?, defect=?, firstWitnessId=?, secondWitnessId=?, objectName=?, objectAddress=?, uniqueId=? WHERE id=?");
             uniqueIDQuery = conn.prepareStatement("SELECT uniqueId FROM report WHERE id=?");
+            allReportsQuery = conn.prepareStatement("SELECT * FROM report");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -435,5 +437,28 @@ public class ReportDAO {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public void resetDatabase() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM report");
+    }
+
+    public ObservableList<Report> allReports(){
+        ObservableList<Report> result = FXCollections.observableArrayList();
+        try{
+            ResultSet rs = allReportsQuery.executeQuery();
+            while(rs.next()){
+                result.add(new Report(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getInt(6), rs.getString(7), rs.getInt(8),
+                        rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getInt(12),
+                        rs.getString(13), rs.getInt(14), rs.getInt(15), rs.getInt(16),
+                        rs.getString(17), rs.getInt(18), rs.getInt(19), rs.getInt(20),
+                        rs.getString(21), rs.getString(22), rs.getString(23)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
