@@ -105,6 +105,15 @@ class InspectorDAOTest {
 
     @Test
     void modifyInspector() {
+        inspectorDAO.modifyInspector(0, "novoIme", "novoPrezime", "ASDFEO", "Kakanj",
+                "062333333", "ahodzic11@etf.unsa.ba", "ahodzic11@etf.unsa.ba", "adnan123",
+                1, "Major federal inspector", "School business");
+        assertEquals("novoIme", inspectorDAO.getFirstNameForID(0));
+        assertEquals("novoPrezime", inspectorDAO.getSurenameForID(0));
+        assertEquals("062333333", inspectorDAO.getPhoneNumberForID(0));
+        assertEquals("ahodzic11@etf.unsa.ba", inspectorDAO.getEmailForID(0));
+        assertTrue(inspectorDAO.isMajorInspector(0));
+        assertEquals("School business", inspectorDAO.getInspectionAreaForID(0));
     }
 
     @Test
