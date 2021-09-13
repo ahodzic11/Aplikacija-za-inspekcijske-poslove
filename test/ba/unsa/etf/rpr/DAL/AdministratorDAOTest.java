@@ -58,7 +58,7 @@ class AdministratorDAOTest {
     }
 
     @Test
-    void getAllAdministrators(){
+    void getAllAdministrators() throws SQLException {
         assertEquals(1, administratorDAO.getAllAdministrators().size());
         administratorDAO.resetDatabase();
         assertEquals(0, administratorDAO.getAllAdministrators().size());

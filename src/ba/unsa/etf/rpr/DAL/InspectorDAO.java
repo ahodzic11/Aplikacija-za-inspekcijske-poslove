@@ -413,11 +413,16 @@ public class InspectorDAO {
         try{
             inspectorTypeQuery.setInt(1, inspectorId);
             ResultSet rs = inspectorTypeQuery.executeQuery();
-            if(rs.getString(1).equals("Glavni federalni inspektor")) return true;
+            if(rs.getString(1).equals("Major federal inspector")) return true;
             return false;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void resetDatabase() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM inspector");
     }
 }

@@ -116,4 +116,9 @@ public class LoginLogDAO {
             e.printStackTrace();
         }
     }
+
+    public void resetDatabase() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM loginLog");
+    }
 }
