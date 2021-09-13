@@ -110,7 +110,6 @@ CREATE TABLE IF NOT EXISTS "report" (
 );
 INSERT INTO "administrator" VALUES (1,'admin@gmail.com','admin','admin1');
 INSERT INTO "inspector" VALUES (0,'Adnan','Hodzic','07.04.2000','1234567891234',1,'ABCD123','Kakanj','062734086','adnan@gmail.com','ahodzic11@etf.unsa.ba','adnan123',1,'ASDFEO','Federal inspector','Business property');
-INSERT INTO "loginData" VALUES (5,'25/09/2021 04:05:03',1,'ABCDPF');
 INSERT INTO "loginLog" VALUES (0,'13/09/2021 04:05:03','13/09/2021 06:07:08','PLSFOE');
 INSERT INTO "loginLog" VALUES (1,'03/10/2021 09:05:04','10/10/2021 08:53:12','PASDAS');
 INSERT INTO "loginLog" VALUES (2,'03/11/2021 09:05:04','10/11/2021 08:53:12','ASGWDS');
