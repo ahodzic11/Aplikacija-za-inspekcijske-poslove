@@ -16,4 +16,12 @@ class WitnessTest {
         assertEquals("1295120351235", witness.getJmbg());
         assertEquals("I have found a product with an expired date", witness.getStatement());
     }
+
+    @Test
+    void testToString(){
+        Witness witness = new Witness(96, 1239, "Dino", "Mujkić", "1295120351235",
+                "I have found a product with an expired date");
+        assertEquals("Dino Mujkić", witness.toString());
+
+    }
 }

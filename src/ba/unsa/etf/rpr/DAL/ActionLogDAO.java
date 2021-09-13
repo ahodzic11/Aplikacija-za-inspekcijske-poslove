@@ -89,7 +89,7 @@ public class ActionLogDAO {
         return instance;
     }
 
-    public ArrayList<ActionLog> dajSveLogove() {
+    public ArrayList<ActionLog> getAllLogs() {
         ArrayList<ActionLog> result = new ArrayList();
         try{
             ResultSet rs = allActionsQuery.executeQuery();
@@ -100,5 +100,10 @@ public class ActionLogDAO {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void resetDatabase() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM actionLog");
     }
 }

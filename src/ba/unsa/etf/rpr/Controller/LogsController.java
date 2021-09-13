@@ -97,7 +97,7 @@ public class LogsController {
     }
 
     private void refreshActionLogs() {
-        ArrayList<ActionLog> actionLogs = actionLogDAO.dajSveLogove();
+        ArrayList<ActionLog> actionLogs = actionLogDAO.getAllLogs();
         String actions = "";
         for(ActionLog l : actionLogs){
             actions += l.getAction() + " date/time: " + l.getDateTime() + "\n";
