@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Report {
     private int id, inspectorId, objectId, firstWitnessId, secondWitnessId;
     private SimpleStringProperty inspectionDate, description, violation, additionalRequirements, openingCondition, defect, objectName, objectAddress,
-    jedinstvenaSifra;
+    uniqueID;
     private SimpleIntegerProperty fine, recordedWorkers, criminalOffense, phytocertificate,
             sampleTaken, daysClosed, reportedWorksite, employeesNumber, openingCertificationNumber;
 
@@ -14,7 +14,7 @@ public class Report {
                   String additionalRequirements, int recordedWorkers, int criminalOffense, int phytocertificate,
                   int sampleTaken, int daysClosed, String openingCondition, int reportedWorksite, int employeesNumber,
                   int openingCertificationNumber, String defect, int firstWitnessId, int secondWitnessId, int objectId, String objectName, String objectAddress,
-                  String jedinstvenaSifra){
+                  String uniqueID){
         this.id = id;
         this.inspectorId = inspectorId;
         this.inspectionDate = new SimpleStringProperty(inspectionDate);
@@ -37,19 +37,19 @@ public class Report {
         this.objectId = objectId;
         this.objectName = new SimpleStringProperty(objectName);
         this.objectAddress = new SimpleStringProperty(objectAddress);
-        this.jedinstvenaSifra = new SimpleStringProperty(jedinstvenaSifra);
+        this.uniqueID = new SimpleStringProperty(uniqueID);
     }
 
-    public String getJedinstvenaSifra() {
-        return jedinstvenaSifra.get();
+    public String getUniqueID() {
+        return uniqueID.get();
     }
 
-    public SimpleStringProperty jedinstvenaSifraProperty() {
-        return jedinstvenaSifra;
+    public SimpleStringProperty uniqueIDProperty() {
+        return uniqueID;
     }
 
-    public void setJedinstvenaSifra(String jedinstvenaSifra) {
-        this.jedinstvenaSifra.set(jedinstvenaSifra);
+    public void setUniqueID(String uniqueID) {
+        this.uniqueID.set(uniqueID);
     }
 
     public SimpleStringProperty objectNameProperty() {

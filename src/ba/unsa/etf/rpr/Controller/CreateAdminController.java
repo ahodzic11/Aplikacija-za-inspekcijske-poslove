@@ -5,17 +5,13 @@ import ba.unsa.etf.rpr.DAL.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.UserDAO;
 import ba.unsa.etf.rpr.Model.ActionLog;
 import ba.unsa.etf.rpr.Model.Administrator;
-import ba.unsa.etf.rpr.Model.Status;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import ba.unsa.etf.rpr.Utility.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;

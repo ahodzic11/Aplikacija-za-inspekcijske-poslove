@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.Model;
+package ba.unsa.etf.rpr.Utility;
 
 import javafx.beans.property.SimpleStringProperty;
 

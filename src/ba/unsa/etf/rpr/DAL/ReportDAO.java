@@ -157,7 +157,7 @@ public class ReportDAO {
         addingQuery.setInt(20, i.getObjectId());
         addingQuery.setString(21, i.getObjectName());
         addingQuery.setString(22, i.getObjectAddress());
-        addingQuery.setString(23, i.getJedinstvenaSifra());
+        addingQuery.setString(23, i.getUniqueID());
         addingQuery.execute();
     }
 

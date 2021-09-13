@@ -2,20 +2,14 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.ActionLogDAO;
 import ba.unsa.etf.rpr.DAL.UserDAO;
-import ba.unsa.etf.rpr.Model.Status;
-import ba.unsa.etf.rpr.Model.User;
+import ba.unsa.etf.rpr.Utility.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class ProfileController {
     public Label labFirstName;

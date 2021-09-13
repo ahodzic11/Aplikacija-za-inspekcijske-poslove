@@ -3,7 +3,7 @@ package ba.unsa.etf.rpr.Controller;
 import ba.unsa.etf.rpr.DAL.ObjectDAO;
 import ba.unsa.etf.rpr.DAL.InspectorDAO;
 import ba.unsa.etf.rpr.DAL.TaskDAO;
-import ba.unsa.etf.rpr.Model.Status;
+import ba.unsa.etf.rpr.Utility.Status;
 import ba.unsa.etf.rpr.Model.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

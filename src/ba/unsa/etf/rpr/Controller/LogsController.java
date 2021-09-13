@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.*;
 import ba.unsa.etf.rpr.Model.*;
+import ba.unsa.etf.rpr.Utility.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;

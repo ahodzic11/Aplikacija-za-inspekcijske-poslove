@@ -2,7 +2,7 @@ package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.AdministratorDAO;
 import ba.unsa.etf.rpr.DAL.UserDAO;
-import ba.unsa.etf.rpr.Model.Status;
+import ba.unsa.etf.rpr.Utility.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

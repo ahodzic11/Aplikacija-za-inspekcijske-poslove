@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.Controller;
 
 import ba.unsa.etf.rpr.DAL.InspectorDAO;
-import ba.unsa.etf.rpr.Model.Status;
+import ba.unsa.etf.rpr.Utility.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
