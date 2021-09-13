@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.GlavniProzorUserController">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.Controller.InspectorMainWindow">
    <stylesheets>
        <URL value="@/css/formulars.css" />
    </stylesheets>
@@ -31,7 +31,7 @@
             <items>
                   <Menu text="_New">
                     <items>
-                      <MenuItem onAction="#kreirajIzvjestaj" text="_Report" />
+                      <MenuItem onAction="#createReport" text="_Report" />
                         <MenuItem onAction="#createTaskBtn" text="_Task" />
                     </items>
                   </Menu>
@@ -97,7 +97,7 @@
                                         <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#kreirajIzvjestaj" prefHeight="342.0" prefWidth="432.0" text="Create a report" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createReport" prefHeight="342.0" prefWidth="432.0" text="Create a report" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteReportBtn" prefHeight="64.0" prefWidth="246.0" text="Delete report" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyReportBtn" prefHeight="432.0" prefWidth="432.0" text="Modify report" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
                                           <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showReportDetailsBtn" prefHeight="235.0" prefWidth="353.0" text="Report details" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
@@ -162,10 +162,10 @@
                                 </rowConstraints>
                                  <children>
                                     <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createTaskBtn" prefHeight="391.0" prefWidth="961.0" text="Create a task" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pregledajTerminBtn" prefHeight="201.0" prefWidth="565.0" text="Task details" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifikacijaTerminaBtn" prefHeight="221.0" prefWidth="406.0" text="Modify task" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#uzmiTerminBtn" prefHeight="274.0" prefWidth="509.0" text="Take task" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#obrisiTerminBtn" prefHeight="245.0" prefWidth="498.0" text="Delete task" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#viewTasksBtn" prefHeight="201.0" prefWidth="565.0" text="Task details" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyTaskBtn" prefHeight="221.0" prefWidth="406.0" text="Modify task" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#takeTaskBtn" prefHeight="274.0" prefWidth="509.0" text="Take task" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                                    <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteTaskBtn" prefHeight="245.0" prefWidth="498.0" text="Delete task" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

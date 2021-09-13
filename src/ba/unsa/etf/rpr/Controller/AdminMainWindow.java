@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
-public class GlavniProzorAdminController {
+public class AdminMainWindow {
     public ListView inspectorList;
     public Label labInfo;
     public Label labUniqueID;

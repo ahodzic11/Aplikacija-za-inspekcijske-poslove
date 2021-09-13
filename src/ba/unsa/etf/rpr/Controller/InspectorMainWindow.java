@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
-public class GlavniProzorUserController {
+public class InspectorMainWindow {
     public ListView reportList;
     public ListView tasksList;
     public RadioButton rbAllTasks;
@@ -67,10 +67,10 @@ public class GlavniProzorUserController {
         });
     }
 
-    public void kreirajIzvjestaj(ActionEvent actionEvent) throws IOException {
+    public void createReport(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/objectPicking.fxml"));
-        myStage.setTitle("Odaberi objekat");
+        myStage.setTitle("Choose an object");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.showAndWait();
@@ -302,11 +302,11 @@ public class GlavniProzorUserController {
         refreshTasks();
     }
 
-    public void pregledajTerminBtn(ActionEvent actionEvent) throws IOException {
+    public void viewTasksBtn(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledTermina.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/taskView.fxml"));
         Parent root = loader.load();
-        PregledTerminaController cont = loader.getController();
+        TaskViewController cont = loader.getController();
         int idInspektora = taskDAO.getInspectorForID(currentTaskID);
         int idObjekta = taskDAO.getObjectID(currentTaskID);
         cont.labTerminZakazao.setText(inspectorDAO.getNameSurenameForID(idInspektora));
@@ -327,11 +327,11 @@ public class GlavniProzorUserController {
         myStage.show();
     }
 
-    public void detaljiObjektaTerminaBtn(ActionEvent actionEvent) {
+    public void detBtn(ActionEvent actionEvent) {
 
     }
 
-    public void modifikacijaTerminaBtn(ActionEvent actionEvent) throws IOException {
+    public void modifyTaskBtn(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/modifyTermin.fxml"));
         Parent root = loader.load();
@@ -350,7 +350,7 @@ public class GlavniProzorUserController {
         refreshTasks();
     }
 
-    public void obrisiTerminBtn(ActionEvent actionEvent) {
+    public void deleteTaskBtn(ActionEvent actionEvent) {
         taskDAO.deleteTask(currentTaskID);
         refreshTasks();
     }
@@ -359,7 +359,7 @@ public class GlavniProzorUserController {
         tasksList.setItems(taskDAO.getAllTasksForInspector(userDAO.getLoggedUserID()));
     }
 
-    public void uzmiTerminBtn(ActionEvent actionEvent) {
+    public void takeTaskBtn(ActionEvent actionEvent) {
         if(!taskDAO.isTaken(currentTaskID)) taskDAO.takeTask(currentTaskID, userDAO.getLoggedUserID());
     }
 }

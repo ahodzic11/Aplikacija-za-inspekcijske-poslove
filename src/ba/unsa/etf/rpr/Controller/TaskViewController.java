@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-public class PregledTerminaController {
+public class TaskViewController {
     public Label labTerminZakazao;
     public Label labNazivObjekta;
     public Label labAdresaObjekta;

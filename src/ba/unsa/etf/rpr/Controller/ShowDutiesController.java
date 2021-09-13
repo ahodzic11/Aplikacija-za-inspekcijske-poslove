@@ -53,9 +53,9 @@ public class ShowDutiesController {
         status.setStatus("Task details for task [" + objectDAO.getNameForID(objectId) + ", " + objectDAO.getAddressForObjectID(objectId) + " - "
                 + taskDAO.getDatetime(currentTaskID) + "] have been shown.");
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledTermina.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/taskView.fxml"));
         Parent root = loader.load();
-        PregledTerminaController cont = loader.getController();
+        TaskViewController cont = loader.getController();
         int idInspektora = taskDAO.getInspectorForID(currentTaskID);
         int idObjekta = taskDAO.getObjectID(currentTaskID);
         cont.labTerminZakazao.setText(inspectorDAO.getNameSurenameForID(idInspektora));
@@ -90,9 +90,9 @@ public class ShowDutiesController {
     }
 
     private void updateStatus() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/adminMainWindow.fxml"));
         Parent root = loader.load();
-        GlavniProzorAdminController cont = loader.getController();
+        AdminMainWindow cont = loader.getController();
         cont.updateStatus();
     }
 }

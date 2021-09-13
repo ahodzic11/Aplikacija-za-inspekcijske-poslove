@@ -165,9 +165,9 @@ public class ModifyProfileController {
         else tipInspektora = "Federal inspector";
         inspectorDAO.modifyInspector(inspectorId, fldName.getText(), fldSurename.getText(), fldIDNumber.getText(), fldResidency.getText(),
                 fldPhoneNumber.getText(), fldEmail.getText(), fldLoginEmail.getText(), fldPassword.getText(), vozacka, tipInspektora, comboInspectionArea.getEditor().getText());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/adminMainWindow.fxml"));
         Parent root = loader.load();
-        GlavniProzorAdminController glavni = loader.getController();
+        AdminMainWindow glavni = loader.getController();
         glavni.refreshInspectorsList();
         status.setStatus("Inspector profile - " + inspectorDAO.getNameSurenameForID(inspectorId) + " [" + inspectorDAO.getUniqueIDForID(inspectorId) + "] modified.");
 

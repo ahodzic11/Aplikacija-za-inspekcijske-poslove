@@ -195,7 +195,7 @@ public class CreateAccountController {
     }
 
     public void createInspectorBtn(ActionEvent actionEvent) throws SQLException {
-        //if(!isValid()) return;
+        if(!isValid()) return;
         int gender=0, driversLicense=0;
         if(cbDriversLicense.isSelected()) driversLicense=1;
         if(maleRB.isSelected()) gender=1;

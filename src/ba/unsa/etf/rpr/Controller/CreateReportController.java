@@ -221,18 +221,6 @@ public class CreateReportController {
                         fldClosedDays.getStyleClass().add("poljeIspravno");
                     }
                 });
-            }else{
-                /*fldOpeningCondition.setDisable(false);
-                fldClosedDays.setDisable(true);
-                fldOpeningCondition.textProperty().addListener((observableValue, oldvalue, newvalue) -> {
-                    if (fldOpeningCondition.getText().isBlank() || containsNumber(fldOpeningCondition.getText())) {
-                        fldOpeningCondition.getStyleClass().removeAll("poljeIspravno");
-                        fldOpeningCondition.getStyleClass().add("poljeNeispravno");
-                    } else {
-                        fldOpeningCondition.getStyleClass().removeAll("poljeNeispravno");
-                        fldOpeningCondition.getStyleClass().add("poljeIspravno");
-                    }
-                });*/
             }
         });
         rbConditionsBan.selectedProperty().addListener((obs, oldItem, newItem)->{

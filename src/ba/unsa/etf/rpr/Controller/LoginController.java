@@ -55,7 +55,7 @@ public class LoginController {
                 userDAO.addUser(new User(-1, LocalDateTime.now().format(formatter), stayLogged, adminUniqueID));
                 loginLogDAO.addLog(new LoginLog(1, LocalDateTime.now().format(formatter), "", adminUniqueID));
                 Stage myStage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/adminMainWindow.fxml"));
                 myStage.setTitle("Administrator");
                 myStage.setMinWidth(603);
                 myStage.setMinHeight(505);
@@ -71,7 +71,7 @@ public class LoginController {
                 userDAO.addUser(new User(inspectorId, LocalDateTime.now().format(formatter), stayLogged, inspectorDAO.getUniqueIDForID(inspectorId)));
                 loginLogDAO.addLog(new LoginLog(1, LocalDateTime.now().format(formatter), "", inspectorDAO.getUniqueIDForID(inspectorId)));
                 Stage myStage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/userMainWindow.fxml"));
                 myStage.setTitle("Inspector");
                 myStage.setMinWidth(60);
                 myStage.setMaxHeight(60);

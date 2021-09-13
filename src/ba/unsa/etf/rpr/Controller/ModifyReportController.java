@@ -333,7 +333,7 @@ public class ModifyReportController {
     }
 
     public void modifyBtn(ActionEvent actionEvent) {
-        if(isValid()) return;
+        if(!isValid()) return;
         int criminalOffense = 0, workersReported = 0, phytocertificate = 0, sampleTaken = 0, workplaceReported = 0;
         if(cbCriminalOffense.isSelected()) criminalOffense = 1;
         if(cbWorkersReported.isSelected() && !fldReportedWorkers.getText().equals("")) workersReported = Integer.parseInt(fldReportedWorkers.getText());

@@ -26,7 +26,7 @@ public class Main extends Application {
             ArrayList<Administrator> administratori = administratorDAO.getAllAdministrators();
             for(Administrator a : administratori)
                 if(a.getUniqueId().equals(userDAO.getLoggedUserUniqueID())){
-                    Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorAdmin.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/fxml/adminMainWindow.fxml"));
                     primaryStage.setTitle("Administrator");
                     primaryStage.setMinWidth(603);
                     primaryStage.setMinHeight(505);
@@ -36,7 +36,7 @@ public class Main extends Application {
             ArrayList<Inspector> inspektori = inspectorDAO.allValidInspectors();
             for(Inspector i : inspektori)
                 if(i.getUniqueId().equals(userDAO.getLoggedUserUniqueID())){
-                    Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavniProzorUser.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/fxml/userMainWindow.fxml"));
                     primaryStage.setTitle("Inspector");
                     primaryStage.setMinWidth(410);
                     primaryStage.setMinHeight(283);
