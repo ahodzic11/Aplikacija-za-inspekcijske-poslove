@@ -159,4 +159,9 @@ public class AdministratorDAO {
         }
         return admins;
     }
+
+    public void resetDatabase() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM administrator");
+    }
 }
