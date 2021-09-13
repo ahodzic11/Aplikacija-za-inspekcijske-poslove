@@ -115,4 +115,9 @@ public class UserDAO {
         }
         return "";
     }
+
+    public void resetDatabase() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM loginData");
+    }
 }
